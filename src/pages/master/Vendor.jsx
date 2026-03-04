@@ -1,124 +1,133 @@
-import PageLayout from "../../components/PageLayout";
+import { useState } from "react";
 
 export default function Vendor() {
+  const [formData, setFormData] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
-    <PageLayout title="Vendor">
+    <div className="vendor-container">
 
-      <div className="grid-2">
-
-        {/* LEFT PANEL */}
-        <div className="form-card">
-          <div className="form-row">
-            <label>Code</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Name</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Opening Balance</label>
-            <input type="text" />
-            <select>
-              <option>Debit</option>
-              <option>Credit</option>
-            </select>
-          </div>
-
-          <h4>Address</h4>
-
-          <div className="form-row">
-            <label>Name</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row vertical">
-            <label>Address</label>
-            <textarea rows="4"></textarea>
-          </div>
-
-          <div className="form-row">
-            <label>Place</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Phone</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Mobile No</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Email</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Web</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Fax</label>
-            <input type="text" />
-          </div>
+      {/* HEADER */}
+      <div className="vendor-header">
+        <h2>Vendor Management</h2>
+        <div className="header-buttons">
+          <button className="btn-outline">Cancel</button>
+          <button className="btn-light">Clear</button>
+          <button className="btn-primary">Save Vendor</button>
         </div>
-
-        {/* RIGHT PANEL */}
-        <div className="form-card">
-          <h4>Others</h4>
-
-          <div className="form-row">
-            <label>Contact Person</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Credit Limit</label>
-            <input type="text" />
-            <label>Due Days</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>TIN</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>CST</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>DL Nos.</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>GST</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Payment Terms</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row vertical">
-            <label>Remark</label>
-            <textarea rows="4"></textarea>
-          </div>
-        </div>
-
       </div>
 
-    </PageLayout>
+      {/* FORM GRID */}
+      <div className="vendor-grid">
+
+        {/* BASIC INFO */}
+        <div className="card">
+          <h3>Basic Information</h3>
+
+          <div className="form-grid">
+            <div className="form-field">
+              <label>Vendor Code</label>
+              <input name="code" placeholder="Auto Generated" />
+            </div>
+
+            <div className="form-field">
+              <label>Vendor Name</label>
+              <input name="name" onChange={handleChange} />
+            </div>
+
+            <div className="form-field">
+              <label>Opening Balance</label>
+              <input name="openingBalance" />
+            </div>
+
+            <div className="form-field">
+              <label>Balance Type</label>
+              <select name="balanceType">
+                <option>Debit</option>
+                <option>Credit</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* FINANCIAL INFO */}
+        <div className="card">
+          <h3>Financial & Others</h3>
+
+          <div className="form-grid">
+            <div className="form-field">
+              <label>Contact Person</label>
+              <input name="contactPerson" />
+            </div>
+
+            <div className="form-field">
+              <label>Credit Limit</label>
+              <input name="creditLimit" />
+            </div>
+
+            <div className="form-field">
+              <label>Due Days</label>
+              <input name="dueDays" />
+            </div>
+
+            <div className="form-field">
+              <label>GST Number</label>
+              <input name="gst" />
+            </div>
+
+            <div className="form-field">
+              <label>TIN</label>
+              <input name="tin" />
+            </div>
+
+            <div className="form-field">
+              <label>Payment Terms</label>
+              <input name="paymentTerms" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ADDRESS SECTION */}
+      <div className="card full-width">
+        <h3>Address Details</h3>
+
+        <div className="form-grid">
+          <div className="form-field">
+            <label>Address</label>
+            <textarea rows="3" name="address" />
+          </div>
+
+          <div className="form-field">
+            <label>Place</label>
+            <input name="place" />
+          </div>
+
+          <div className="form-field">
+            <label>Phone</label>
+            <input name="phone" />
+          </div>
+
+          <div className="form-field">
+            <label>Mobile</label>
+            <input name="mobile" />
+          </div>
+
+          <div className="form-field">
+            <label>Email</label>
+            <input name="email" />
+          </div>
+
+          <div className="form-field">
+            <label>Website</label>
+            <input name="web" />
+          </div>
+        </div>
+      </div>
+
+    </div>
   );
 }

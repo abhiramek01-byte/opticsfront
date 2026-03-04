@@ -1,3 +1,5 @@
+import "../styles/OrderTracking.css";
+
 export default function OrderTracking() {
   return (
     <div>

@@ -1,0 +1,15 @@
+/* SALESMAN PAGE */
+
+.salesman-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.small-card {
+    width: 450px;
+}
+
+.single-grid {
+    grid-template-columns: 1fr;
+}

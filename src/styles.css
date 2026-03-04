@@ -23,20 +23,20 @@ body {
 ========================= */
 
 .sidebar {
-  width: 240px;
-  background: #f8f9fc;
-  border-right: 1px solid #e6e6e6;
+  width: 250px;
+  height: 100vh;
+  background: #f4f6f9;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
+  border-right: 1px solid #ddd;
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 22px;
+  font-weight: bold;
   padding: 20px;
-  border-bottom: 1px solid #e6e6e6;
   text-align: center;
+  border-bottom: 1px solid #ddd;
 }
 
 .sidebar-scroll {
@@ -44,71 +44,56 @@ body {
   overflow-y: auto;
 }
 
-/* =========================
-   SIDEBAR MENU
-========================= */
-
 .side-main {
   display: flex;
   align-items: center;
-  gap: 12px;
   padding: 12px 18px;
   cursor: pointer;
-  font-size: 14px;
-  color: #444;
-  transition: 0.2s ease;
+  text-decoration: none;
+  color: #333;
+  transition: 0.2s;
 }
 
 .side-main:hover {
-  background: #e9f0ff;
+  background: #e0e7ff;
 }
 
 .side-main.active {
-  background: #1e73ff;
+  background: #2563eb;
   color: white;
-  font-weight: 500;
 }
 
 .icon {
-  width: 18px;
+  margin-right: 10px;
 }
 
 .arrow {
   margin-left: auto;
-  font-size: 11px;
-  transition: transform 0.2s ease;
-}
-
-.arrow.rotate {
-  transform: rotate(180deg);
 }
 
 .submenu {
-  padding-left: 48px;
-  background: #fafafa;
+  background: #eef2ff;
 }
 
 .sub-item {
-  padding: 8px 0;
-  font-size: 13px;
-  color: #555;
-  cursor: pointer;
+  display: block;
+  padding: 10px 40px;
+  text-decoration: none;
+  color: #444;
+  font-size: 14px;
 }
 
 .sub-item:hover {
-  color: #1e73ff;
+  background: #dbeafe;
 }
 
-/* =========================
-   MAIN CONTENT
-========================= */
-
-.main {
-  flex: 1;
-  padding: 30px;
-  background: #f3f5f9;
-  overflow: auto;
+.sub-active {
+  background: #2563eb;
+  color: white;
 }
+
+
+
 
 /* =========================
    TOP BAR
@@ -153,7 +138,7 @@ body {
   background: #ffffff;
   padding: 18px;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
   position: relative;
   transition: 0.2s ease;
 }
@@ -177,15 +162,45 @@ body {
   margin-bottom: 10px;
 }
 
-.sales { background:#ffd6e7; color:#e91e63; }
-.revenue { background:#ffe3c4; color:#ff9800; }
-.customer { background:#e1f5e4; color:#4caf50; }
-.stock { background:#f0ddff; color:#9c27b0; }
+.sales {
+  background: #ffd6e7;
+  color: #e91e63;
+}
 
-.calendar { background:#dde7ff; color:#3f51b5; }
-.bank { background:#e0f2e9; color:#2e7d32; }
-.user { background:#e0f7fa; color:#00838f; }
-.box { background:#fff3e0; color:#ef6c00; }
+.revenue {
+  background: #ffe3c4;
+  color: #ff9800;
+}
+
+.customer {
+  background: #e1f5e4;
+  color: #4caf50;
+}
+
+.stock {
+  background: #f0ddff;
+  color: #9c27b0;
+}
+
+.calendar {
+  background: #dde7ff;
+  color: #3f51b5;
+}
+
+.bank {
+  background: #e0f2e9;
+  color: #2e7d32;
+}
+
+.user {
+  background: #e0f7fa;
+  color: #00838f;
+}
+
+.box {
+  background: #fff3e0;
+  color: #ef6c00;
+}
 
 /* =========================
    LOW STOCK BADGE
@@ -237,7 +252,7 @@ body {
   background: white;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
 }
 
 /* =========================
@@ -343,9 +358,17 @@ body {
   transition: width 0.4s ease;
 }
 
-.progress-fill.blue { background: #1e88e5; }
-.progress-fill.green { background: #43a047; }
-.progress-fill.orange { background: #fb8c00; }
+.progress-fill.blue {
+  background: #1e88e5;
+}
+
+.progress-fill.green {
+  background: #43a047;
+}
+
+.progress-fill.orange {
+  background: #fb8c00;
+}
 
 /* =========================
    MASTER FORM STYLES
@@ -392,4 +415,21 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+
+/* ── LOGOUT BUTTON in Sidebar ── */
+.logout-btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  color: #e53935;
+}
+
+.logout-btn:hover {
+  background: #fdecea !important;
+  color: #c62828;
 }

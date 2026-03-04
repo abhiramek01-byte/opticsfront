@@ -1,43 +1,115 @@
-import PageLayout from "../../components/PageLayout";
+import { useState } from "react";
 
 export default function Doctor() {
+  const [formData, setFormData] = useState({
+    code: "DR001",
+    name: "",
+    address: "",
+    phone: "",
+    mobile: "",
+    email: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleClear = () => {
+    setFormData({
+      ...formData,
+      name: "",
+      address: "",
+      phone: "",
+      mobile: "",
+      email: ""
+    });
+  };
+
+  const handleSave = () => {
+    console.log("Doctor Data:", formData);
+    alert("Doctor Saved Successfully!");
+  };
+
   return (
-    <PageLayout title="Doctor">
+    <div className="vendor-container">
 
-      <div className="form-card">
-
-        <div className="form-row">
-          <label>Code</label>
-          <input type="text" />
+      {/* HEADER */}
+      <div className="vendor-header">
+        <h2>Doctor Management</h2>
+        <div className="header-buttons">
+          <button className="btn-outline">Cancel</button>
+          <button className="btn-light" onClick={handleClear}>
+            Clear
+          </button>
+          <button className="btn-primary" onClick={handleSave}>
+            Save Doctor
+          </button>
         </div>
-
-        <div className="form-row">
-          <label>Name</label>
-          <input type="text" />
-        </div>
-
-        <div className="form-row vertical">
-          <label>Address</label>
-          <textarea rows="4"></textarea>
-        </div>
-
-        <div className="form-row">
-          <label>Phone</label>
-          <input type="text" />
-        </div>
-
-        <div className="form-row">
-          <label>Mobile No</label>
-          <input type="text" />
-        </div>
-
-        <div className="form-row">
-          <label>Email</label>
-          <input type="text" />
-        </div>
-
       </div>
 
-    </PageLayout>
+      {/* FORM CARD */}
+      <div className="doctor-wrapper">
+        <div className="card medium-card">
+          <h3>Doctor Details</h3>
+
+          <div className="form-grid single-grid">
+            <div className="form-field">
+              <label>Doctor Code</label>
+              <input value={formData.code} readOnly />
+            </div>
+
+            <div className="form-field">
+              <label>Doctor Name</label>
+              <input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field full">
+              <label>Address</label>
+              <textarea
+                rows="4"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field">
+              <label>Phone</label>
+              <input
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field">
+              <label>Mobile No</label>
+              <input
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field full">
+              <label>Email</label>
+              <input
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   );
 }

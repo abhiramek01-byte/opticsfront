@@ -1,123 +1,219 @@
-import PageLayout from "../../components/PageLayout";
+import { useState } from "react";
 
 export default function Customer() {
+  const [formData, setFormData] = useState({
+    code: "CU0001",
+    name: "",
+    type: "Retail",
+    openingBalance: "",
+    creditLimit: "",
+    dueDays: "",
+    gst: "",
+    pan: "",
+    paymentTerms: "",
+    phone: "",
+    mobile: "",
+    email: "",
+    place: "",
+    address: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleClear = () => {
+    setFormData({
+      ...formData,
+      name: "",
+      openingBalance: "",
+      creditLimit: "",
+      dueDays: "",
+      gst: "",
+      pan: "",
+      paymentTerms: "",
+      phone: "",
+      mobile: "",
+      email: "",
+      place: "",
+      address: ""
+    });
+  };
+
+  const handleSave = () => {
+    console.log("Customer Data:", formData);
+    alert("Customer Saved Successfully!");
+  };
+
   return (
-    <PageLayout title="Customer">
+    <div className="vendor-container">
 
-      <div className="grid-2">
-
-        {/* LEFT SIDE */}
-        <div className="form-card">
-
-          <div className="form-row">
-            <label>Code</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Name</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Opening Balance</label>
-            <input type="text" />
-            <select>
-              <option>Debit</option>
-              <option>Credit</option>
-            </select>
-          </div>
-
-          <h4>Address</h4>
-
-          <div className="form-row vertical">
-            <label>Address</label>
-            <textarea rows="4"></textarea>
-          </div>
-
-          <div className="form-row">
-            <label>Place</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Phone</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Mobile No</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Email</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Web</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Fax</label>
-            <input type="text" />
-          </div>
-
+      {/* HEADER */}
+      <div className="vendor-header">
+        <h2>Customer Management</h2>
+        <div className="header-buttons">
+          <button className="btn-outline">Cancel</button>
+          <button className="btn-light" onClick={handleClear}>Clear</button>
+          <button className="btn-primary" onClick={handleSave}>
+            Save Customer
+          </button>
         </div>
-
-        {/* RIGHT SIDE */}
-        <div className="form-card">
-
-          <h4>Others</h4>
-
-          <div className="form-row">
-            <label>Contact Person</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Credit Limit</label>
-            <input type="text" />
-            <label>Due Days</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>TIN</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>CST</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>DL Nos.</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>GST</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row">
-            <label>Payment Terms</label>
-            <input type="text" />
-          </div>
-
-          <div className="form-row vertical">
-            <label>Remark</label>
-            <textarea rows="4"></textarea>
-          </div>
-
-        </div>
-
       </div>
 
-    </PageLayout>
+      {/* MAIN GRID */}
+      <div className="vendor-grid">
+
+        {/* BASIC INFO */}
+        <div className="card">
+          <h3>Basic Information</h3>
+
+          <div className="form-grid">
+            <div className="form-field">
+              <label>Customer Code</label>
+              <input value={formData.code} readOnly />
+            </div>
+
+            <div className="form-field">
+              <label>Customer Name</label>
+              <input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field">
+              <label>Customer Type</label>
+              <select
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+              >
+                <option>Retail</option>
+                <option>Wholesale</option>
+              </select>
+            </div>
+
+            <div className="form-field">
+              <label>Opening Balance</label>
+              <input
+                name="openingBalance"
+                value={formData.openingBalance}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* FINANCIAL INFO */}
+        <div className="card">
+          <h3>Financial Details</h3>
+
+          <div className="form-grid">
+            <div className="form-field">
+              <label>Credit Limit</label>
+              <input
+                name="creditLimit"
+                value={formData.creditLimit}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field">
+              <label>Due Days</label>
+              <input
+                name="dueDays"
+                value={formData.dueDays}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field">
+              <label>GST Number</label>
+              <input
+                name="gst"
+                value={formData.gst}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field">
+              <label>PAN Number</label>
+              <input
+                name="pan"
+                value={formData.pan}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field">
+              <label>Payment Terms</label>
+              <input
+                name="paymentTerms"
+                value={formData.paymentTerms}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CONTACT SECTION */}
+      <div className="card full-width">
+        <h3>Contact Details</h3>
+
+        <div className="form-grid">
+          <div className="form-field">
+            <label>Phone</label>
+            <input
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-field">
+            <label>Mobile</label>
+            <input
+              name="mobile"
+              value={formData.mobile}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-field">
+            <label>Email</label>
+            <input
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-field">
+            <label>Place</label>
+            <input
+              name="place"
+              value={formData.place}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-field full">
+            <label>Address</label>
+            <textarea
+              rows="3"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+      </div>
+
+    </div>
   );
 }

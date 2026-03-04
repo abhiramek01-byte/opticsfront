@@ -1,0 +1,15 @@
+/* DOCTOR PAGE */
+
+.doctor-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.medium-card {
+    width: 600px;
+}
+
+.single-grid {
+    grid-template-columns: 1fr;
+}

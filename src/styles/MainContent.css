@@ -1,0 +1,10 @@
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main {
+  flex: 1;
+  padding: 30px;
+  background: #f3f5f9;
+  overflow: auto;
+}

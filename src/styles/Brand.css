@@ -1,0 +1,103 @@
+/* PAGE CONTAINER */
+.page-container {
+    padding: 30px;
+    background: #f8fafc;
+    min-height: 100vh;
+}
+
+/* HEADER */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 15px 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* BUTTONS */
+.page-header button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #d1d5db;
+    background: white;
+    transition: 0.2s ease;
+}
+
+.btn-primary {
+    background: black;
+    color: white;
+    border: none;
+}
+
+.btn-light {
+    background: #e5e7eb;
+}
+
+.btn-edit {
+    background: #2563eb;
+    color: white;
+    border: none;
+}
+
+/* FORM WRAPPER */
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.small-card {
+    width: 450px;
+}
+
+.form-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.single-grid {
+    grid-template-columns: 1fr;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #6b7280;
+}
+
+input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    transition: 0.2s;
+}
+
+input:focus {
+    border-color: #2563eb;
+    outline: none;
+    background: white;
+}

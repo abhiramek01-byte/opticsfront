@@ -1,0 +1,89 @@
+.period-page {
+    padding: 25px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+/* Top Bar */
+
+.period-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.nav-buttons button {
+    margin-right: 10px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: white;
+}
+
+.edit-btn {
+    background: #e5e7eb;
+}
+
+.action-buttons button {
+    margin-left: 10px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    border: none;
+}
+
+.save {
+    background: black;
+    color: white;
+}
+
+.clear {
+    background: #e5e7eb;
+}
+
+.cancel {
+    background: white;
+    border: 1px solid #ddd;
+}
+
+/* Card */
+
+.period-card {
+    background: white;
+    width: 600px;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Form Layout */
+
+.period-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* From To Row */
+
+.form-row {
+    display: flex;
+    gap: 40px;
+}

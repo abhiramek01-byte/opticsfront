@@ -1,0 +1,16 @@
+/* MODEL PAGE ADDITIONS */
+
+.medium-card {
+    width: 600px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.checkbox-group input {
+    margin-right: 6px;
+}

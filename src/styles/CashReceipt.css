@@ -1,0 +1,134 @@
+.cash-page {
+    padding: 25px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+/* Top Bar */
+
+.cash-topbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.nav-buttons button {
+    margin-right: 10px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: white;
+}
+
+.edit-btn {
+    background: #e5e7eb;
+}
+
+.action-buttons button {
+    margin-left: 10px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    border: none;
+}
+
+.save {
+    background: black;
+    color: white;
+}
+
+.clear {
+    background: #e5e7eb;
+}
+
+.cancel {
+    background: white;
+    border: 1px solid #ddd;
+}
+
+
+/* Header Form */
+
+.cash-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.form-row {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.form-group input {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.full {
+    width: 400px;
+}
+
+
+/* Table */
+
+.cash-table-container {
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.cash-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cash-table th {
+    background: #8fb39e;
+    color: black;
+    padding: 6px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+}
+
+.cash-table td {
+    border: 1px solid #ccc;
+    padding: 4px;
+}
+
+.cash-table input {
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+
+/* Bottom */
+
+.cash-bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.print-btn {
+    padding: 5px 12px;
+}
+
+.total-box {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
