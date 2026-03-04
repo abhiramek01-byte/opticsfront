@@ -1,0 +1,133 @@
+/* =========================
+   VENDOR
+========================= */
+/* PAGE BACKGROUND */
+.vendor-page {
+  padding: 30px;
+  background: linear-gradient(135deg, #f3f4f6, #eef2ff);
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* TOP BAR */
+.vendor-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.vendor-topbar button {
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.vendor-topbar button:hover {
+  transform: translateY(-2px);
+}
+
+/* BUTTON STYLES */
+.save-btn {
+  background: black;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.clear-btn {
+  background: #e5e7eb;
+}
+
+.cancel-btn {
+  background: #f3f4f6;
+}
+
+.edit-btn {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+/* FORM CONTAINER */
+.vendor-form {
+  display: flex;
+  gap: 25px;
+}
+
+/* CARD DESIGN */
+.form-section {
+  flex: 1;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  border: 1px solid #f1f1f1;
+  transition: 0.3s;
+}
+
+.form-section:hover {
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+/* SECTION TITLES */
+.form-section h4 {
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #111827;
+  border-left: 4px solid #2563eb;
+  padding-left: 10px;
+}
+
+/* FORM GROUP */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* INLINE GROUP */
+.form-group-inline {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-group-inline label {
+  min-width: 120px;
+}
+
+/* INPUT DESIGN */
+input, textarea, select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .vendor-form {
+    flex-direction: column;
+  }
+}

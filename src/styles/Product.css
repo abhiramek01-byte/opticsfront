@@ -1,0 +1,60 @@
+.product-wrapper {
+    margin-top: 20px;
+}
+
+.product-card {
+    padding: 25px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.product-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.barcode-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.product-bottom-buttons {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+}
+
+.product-bottom-buttons button {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid #d1d5db;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.product-bottom-buttons {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+}
+
+.product-bottom-buttons button {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid #d1d5db;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.product-bottom-buttons button:hover {
+    background: #f3f4f6;
+}

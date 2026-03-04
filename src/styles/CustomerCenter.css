@@ -1,0 +1,147 @@
+.customer-center-page {
+    padding: 20px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+/* topbar */
+
+.cc-topbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.nav-buttons button {
+    margin-right: 10px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: white;
+}
+
+.edit-btn {
+    background: #e5e7eb;
+}
+
+.action-buttons button {
+    margin-left: 10px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    border: none;
+}
+
+.save {
+    background: black;
+    color: white;
+}
+
+.clear {
+    background: #e5e7eb;
+}
+
+.cancel {
+    background: white;
+    border: 1px solid #ddd;
+}
+
+
+/* layout */
+
+.cc-container {
+    display: flex;
+    gap: 20px;
+}
+
+
+/* left panel */
+
+.cc-left {
+    width: 350px;
+    background: #e6f0f7;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.filters {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    font-size: 13px;
+}
+
+.filters input,
+.filters select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+
+/* table */
+
+.customer-list {
+    margin-top: 10px;
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.customer-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.customer-list th {
+    background: #2c6fa3;
+    color: white;
+    font-size: 13px;
+    padding: 6px;
+}
+
+.customer-list td {
+    border-top: 1px solid #ddd;
+    padding: 6px;
+    font-size: 13px;
+}
+
+
+/* right panel */
+
+.cc-right {
+    flex: 1;
+    background: #e6f0f7;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.customer-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.detail-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-box textarea {
+    height: 80px;
+}
+
+.detail-box input,
+.detail-box textarea,
+.detail-box select {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.update-btn {
+    grid-column: span 2;
+    padding: 8px;
+    background: #2c6fa3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}

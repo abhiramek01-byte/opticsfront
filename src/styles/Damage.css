@@ -1,0 +1,89 @@
+.damage-container {
+    padding: 25px;
+    background: #f8fafc;
+    min-height: 100vh;
+}
+
+/* HEADER */
+.damage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.damage-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+/* BUTTONS */
+.dm-btn-primary {
+    background: black;
+    color: white;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.dm-btn-light {
+    background: #e5e7eb;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.dm-btn-outline {
+    background: white;
+    border: 1px solid #d1d5db;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* CARD */
+.damage-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* TABLE */
+.damage-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.damage-table th,
+.damage-table td {
+    border: 1px solid #e5e7eb;
+    padding: 10px;
+    text-align: left;
+}
+
+.damage-table th {
+    background: #f3f4f6;
+}
+
+.damage-table input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+}
+
+/* ADD BUTTON */
+.add-row-btn {
+    margin-top: 15px;
+}
+
+/* SUMMARY */
+.damage-summary {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+}

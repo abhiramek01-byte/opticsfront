@@ -1,0 +1,74 @@
+.patient-container {
+    padding: 25px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: black;
+    color: white;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+}
+
+.btn-light {
+    background: #e5e7eb;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+}
+
+.btn-outline {
+    background: white;
+    border: 1px solid #d1d5db;
+    padding: 8px 18px;
+    border-radius: 6px;
+}
+
+.patient-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.form-left label {
+    font-weight: 500;
+    margin-top: 10px;
+    display: block;
+}
+
+.form-left input,
+.form-left textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.upload-box {
+    border: 2px dashed #ccc;
+    padding: 40px;
+    text-align: center;
+    border-radius: 6px;
+}

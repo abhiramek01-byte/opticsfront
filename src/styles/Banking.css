@@ -1,0 +1,105 @@
+.bank-page {
+    padding: 25px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+/* Topbar */
+
+.bank-topbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.bank-topbar .right-btns {
+    margin-left: auto;
+}
+
+.bank-topbar button {
+    padding: 6px 14px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 20px;
+}
+
+.save {
+    background: black;
+    color: white;
+}
+
+/* Form */
+
+.bank-form {
+    background: white;
+    padding: 20px;
+    width: 520px;
+    border-radius: 6px;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.row label {
+    width: 80px;
+    font-size: 13px;
+}
+
+.row input {
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.full {
+    flex: 1;
+}
+
+/* Filter section */
+
+.bank-filter {
+    background: white;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.bank-filter label {
+    font-size: 13px;
+}
+
+/* Table */
+
+.bank-table {
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.bank-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bank-table th {
+    background: #e5e7eb;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.bank-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.empty {
+    text-align: center;
+    height: 200px;
+}

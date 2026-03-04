@@ -1,0 +1,96 @@
+.company-page {
+    padding: 25px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+/* TOP BAR */
+
+.company-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.nav-buttons button {
+    margin-right: 10px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: white;
+}
+
+.edit-btn {
+    background: #e5e7eb;
+}
+
+.action-buttons button {
+    margin-left: 10px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    border: none;
+}
+
+.save {
+    background: black;
+    color: white;
+}
+
+.clear {
+    background: #e5e7eb;
+}
+
+.cancel {
+    background: white;
+    border: 1px solid #ddd;
+}
+
+/* CARD */
+
+.company-card {
+    background: white;
+    width: 550px;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* FORM GRID */
+
+.company-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* ADDRESS FULL WIDTH */
+
+.address-group {
+    align-items: start;
+}
+
+.address-group textarea {
+    height: 80px;
+}
