@@ -80,7 +80,7 @@ export default function HomePage() {
             {/* ── NAVBAR ── */}
             <nav className="home-nav">
                 <div className="home-nav-logo">
-                    <span className="logo-icon">👁️</span> OpticsPro
+                    <span className="logo-icon"></span> OpticsPro
                 </div>
                 <div className="home-nav-links">
                     <button onClick={() => scrollToSection("features")}>Features</button>
@@ -98,7 +98,7 @@ export default function HomePage() {
                 <div className="hero-glow glow-2" />
                 <div className="hero-glow glow-3" />
 
-                <div className="hero-badge">🚀 Optics Business Suite 2025</div>
+                <div className="hero-badge"> Optics Business Suite 2025</div>
                 <h1 className="hero-title">
                     Run Your Optics <br />
                     <span className="hero-gradient">Business Smarter</span>
@@ -123,29 +123,7 @@ export default function HomePage() {
                 </div>
 
                 {/* floating cards */}
-                <div className="hero-cards">
-                    <div className="floating-card card-a">
-                        <span>📦</span>
-                        <div>
-                            <p className="fc-label">Stock In</p>
-                            <p className="fc-value">+248 units</p>
-                        </div>
-                    </div>
-                    <div className="floating-card card-b">
-                        <span>💰</span>
-                        <div>
-                            <p className="fc-label">Today Revenue</p>
-                            <p className="fc-value">₹ 1,24,500</p>
-                        </div>
-                    </div>
-                    <div className="floating-card card-c">
-                        <span>✅</span>
-                        <div>
-                            <p className="fc-label">Orders Done</p>
-                            <p className="fc-value">37 Today</p>
-                        </div>
-                    </div>
-                </div>
+
             </section>
 
             {/* ── STATS BAND ── */}

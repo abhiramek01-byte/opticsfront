@@ -1,0 +1,42 @@
+.report-page {
+    padding: 25px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+.report-table {
+    background: white;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.report-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.report-table th {
+    background: #e5e7eb;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.report-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.green {
+    color: green;
+    font-weight: 600;
+}
+
+.orange {
+    color: orange;
+    font-weight: 600;
+}
+
+.red {
+    color: red;
+    font-weight: 600;
+}

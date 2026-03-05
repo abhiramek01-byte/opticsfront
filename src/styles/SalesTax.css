@@ -1,0 +1,91 @@
+.tax-page {
+    padding: 25px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+.tax-header h2 {
+    margin-bottom: 5px;
+}
+
+.tax-header p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* cards */
+
+.tax-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.tax-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.tax-card h4 {
+    font-size: 14px;
+    color: #666;
+}
+
+.tax-card p {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.tax-card.highlight {
+    background: #2563eb;
+    color: white;
+}
+
+/* filters */
+
+.tax-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tax-filters input {
+    padding: 6px;
+    border: 1px solid #ccc;
+}
+
+.tax-filters button {
+    padding: 6px 14px;
+    background: #2563eb;
+    color: white;
+    border: none;
+}
+
+/* table */
+
+.tax-table {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.tax-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tax-table th {
+    background: #e5e7eb;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.tax-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
