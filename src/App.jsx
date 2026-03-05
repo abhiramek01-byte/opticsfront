@@ -54,6 +54,33 @@ import ChequeReceipt from "./pages/accounts/banking/ChequeReceipt";
 import ChequePayment from "./pages/accounts/banking/ChequePayment";
 import ChequeClearing from "./pages/accounts/banking/ChequeClearing";
 
+import SalesOrder from "./pages/sales/SalesOrder";
+import Sales from "./pages/sales/Sales";
+import SalesReturn from "./pages/sales/SalesReturn";
+import SalesTaxSummary from "./pages/sales/SalesTaxSummary";
+import SalesTaxReport from "./pages/sales/SalesTaxReport";
+
+import ViewProduct from "./pages/product/ViewProduct";
+import AddProduct from "./pages/product/AddProduct";
+
+
+import PurchaseReport from "./pages/report/PurchaseReport";
+import SalesReport from "./pages/report/SalesReport";
+import StockReport from "./pages/report/StockReport";
+import AddressList from "./pages/report/AddressList";
+import AuditTrail from "./pages/report/AuditTrail";
+import AccountsReport from "./pages/report/AccountsReport";
+
+
+
+import BillWiseProfit from "./pages/mis/BillWiseProfit";
+import DayEndReport from "./pages/mis/DayEndReport";
+
+
+import BarcodeDesigner from "./pages/tools/BarcodeDesigner";
+import ToolsRegistration from "./pages/tools/ToolsRegistration";
+import BulkMessage from "./pages/tools/BulkMessage";
+
 
 
 
@@ -98,6 +125,21 @@ import "./styles/CustomerCenter.css";
 import "./styles/VendorCenter.css";
 import "./styles/Banking.css";
 import "./styles/OrderTracking.css";
+import "./styles/Sales.css";
+import "./styles/SalesReturn.css";
+import "./styles/SalesOrder.css";
+import "./styles/SalesTax.css";
+import "./styles/ProductCatalog.css";
+import "./styles/AddProduct.css";
+import "./styles/Report.css";
+import "./styles/MIS.css";
+import "./styles/Tools.css";
+
+
+
+
+
+
 
 
 
@@ -163,6 +205,31 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/accounts/banking/chequereceipt" element={<ChequeReceipt />} />
           <Route path="/accounts/banking/chequepayment" element={<ChequePayment />} />
           <Route path="/accounts/banking/chequeclearing" element={<ChequeClearing />} />
+
+          <Route path="/salesorder" element={<SalesOrder />} />
+          <Route path="/sales" element={<Sales />} />
+          <Route path="/sales-return" element={<SalesReturn />} />
+          <Route path="/sales-tax-summary" element={<SalesTaxSummary />} />
+          <Route path="/sales-tax-report" element={<SalesTaxReport />} />
+
+          <Route path="/viewProduct" element={<ViewProduct />} />
+          <Route path="/addProduct" element={<AddProduct />} />
+
+
+          <Route path="/report/purchase" element={<PurchaseReport />} />
+          <Route path="/report/sales" element={<SalesReport />} />
+          <Route path="/report/stock" element={<StockReport />} />
+          <Route path="/report/address" element={<AddressList />} />
+          <Route path="/report/audit" element={<AuditTrail />} />
+          <Route path="/report/accounts" element={<AccountsReport />} />
+
+
+          <Route path="/bill-profit" element={<BillWiseProfit />} />
+          <Route path="/day-end" element={<DayEndReport />} />
+
+          <Route path="/tools/barcode" element={<BarcodeDesigner />} />
+          <Route path="/tools/registration" element={<ToolsRegistration />} />
+          <Route path="/tools/bulkmessage" element={<BulkMessage />} />
 
 
         </Routes>

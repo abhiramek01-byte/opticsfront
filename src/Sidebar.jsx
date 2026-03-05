@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaChartLine } from "react-icons/fa";
 import { useState } from "react";
 import {
   FaHome,
@@ -62,6 +63,67 @@ const menu = [
       { name: "Eye Testing", path: "/dashboard/eye-testing" }
     ]
   },
+
+  {
+    name: "Product",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "View Product", path: "/dashboard/viewProduct" },
+      { name: "Add Product", path: "/dashboard/addProduct" }
+    ]
+  },
+
+  {
+    name: "Report",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Purchase", path: "/dashboard/report/purchase" },
+      { name: "Sales", path: "/dashboard/report/sales" },
+      { name: "Stock", path: "/dashboard/report/stock" },
+      { name: "Address list", path: "/dashboard/report/address" },
+      { name: "Audit trial", path: "/dashboard/report/audit" },
+      { name: "Accounts", path: "/dashboard/report/accounts" }
+    ]
+  },
+
+
+  {
+    name: "MIS",
+    icon: <FaChartLine />,
+    children: [
+      { name: "Bill wise profit", path: "/dashboard/bill-profit" },
+      { name: "Day end report", path: "/dashboard/day-end" }
+    ]
+  },
+
+
+  {
+    name: "Sales",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Sales Order", path: "/dashboard/salesorder" },
+      { name: "Sales", path: "/dashboard/sales" },
+      { name: "Sales Return", path: "/dashboard/sales-return" },
+      {
+        name: "Sales Tax",
+        children: [
+          { name: "Summary", path: "/dashboard/sales-tax-summary" },
+          { name: "Detailed Report", path: "/dashboard/sales-tax-report" }
+        ]
+      },
+      { name: "More Reports", path: "/dashboard/sales-reports" }
+    ]
+  },
+  {
+    name: "Tools",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Barcode Designer", path: "/dashboard/tools/barcode" },
+      { name: "Registration", path: "/dashboard/tools/registration" },
+      { name: "Bulk Message", path: "/dashboard/tools/bulkmessage" }
+    ]
+  },
+
   {
     name: "Accounts",
     icon: <FaLayerGroup />,
@@ -112,7 +174,7 @@ export default function Sidebar({ onLogout }) {
 
   return (
     <aside className="sidebar">
-      <div className="logo">OpticsPro</div>
+      <div className="logo"> SPASH EYE WEAR</div>
 
       <div className="sidebar-scroll">
         {menu.map((item, index) => (

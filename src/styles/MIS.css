@@ -1,0 +1,103 @@
+.mis-container {
+    padding: 30px;
+    background: #f6f7fb;
+}
+
+/* cards */
+
+.mis-cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.mis-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.mis-card h4 {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.mis-card h2 {
+    margin-top: 5px;
+}
+
+/* table */
+
+.mis-table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #f1f5f9;
+    padding: 12px;
+    text-align: left;
+    font-size: 13px;
+}
+
+td {
+    padding: 12px;
+    border-top: 1px solid #eee;
+}
+
+.invoice {
+    color: #2563eb;
+    font-weight: 500;
+}
+
+.profit {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.percent {
+    background: #dcfce7;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+/* report */
+
+.report-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 800px;
+    margin: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.report-title {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.report-date {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.report-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.report-table table {
+    width: 100%;
+}
