@@ -96,6 +96,26 @@ const menu = [
     ]
   },
 
+  {
+    name: "Branches",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Branch Master", path: "/dashboard/branches" },
+      { name: "Branch Inventory", path: "/dashboard/branches/inventory" },
+      { name: "Branch Sales", path: "/dashboard/branches/sales" }
+    ]
+  },
+
+  {
+    name: "Lens Management",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Lens Order Entry", path: "/dashboard/lens/order" },
+      { name: "Lens Orders", path: "/dashboard/lens/list" },
+      { name: "Receive Lens", path: "/dashboard/lens/receive" }
+    ]
+  },
+
 
   {
     name: "Sales",

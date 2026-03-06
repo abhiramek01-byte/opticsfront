@@ -1,0 +1,79 @@
+.lens-page {
+    padding: 25px;
+}
+
+.lens-form {
+    margin-top: 20px;
+}
+
+.lens-grid {
+    display: grid;
+    grid-template-columns: 200px 300px;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.lens-grid input,
+.lens-grid select {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.eye-table {
+    width: 400px;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.eye-table th {
+    background: #2563eb;
+    color: white;
+    padding: 6px;
+}
+
+.eye-table td {
+    border: 1px solid #ddd;
+    padding: 6px;
+}
+
+.eye-table input {
+    width: 100%;
+    padding: 5px;
+}
+
+.save-btn {
+    margin-top: 15px;
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.lens-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.lens-table th {
+    background: #2563eb;
+    color: white;
+    padding: 10px;
+}
+
+.lens-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.receive-btn {
+    background: #f59e0b;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}

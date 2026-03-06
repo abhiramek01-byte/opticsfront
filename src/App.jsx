@@ -81,6 +81,15 @@ import BarcodeDesigner from "./pages/tools/BarcodeDesigner";
 import ToolsRegistration from "./pages/tools/ToolsRegistration";
 import BulkMessage from "./pages/tools/BulkMessage";
 
+import BranchMaster from "./pages/branch/BranchMaster";
+import BranchInventory from "./pages/branch/BranchInventory";
+import BranchSales from "./pages/branch/BranchSales";
+
+
+import LensOrderEntry from "./pages/lens/LensOrderEntry";
+import LensOrderList from "./pages/lens/LensOrderList";
+import ReceiveLens from "./pages/lens/ReceiveLens";
+
 
 
 
@@ -134,6 +143,10 @@ import "./styles/AddProduct.css";
 import "./styles/Report.css";
 import "./styles/MIS.css";
 import "./styles/Tools.css";
+import "./styles/BranchInventory.css";
+import "./styles/BranchMaster.css";
+import "./styles/BranchSales.css";
+import "./styles/LensOrder.css";
 
 
 
@@ -230,6 +243,17 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/tools/barcode" element={<BarcodeDesigner />} />
           <Route path="/tools/registration" element={<ToolsRegistration />} />
           <Route path="/tools/bulkmessage" element={<BulkMessage />} />
+
+          <Route path="/branches" element={<BranchMaster />} />
+          <Route path="/branches/inventory" element={<BranchInventory />} />
+          <Route path="/branches/sales" element={<BranchSales />} />
+
+          <Route path="/lens/order" element={<LensOrderEntry />} />
+          <Route path="/lens/list" element={<LensOrderList />} />
+          <Route path="/lens/receive" element={<ReceiveLens />} />
+
+
+
 
 
         </Routes>

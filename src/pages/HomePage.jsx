@@ -38,7 +38,7 @@ const features = [
 const stats = [
     { value: "10K+", label: "Products Managed" },
     { value: "500+", label: "Happy Clients" },
-    { value: "99.9%", label: "Uptime Guarantee" },
+    { value: "15+", label: "Branches", link: "/branches" },
     { value: "24/7", label: "Support Available" },
 ];
 
@@ -80,10 +80,10 @@ export default function HomePage() {
             {/* ── NAVBAR ── */}
             <nav className="home-nav">
                 <div className="home-nav-logo">
-                    <span className="logo-icon"></span> OpticsPro
+                    <span className="logo-icon"></span> OCRM
                 </div>
                 <div className="home-nav-links">
-                    <button onClick={() => scrollToSection("features")}>Features</button>
+                    <button onClick={() => scrollToSection("products")}>Products</button>
                     <button onClick={() => scrollToSection("stats")}>Stats</button>
                     <button onClick={() => scrollToSection("cta")}>About</button>
                 </div>
@@ -129,40 +129,79 @@ export default function HomePage() {
             {/* ── STATS BAND ── */}
             <section id="stats" className="stats-band" ref={addRef}>
                 {stats.map((s) => (
-                    <div className="stat-block fade-up" key={s.label}>
+                    <div
+                        className="stat-block fade-up"
+                        key={s.label}
+                        onClick={() => s.label === "Branches" && navigate("/branches")}
+                        style={{ cursor: s.label === "Branches" ? "pointer" : "default" }}
+                    >
                         <h2>{s.value}</h2>
                         <p>{s.label}</p>
+
+                        {/* Branch Images */}
+                        {s.label === "Branches" && (
+                            <div className="branch-images">
+                                <img src="/branch1.jpg" alt="Branch 1" />
+                                <img src="/branch2.jpg" alt="Branch 2" />
+                                <img src="/branch3.jpg" alt="Branch 3" />
+                            </div>
+                        )}
                     </div>
                 ))}
             </section>
 
             {/* ── FEATURES ── */}
-            <section id="features" className="features-section">
-                <div className="section-header fade-up" ref={addRef}>
-                    <span className="section-badge">Features</span>
-                    <h2>Everything You Need to Run Your Store</h2>
-                    <p>Powerful tools built for modern optics businesses</p>
-                </div>
-                <div className="features-grid">
-                    {features.map((f, i) => (
-                        <div
-                            className="feature-card fade-up"
-                            ref={addRef}
-                            key={f.title}
-                            style={{ animationDelay: `${i * 0.08}s` }}
-                        >
-                            <div className="feature-icon">{f.icon}</div>
-                            <h3>{f.title}</h3>
-                            <p>{f.desc}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
+            <section id="products" className="products-section">
 
+                <div className="products-wrapper">
+
+                    {/* LEFT SIDE - PRODUCTS */}
+                    <div className="products-left">
+                        <div className="section-header fade-up" ref={addRef}>
+                            <span className="section-badge">Products</span>
+                            <h2>Our Optical Products</h2>
+                            <p>Explore our best eyewear collections</p>
+                        </div>
+
+                        <div className="products-grid">
+                            {[
+                                "Eyeglasses",
+                                "Sunglasses",
+                                "Contact Lens",
+                                "Lens Solutions",
+                                "Frames",
+                                "Accessories"
+                            ].map((p) => (
+                                <div className="product-card" key={p}>
+                                    <h3>{p}</h3>
+                                    <p>High quality optical product</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* RIGHT SIDE - TOP SELLING */}
+                    <div className="top-selling">
+
+                        <h3>🔥 Top Selling Products</h3>
+
+                        <ul>
+                            <li>RayBan Classic Frame</li>
+                            <li>Blue Cut Computer Lens</li>
+                            <li>Premium Sunglasses</li>
+                            <li>Daily Contact Lens</li>
+                            <li>Anti Glare Lens</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </section>
             {/* ── HOW IT WORKS ── */}
             <section className="how-section">
                 <div className="section-header fade-up" ref={addRef}>
-                    <span className="section-badge">Process</span>
+                    <span className="section-badge">Branch</span>
                     <h2>Get Started in 3 Simple Steps</h2>
                 </div>
                 <div className="steps-row">
@@ -170,17 +209,17 @@ export default function HomePage() {
                         {
                             n: "01",
                             title: "Login Securely",
-                            desc: "Sign in with your credentials to access your personalized dashboard.",
+                            desc: "Branch 1",
                         },
                         {
                             n: "02",
                             title: "Set Up Your Store",
-                            desc: "Add products, vendors, and customers to get your database ready.",
+                            desc: "Branch 2",
                         },
                         {
                             n: "03",
                             title: "Track & Grow",
-                            desc: "Monitor sales, stock levels, and revenues with real-time analytics.",
+                            desc: "Branch 3",
                         },
                     ].map((step) => (
                         <div className="step-card fade-up" ref={addRef} key={step.n}>
@@ -197,7 +236,7 @@ export default function HomePage() {
                 <div className="cta-glow" />
                 <span className="section-badge">Ready?</span>
                 <h2>Start Managing Your Optics Store Today</h2>
-                <p>Join hundreds of shops already using OpticsPro</p>
+                <p>Join hundreds of shops already using OCRM</p>
                 <button className="hero-btn-primary" onClick={() => navigate("/login")}>
                     Login to Dashboard →
                 </button>
@@ -205,7 +244,7 @@ export default function HomePage() {
 
             {/* ── FOOTER ── */}
             <footer className="home-footer">
-                <p>© 2025 OpticsPro · Built for optics businesses</p>
+                <p>© 2025 OCRM · Built for optics businesses</p>
             </footer>
         </div>
     );
