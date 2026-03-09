@@ -43,6 +43,7 @@ const menu = [
     children: [
       { name: "Purchase", path: "/dashboard/purchase" },
       { name: "Purchase Return", path: "/dashboard/purchase-return" },
+      { name: "Vendor Lens Order", path: "/dashboard/purchase/vendor-lens-order" },
     ],
   },
   {
@@ -82,7 +83,8 @@ const menu = [
       { name: "Stock", path: "/dashboard/report/stock" },
       { name: "Address list", path: "/dashboard/report/address" },
       { name: "Audit trial", path: "/dashboard/report/audit" },
-      { name: "Accounts", path: "/dashboard/report/accounts" }
+      { name: "Accounts", path: "/dashboard/report/accounts" },
+      { name: "Customer History", path: "/dashboard/customer/history" }
     ]
   },
 
@@ -141,6 +143,7 @@ const menu = [
       { name: "Barcode Designer", path: "/dashboard/tools/barcode" },
       { name: "Registration", path: "/dashboard/tools/registration" },
       { name: "Bulk Message", path: "/dashboard/tools/bulkmessage" }
+
     ]
   },
 

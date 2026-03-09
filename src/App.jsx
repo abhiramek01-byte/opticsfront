@@ -29,6 +29,8 @@ import TaxGroup from "./pages/master/TaxGroup";
 
 import Purchase from "./pages/purchase/Purchase";
 import PurchaseReturn from "./pages/purchase/PurchaseReturn";
+import VendorLensOrder from "./pages/purchase/VendorLensOrder";
+
 
 import OpeningStock from "./pages/stock/OpeningStock";
 import Damage from "./pages/stock/Damage";
@@ -81,6 +83,7 @@ import BarcodeDesigner from "./pages/tools/BarcodeDesigner";
 import ToolsRegistration from "./pages/tools/ToolsRegistration";
 import BulkMessage from "./pages/tools/BulkMessage";
 
+
 import BranchMaster from "./pages/branch/BranchMaster";
 import BranchInventory from "./pages/branch/BranchInventory";
 import BranchSales from "./pages/branch/BranchSales";
@@ -89,6 +92,8 @@ import BranchSales from "./pages/branch/BranchSales";
 import LensOrderEntry from "./pages/lens/LensOrderEntry";
 import LensOrderList from "./pages/lens/LensOrderList";
 import ReceiveLens from "./pages/lens/ReceiveLens";
+
+import CustomerHistory from "./pages/customer/CustomerHistory";
 
 
 
@@ -147,6 +152,9 @@ import "./styles/BranchInventory.css";
 import "./styles/BranchMaster.css";
 import "./styles/BranchSales.css";
 import "./styles/LensOrder.css";
+import "./styles/VendorLensOrder.css"
+import "./styles/CustomerHistory.css"
+
 
 
 
@@ -193,6 +201,7 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/purchase" element={<Purchase />} />
 
           <Route path="/purchase-return" element={<PurchaseReturn />} />
+          <Route path="/purchase/vendor-lens-order" element={<VendorLensOrder />} />
 
           <Route path="/openingstock" element={<OpeningStock />} />
           <Route path="/damage" element={<Damage />} />
@@ -244,6 +253,7 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/tools/registration" element={<ToolsRegistration />} />
           <Route path="/tools/bulkmessage" element={<BulkMessage />} />
 
+
           <Route path="/branches" element={<BranchMaster />} />
           <Route path="/branches/inventory" element={<BranchInventory />} />
           <Route path="/branches/sales" element={<BranchSales />} />
@@ -251,6 +261,8 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/lens/order" element={<LensOrderEntry />} />
           <Route path="/lens/list" element={<LensOrderList />} />
           <Route path="/lens/receive" element={<ReceiveLens />} />
+
+          <Route path="/customer/history" element={<CustomerHistory />} />
 
 
 
