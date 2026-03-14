@@ -1,0 +1,75 @@
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.admin-sidebar {
+    width: 230px;
+    background: #111827;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+}
+
+/* LOGO */
+
+.admin-logo {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* MENU */
+
+.admin-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.admin-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.admin-link:hover {
+    background: #1f2937;
+}
+
+.admin-active {
+    background: #2563eb;
+}
+
+/* CONTENT AREA */
+
+.admin-content {
+    flex: 1;
+    padding: 30px;
+    background: #f5f6fa;
+    min-height: 100vh;
+    overflow: auto;
+}
+
+/* LOGOUT */
+
+.admin-logout {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
