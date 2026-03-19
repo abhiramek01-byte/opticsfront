@@ -1,0 +1,13 @@
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #0a0f1e;
+    color: #e2e8f0;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* .admin-content {
+    margin-left: 240px;
+    padding: 40px;
+    width: 100%;
+} */

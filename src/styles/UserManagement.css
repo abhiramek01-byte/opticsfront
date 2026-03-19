@@ -1,0 +1,185 @@
+.um-root {
+    background: #ffffff;
+    min-height: 100vh;
+    padding: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.um-card {
+    width: 100%;
+}
+
+.um-header {
+    margin-bottom: 25px;
+}
+
+.um-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.um-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.um-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #222;
+}
+
+.um-stats {
+    display: flex;
+    gap: 10px;
+}
+
+.um-stat {
+    background: #f5f5f5;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.um-stat-num {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.um-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.um-search {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.um-filters {
+    display: flex;
+    gap: 5px;
+}
+
+.um-filter-btn {
+    border: none;
+    padding: 8px 12px;
+    background: #eee;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.um-filter-btn.active {
+    background: #007bff;
+    color: white;
+}
+
+.um-table {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.um-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr 100px;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.um-row:hover {
+    background: #f9f9f9;
+}
+
+.um-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.um-avatar {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.um-name {
+    font-weight: 600;
+    color: #111;
+}
+
+.um-email {
+    color: #444;
+    font-size: 14px;
+}
+
+.um-phone {
+    color: #333;
+}
+
+.um-stat-num {
+    font-size: 20px;
+    font-weight: bold;
+    color: #111;
+}
+
+.um-stat {
+    background: #f5f5f5;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-align: center;
+    color: #333;
+}
+
+.um-status.active {
+    background: #34d399;
+    color: white;
+}
+
+.um-status.inactive {
+    background: #fb7185;
+    color: white;
+}
+
+.um-delete {
+    background: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.um-delete:hover {
+    background: #e63939;
+}
+
+.um-empty {
+    padding: 40px;
+    text-align: center;
+    border: 1px dashed #ddd;
+    border-radius: 10px;
+}
+
+.removing {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.um-row {
+    color: #111;
+}

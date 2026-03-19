@@ -17,9 +17,9 @@ export default function Dashboard() {
 
       {/* FIRST ROW */}
       <div className="cards">
-        <StatCard title="Today Sales" type="sales" />
-        <StatCard title="Today Revenue" type="revenue" />
-        <StatCard title="Today Customer" type="customer" />
+        <StatCard title="Total Sales" type="sales" />
+        <StatCard title="Total Revenue" type="revenue" />
+        <StatCard title="Total Customer" type="customer" />
         <StatCard title="Total Stock" type="stock" />
       </div>
 

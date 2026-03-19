@@ -1,0 +1,159 @@
+.pm-root {
+    background: #ffffff;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* HEADER */
+
+.pm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.pm-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000;
+}
+
+.pm-subtitle {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #777;
+}
+
+/* BUTTON */
+
+.pm-add-btn {
+    background: #f5b731;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.pm-add-btn:hover {
+    background: #e4a51c;
+}
+
+/* STATS */
+
+.pm-stats {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pm-stat {
+    background: #f3f4f6;
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+    color: #111;
+    min-width: 120px;
+}
+
+.pm-stat span {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+}
+
+/* FORM */
+
+.pm-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.pm-form input,
+.pm-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.pm-form button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* SEARCH */
+
+.pm-search {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+/* TABLE */
+
+.pm-table {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pm-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+    align-items: center;
+    padding: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.pm-row:hover {
+    background: #f9fafb;
+}
+
+/* TEXT */
+
+.pm-name {
+    font-weight: 600;
+    color: #000;
+}
+
+.pm-price {
+    font-weight: 700;
+    color: #000;
+}
+
+.pm-stock {
+    color: #000;
+}
+
+.pm-category {
+    font-weight: 500;
+}
+
+/* DELETE BUTTON */
+
+.pm-delete {
+    background: #ef4444;
+    border: none;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.pm-delete:hover {
+    background: #dc2626;
+}

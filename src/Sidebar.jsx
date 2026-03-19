@@ -43,6 +43,7 @@ const menu = [
     children: [
       { name: "Purchase", path: "/dashboard/purchase" },
       { name: "Purchase Return", path: "/dashboard/purchase-return" },
+      { name: "Vendor Lens Order", path: "/dashboard/purchase/vendor-lens-order" },
     ],
   },
   {
@@ -82,7 +83,8 @@ const menu = [
       { name: "Stock", path: "/dashboard/report/stock" },
       { name: "Address list", path: "/dashboard/report/address" },
       { name: "Audit trial", path: "/dashboard/report/audit" },
-      { name: "Accounts", path: "/dashboard/report/accounts" }
+      { name: "Accounts", path: "/dashboard/report/accounts" },
+      { name: "Customer History", path: "/dashboard/customer/history" }
     ]
   },
 
@@ -93,6 +95,26 @@ const menu = [
     children: [
       { name: "Bill wise profit", path: "/dashboard/bill-profit" },
       { name: "Day end report", path: "/dashboard/day-end" }
+    ]
+  },
+
+  {
+    name: "Branches",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Branch Master", path: "/dashboard/branches" },
+      { name: "Branch Inventory", path: "/dashboard/branches/inventory" },
+      { name: "Branch Sales", path: "/dashboard/branches/sales" }
+    ]
+  },
+
+  {
+    name: "Lens Management",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Lens Order Entry", path: "/dashboard/lens/order" },
+      { name: "Lens Orders", path: "/dashboard/lens/list" },
+      { name: "Receive Lens", path: "/dashboard/lens/receive" }
     ]
   },
 
@@ -121,6 +143,7 @@ const menu = [
       { name: "Barcode Designer", path: "/dashboard/tools/barcode" },
       { name: "Registration", path: "/dashboard/tools/registration" },
       { name: "Bulk Message", path: "/dashboard/tools/bulkmessage" }
+
     ]
   },
 

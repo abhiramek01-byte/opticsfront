@@ -4,6 +4,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 // Pages
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import AboutPage from "./pages/AboutPage";
+import ProductListPage from "./pages/ProductListPage";
 
 // Dashboard layout (existing)
 import Sidebar from "./Sidebar";
@@ -29,6 +31,8 @@ import TaxGroup from "./pages/master/TaxGroup";
 
 import Purchase from "./pages/purchase/Purchase";
 import PurchaseReturn from "./pages/purchase/PurchaseReturn";
+import VendorLensOrder from "./pages/purchase/VendorLensOrder";
+
 
 import OpeningStock from "./pages/stock/OpeningStock";
 import Damage from "./pages/stock/Damage";
@@ -80,6 +84,34 @@ import DayEndReport from "./pages/mis/DayEndReport";
 import BarcodeDesigner from "./pages/tools/BarcodeDesigner";
 import ToolsRegistration from "./pages/tools/ToolsRegistration";
 import BulkMessage from "./pages/tools/BulkMessage";
+
+
+import BranchMaster from "./pages/branch/BranchMaster";
+import BranchInventory from "./pages/branch/BranchInventory";
+import BranchSales from "./pages/branch/BranchSales";
+
+
+import LensOrderEntry from "./pages/lens/LensOrderEntry";
+import LensOrderList from "./pages/lens/LensOrderList";
+import ReceiveLens from "./pages/lens/ReceiveLens";
+
+import CustomerHistory from "./pages/customer/CustomerHistory";
+
+//Admin 
+
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import BranchManagement from "./pages/admin/BranchManagement";
+import UserManagement from "./pages/admin/UserManagement";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Products from "./pages/admin/AdminProducts";
+import Vendors from "./pages/admin/AdminVendors";
+import Reports from "./pages/admin/AdminReports";
+
+
+
+
+
+
 
 
 
@@ -134,6 +166,32 @@ import "./styles/AddProduct.css";
 import "./styles/Report.css";
 import "./styles/MIS.css";
 import "./styles/Tools.css";
+import "./styles/BranchInventory.css";
+import "./styles/BranchMaster.css";
+import "./styles/BranchSales.css";
+import "./styles/LensOrder.css";
+import "./styles/VendorLensOrder.css";
+import "./styles/CustomerHistory.css";
+import "./styles/ProductListPage.css";
+import "./styles/About.css";
+import "./styles/Admin.css";
+import "./styles/AdminDashboard.css";
+
+function AdminRoute({ children }) {
+
+  const role = localStorage.getItem("role");
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (role !== "admin") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+}
 
 
 
@@ -180,6 +238,7 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/purchase" element={<Purchase />} />
 
           <Route path="/purchase-return" element={<PurchaseReturn />} />
+          <Route path="/purchase/vendor-lens-order" element={<VendorLensOrder />} />
 
           <Route path="/openingstock" element={<OpeningStock />} />
           <Route path="/damage" element={<Damage />} />
@@ -232,6 +291,26 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/tools/bulkmessage" element={<BulkMessage />} />
 
 
+          <Route path="/branches" element={<BranchMaster />} />
+          <Route path="/branches/inventory" element={<BranchInventory />} />
+          <Route path="/branches/sales" element={<BranchSales />} />
+
+          <Route path="/lens/order" element={<LensOrderEntry />} />
+          <Route path="/lens/list" element={<LensOrderList />} />
+          <Route path="/lens/receive" element={<ReceiveLens />} />
+
+          <Route path="/customer/history" element={<CustomerHistory />} />
+
+
+
+
+
+
+
+
+
+
+
         </Routes>
       </div>
     </div>
@@ -239,36 +318,85 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
 }
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogin = () => setIsLoggedIn(true);
-  const handleLogout = () => setIsLoggedIn(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true"
+  );
+
+  /* LOGIN */
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  /* LOGOUT */
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+  };
 
   return (
+
     <Routes>
-      {/* Public routes */}
+
+      {/* PUBLIC ROUTES */}
+
       <Route path="/" element={<HomePage />} />
+
+      <Route path="/products" element={<ProductListPage />} />
+
+      <Route path="/about" element={<AboutPage />} />
+
+      {/* LOGIN */}
+
       <Route
         path="/login"
         element={
-          isLoggedIn ? (
-            <Navigate to="/dashboard" replace />
-          ) : (
+          !isLoggedIn ? (
             <LoginPage onLogin={handleLogin} />
+          ) : localStorage.getItem("role") === "admin" ? (
+            <Navigate to="/admin/dashboard" replace />
+          ) : (
+            <Navigate to="/dashboard" replace />
           )
         }
       />
 
-      {/* Protected dashboard routes */}
+      {/* USER DASHBOARD */}
+
       <Route
         path="/dashboard/*"
         element={
-          <ProtectedLayout isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+          <ProtectedLayout
+            isLoggedIn={isLoggedIn}
+            onLogout={handleLogout}
+          />
         }
       />
 
-      {/* Fallback */}
+      {/* ADMIN DASHBOARD */}
+
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminLayout />
+          </AdminRoute>
+        }
+      >
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="branches" element={<BranchManagement />} />
+        <Route path="users" element={<UserManagement />} />
+        <Route path="products" element={<Products />} />
+        <Route path="vendors" element={<Vendors />} />
+        <Route path="reports" element={<Reports />} />
+      </Route>
+
+      {/* FALLBACK */}
+
       <Route path="*" element={<Navigate to="/" replace />} />
+
     </Routes>
   );
 }
