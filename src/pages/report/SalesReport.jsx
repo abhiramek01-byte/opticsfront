@@ -1,6 +1,29 @@
+import { useState, useEffect } from "react";
 import "../../styles/Report.css";
 
 export default function SalesReport() {
+    const [sales, setSales] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchSales = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch("http://localhost:3000/sales/report");
+                const data = await res.json();
+                
+                if (data.sales && Array.isArray(data.sales)) {
+                    setSales(data.sales);
+                }
+            } catch (err) {
+                console.error("Failed to fetch sales records", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSales();
+    }, []);
 
     return (
         <div className="report-page">
@@ -22,25 +45,26 @@ export default function SalesReport() {
                     </thead>
 
                     <tbody>
-
-                        <tr>
-                            <td>Oct 24 2023</td>
-                            <td>#INV-9021</td>
-                            <td>Robert Chen</td>
-                            <td>Central</td>
-                            <td>$342</td>
-                            <td className="green">Paid</td>
-                        </tr>
-
-                        <tr>
-                            <td>Oct 23 2023</td>
-                            <td>#INV-9018</td>
-                            <td>Sarah Jenkins</td>
-                            <td>North Valley</td>
-                            <td>$1250</td>
-                            <td className="orange">Partial</td>
-                        </tr>
-
+                        {loading ? (
+                            <tr>
+                                <td colSpan="6" style={{ textAlign: "center" }}>Loading records...</td>
+                            </tr>
+                        ) : sales.length === 0 ? (
+                            <tr>
+                                <td colSpan="6" style={{ textAlign: "center" }}>No sales records found.</td>
+                            </tr>
+                        ) : (
+                            sales.map(sale => (
+                                <tr key={sale.id}>
+                                    <td>{new Date(sale.saleDate).toLocaleDateString()}</td>
+                                    <td>{sale.invoiceNo}</td>
+                                    <td>{sale.customer?.name || "Walk-in"}</td>
+                                    <td>Central {/* Assuming Central unless Branch logic exists */}</td>
+                                    <td style={{ fontWeight: "bold" }}>₹{Number(sale.netTotal || sale.total).toFixed(2)}</td>
+                                    <td className="green">Paid</td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
 
                 </table>

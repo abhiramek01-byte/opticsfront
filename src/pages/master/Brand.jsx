@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useMasterNavigation } from "../../hooks/useMasterNavigation";
+import "../../styles/Master.css";
 
 export default function Brand() {
-  const [formData, setFormData] = useState({
-    code: "BR001",
-    name: ""
-  });
+  const {
+    formData,
+    setFormData,
+    handleNext,
+    handlePrevious,
+    handleClear,
+    handleEdit,
+    handleSave,
+    isFirst,
+    isLast,
+    isViewing,
+    isEditMode
+  } = useMasterNavigation("brand", { code: "BR001", name: "" });
 
   const handleChange = (e) => {
     setFormData({
@@ -13,72 +23,47 @@ export default function Brand() {
     });
   };
 
-  const handleClear = () => {
-    setFormData({
-      ...formData,
-      name: ""
-    });
-  };
-
-  const handleSave = () => {
-    console.log("Brand Data:", formData);
-    alert("Brand Saved Successfully!");
-  };
-
   return (
-    <div className="page-container">
-
-      {/* ================= HEADER ================= */}
-      <div className="page-header">
-
+    <div className="master-container">
+      <div className="master-header">
         <div className="header-left">
-          <button className="btn-outline">◀ Previous</button>
-          <button className="btn-outline">Next ▶</button>
-          <button className="btn-edit">Edit</button>
+          <button className="btn-outline" onClick={handlePrevious} disabled={isFirst}>◀ Previous</button>
+          <button className="btn-outline" onClick={handleNext} disabled={isLast}>Next ▶</button>
+          <button className="btn-secondary" onClick={handleEdit} disabled={!isViewing}>Edit</button>
         </div>
 
-        <div className="header-right">
-          <button className="btn-outline">Cancel</button>
-          <button className="btn-light" onClick={handleClear}>
-            Clear
-          </button>
-          <button className="btn-primary" onClick={handleSave}>
-            Save
+        <div className="header-buttons">
+          <button className="btn-outline" onClick={handleClear}>Cancel</button>
+          <button className="btn-secondary" onClick={handleClear}>Clear</button>
+          <button className="btn-primary" onClick={handleSave} disabled={isViewing}>
+            {isEditMode ? "Update" : "Save"}
           </button>
         </div>
-
       </div>
 
-      {/* ================= FORM ================= */}
-      <div className="form-wrapper">
-        <div className="card small-card">
-
+      <div className="master-wrapper">
+        <div className="master-card">
           <h3>Brand Details</h3>
 
           <div className="form-grid single-grid">
-
             <div className="form-field">
               <label>Brand Code</label>
-              <input
-                value={formData.code}
-                readOnly
-              />
+              <input value={formData.code || ''} className="visual-readonly" readOnly />
             </div>
 
             <div className="form-field">
               <label>Brand Name</label>
               <input
                 name="name"
-                value={formData.name}
+                value={formData.name || ''}
                 onChange={handleChange}
                 placeholder="Enter brand name"
+                readOnly={isViewing}
               />
             </div>
-
           </div>
         </div>
       </div>
-
     </div>
   );
 }

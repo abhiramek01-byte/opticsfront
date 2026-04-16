@@ -1,0 +1,211 @@
+/* Transaction.css - Advanced glassmorphism tailored for form tables/grids */
+
+.transaction-container {
+    padding: 30px;
+    background: #f1f5f9;
+    min-height: calc(100vh - 60px);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.transaction-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.transaction-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+/* Card */
+.transaction-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    margin-bottom: 25px;
+    overflow-x: auto;
+}
+
+/* Advanced Table Formatting */
+.transaction-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 20px;
+}
+
+.transaction-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.transaction-table th:first-child {
+    border-top-left-radius: 8px;
+}
+.transaction-table th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.transaction-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+    transition: background 0.2s ease;
+}
+
+.transaction-table tr:hover td {
+    background: rgba(248, 250, 252, 0.5);
+}
+
+/* Table Inputs */
+.transaction-table input,
+.transaction-table select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #334155;
+    background: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.transaction-table input:focus,
+.transaction-table select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Action Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
+}
+
+.btn-secondary {
+    background: white;
+    color: #475569;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: #f8fafc;
+    color: #1e293b;
+    border-color: #94a3b8;
+}
+
+.btn-danger {
+    background: #fee2e2;
+    color: #ef4444;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #fca5a5;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-add-row {
+    background: #e0f2fe;
+    color: #0284c7;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px dashed #7dd3fc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.btn-add-row:hover {
+    background: #bae6fd;
+    border-style: solid;
+}
+
+/* Summary Box */
+.transaction-summary {
+    background: linear-gradient(to right, #1e293b, #334155);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
+    margin-top: 25px;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.summary-label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.summary-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f8fafc;
+}

@@ -1,15 +1,46 @@
-/* SALESMAN PAGE */
+.salesman-container {
+    padding: 20px;
+}
 
-.salesman-wrapper {
+.header {
     display: flex;
-    justify-content: center;
-    margin-top: 40px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.small-card {
-    width: 450px;
+.header button {
+    margin-left: 10px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-.single-grid {
-    grid-template-columns: 1fr;
+.header button:last-child {
+    background: black;
+    color: white;
+}
+
+.card {
+    background: #f5f6f8;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }

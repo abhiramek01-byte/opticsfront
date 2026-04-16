@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import "../../styles/PatientRegistration.css";
 
 export default function PatientRegistration() {
@@ -19,6 +20,53 @@ export default function PatientRegistration() {
         setPatient({ ...patient, [e.target.name]: e.target.value });
     };
 
+    // ✅ SAVE FUNCTION
+    const handleSave = async () => {
+        try {
+
+            if (!patient.name) {
+                alert("Name is required ❌");
+                return;
+            }
+
+            await axios.post("http://localhost:3000/patient", patient);
+
+            alert("Patient saved successfully ✅");
+
+            // Reset form
+            setPatient({
+                cardNo: "",
+                name: "",
+                address: "",
+                phone: "",
+                mobile: "",
+                email: "",
+                lensType: "",
+                doctor: "",
+                remark: ""
+            });
+
+        } catch (err) {
+            console.log(err);
+            alert("Error saving patient ❌");
+        }
+    };
+
+    // ✅ CLEAR FUNCTION
+    const handleClear = () => {
+        setPatient({
+            cardNo: "",
+            name: "",
+            address: "",
+            phone: "",
+            mobile: "",
+            email: "",
+            lensType: "",
+            doctor: "",
+            remark: ""
+        });
+    };
+
     return (
         <div className="patient-container">
 
@@ -27,8 +75,14 @@ export default function PatientRegistration() {
 
                 <div className="form-buttons">
                     <button className="btn-outline">Cancel</button>
-                    <button className="btn-light">Clear</button>
-                    <button className="btn-primary">Save</button>
+
+                    <button className="btn-light" onClick={handleClear}>
+                        Clear
+                    </button>
+
+                    <button className="btn-primary" onClick={handleSave}>
+                        Save
+                    </button>
                 </div>
             </div>
 
@@ -39,31 +93,31 @@ export default function PatientRegistration() {
                     <div className="form-left">
 
                         <label>Card No</label>
-                        <input name="cardNo" onChange={handleChange} />
+                        <input name="cardNo" value={patient.cardNo} onChange={handleChange} />
 
                         <label>Name</label>
-                        <input name="name" onChange={handleChange} />
+                        <input name="name" value={patient.name} onChange={handleChange} />
 
                         <label>Address</label>
-                        <textarea name="address" onChange={handleChange}></textarea>
+                        <textarea name="address" value={patient.address} onChange={handleChange}></textarea>
 
                         <label>Phone</label>
-                        <input name="phone" onChange={handleChange} />
+                        <input name="phone" value={patient.phone} onChange={handleChange} />
 
                         <label>Mobile No</label>
-                        <input name="mobile" onChange={handleChange} />
+                        <input name="mobile" value={patient.mobile} onChange={handleChange} />
 
                         <label>Email</label>
-                        <input name="email" onChange={handleChange} />
+                        <input name="email" value={patient.email} onChange={handleChange} />
 
                         <label>Lens Type</label>
-                        <input name="lensType" onChange={handleChange} />
+                        <input name="lensType" value={patient.lensType} onChange={handleChange} />
 
                         <label>Doctor</label>
-                        <input name="doctor" onChange={handleChange} />
+                        <input name="doctor" value={patient.doctor} onChange={handleChange} />
 
                         <label>Remark</label>
-                        <textarea name="remark" onChange={handleChange}></textarea>
+                        <textarea name="remark" value={patient.remark} onChange={handleChange}></textarea>
 
                     </div>
 

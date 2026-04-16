@@ -1,6 +1,62 @@
+import { useState, useEffect } from "react";
 import "../../styles/SalesTax.css";
 
 export default function SalesTaxSummary() {
+    const [slabs, setSlabs] = useState([]);
+    const [totals, setTotals] = useState({ taxable: 0, tax: 0 });
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchSummary = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch("http://localhost:3000/sales/report");
+                const data = await res.json();
+                
+                let totalTaxable = 0;
+                let totalTax = 0;
+                const slabsMap = {};
+
+                if (data.sales && Array.isArray(data.sales)) {
+                    data.sales.forEach(sale => {
+                        if (sale.items && Array.isArray(sale.items)) {
+                            sale.items.forEach(item => {
+                                const taxable = Number(item.amount);
+                                const tax = Number(item.tax);
+                                const gstPercent = taxable > 0 ? Math.round((tax / taxable) * 100) : 0;
+                                
+                                totalTaxable += taxable;
+                                totalTax += tax;
+
+                                if (!slabsMap[gstPercent]) {
+                                    slabsMap[gstPercent] = {
+                                        percent: gstPercent,
+                                        taxable: 0,
+                                        tax: 0
+                                    };
+                                }
+                                slabsMap[gstPercent].taxable += taxable;
+                                slabsMap[gstPercent].tax += tax;
+                            });
+                        }
+                    });
+                }
+                
+                setTotals({ taxable: totalTaxable, tax: totalTax });
+                
+                const slabsArray = Object.values(slabsMap).sort((a, b) => a.percent - b.percent);
+                setSlabs(slabsArray);
+
+            } catch (err) {
+                console.error("Error fetching tax summary:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSummary();
+    }, []);
+
     return (
         <div className="tax-page">
 
@@ -10,79 +66,65 @@ export default function SalesTaxSummary() {
             </div>
 
             {/* Cards */}
-
             <div className="tax-cards">
 
                 <div className="tax-card">
                     <h4>Total Taxable Amount</h4>
-                    <p>₹12,45,280.00</p>
+                    <p>₹{totals.taxable.toFixed(2)}</p>
                 </div>
 
                 <div className="tax-card">
                     <h4>Total SGST</h4>
-                    <p>₹74,716.80</p>
+                    <p>₹{(totals.tax / 2).toFixed(2)}</p>
                 </div>
 
                 <div className="tax-card">
                     <h4>Total CGST</h4>
-                    <p>₹74,716.80</p>
+                    <p>₹{(totals.tax / 2).toFixed(2)}</p>
                 </div>
 
                 <div className="tax-card highlight">
                     <h4>Grand Total Tax</h4>
-                    <p>₹1,49,433.60</p>
+                    <p>₹{totals.tax.toFixed(2)}</p>
                 </div>
 
             </div>
 
             {/* Tax Table */}
-
             <div className="tax-table">
-
                 <h3>Tax Slab Summary</h3>
 
-                <table>
+                {loading ? <p>Loading summary...</p> : (
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tax Slab</th>
+                                <th>Taxable Amount</th>
+                                <th>SGST</th>
+                                <th>CGST</th>
+                                <th>Total Tax</th>
+                            </tr>
+                        </thead>
 
-                    <thead>
-                        <tr>
-                            <th>Tax Slab</th>
-                            <th>Taxable Amount</th>
-                            <th>SGST</th>
-                            <th>CGST</th>
-                            <th>Total Tax</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <tr>
-                            <td>5% (Frames)</td>
-                            <td>₹4,20,000</td>
-                            <td>₹10,500</td>
-                            <td>₹10,500</td>
-                            <td>₹21,000</td>
-                        </tr>
-
-                        <tr>
-                            <td>12% (Lenses)</td>
-                            <td>₹6,85,280</td>
-                            <td>₹41,116</td>
-                            <td>₹41,116</td>
-                            <td>₹82,232</td>
-                        </tr>
-
-                        <tr>
-                            <td>18% (Accessories)</td>
-                            <td>₹1,40,000</td>
-                            <td>₹12,600</td>
-                            <td>₹12,600</td>
-                            <td>₹25,200</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
+                        <tbody>
+                            {slabs.length === 0 ? (
+                                <tr>
+                                    <td colSpan="5" style={{ textAlign: "center" }}>No tax data available.</td>
+                                </tr>
+                            ) : (
+                                slabs.map((slab) => (
+                                    <tr key={slab.percent}>
+                                        <td>{slab.percent}%</td>
+                                        <td>₹{slab.taxable.toFixed(2)}</td>
+                                        <td>₹{(slab.tax / 2).toFixed(2)}</td>
+                                        <td>₹{(slab.tax / 2).toFixed(2)}</td>
+                                        <td>₹{slab.tax.toFixed(2)}</td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                )}
             </div>
 
         </div>

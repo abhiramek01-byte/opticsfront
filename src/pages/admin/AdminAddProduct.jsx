@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/Master.css"; // Reuse the premium master layouts
 
-export default function AddProduct() {
+export default function AdminAddProduct() {
 
-    const [product, setProduct] = useState({
-        code: "P" + Math.floor(Math.random() * 100000), // Auto-generated dummy or controlled by backend
+    const navigate = useNavigate();
+
+    const [product, setProduct] = useState(() => ({
+        code: "P" + Math.floor(Math.random() * 100000), 
         barcode: "",
         category: "",
         productName: "",
@@ -23,8 +26,8 @@ export default function AddProduct() {
         hsnCode: "",
         nonStock: false,
         noOfSticker: "",
-        initialStock: "" // Only if backend accepts it in product, or just keep it around
-    });
+        initialStock: "" 
+    }));
 
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState("");
@@ -84,9 +87,7 @@ export default function AddProduct() {
                 const data = await res.json();
                 console.log("Product Saved:", data);
                 alert("Product Saved Successfully! ✅");
-                handleClear();
-                // Optionally generate a new code
-                setProduct(prev => ({ ...prev, code: "P" + Math.floor(Math.random() * 100000) }));
+                navigate("/admin/products");
             } else {
                 const errData = await res.json();
                 alert(`Failed to save product: ${errData.message || 'Unknown error'}`);
@@ -101,13 +102,13 @@ export default function AddProduct() {
         <div className="master-container" style={{ paddingBottom: '40px' }}>
 
             <div className="master-header">
-                <div className="header-left">
-                    <h2>Add New Product</h2>
+                <div className="header-left" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <button className="btn-outline" onClick={() => navigate("/admin/products")}>← Back</button>
+                    <h2 style={{ margin: 0 }}>Add New Product</h2>
                 </div>
 
                 <div className="header-buttons">
-                    <button className="btn-outline" onClick={handleClear}>Cancel</button>
-                    <button className="btn-secondary" onClick={handleClear}>Clear</button>
+                    <button className="btn-outline" onClick={handleClear}>Clear</button>
                     <button className="btn-primary" onClick={handleSubmit}>Save Product</button>
                 </div>
             </div>

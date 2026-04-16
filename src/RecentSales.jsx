@@ -1,29 +1,9 @@
-export default function RecentSales() {
-  const salesData = [
-    {
-      id: "#OPT-1001",
-      customer: "Ravi Kumar",
-      product: "Ray-Ban Frame",
-      amount: "$220.00",
-      status: "Completed"
-    },
-    {
-      id: "#OPT-1002",
-      customer: "Anita Sharma",
-      product: "Progressive Lenses",
-      amount: "$180.00",
-      status: "Shipped"
-    },
-    {
-      id: "#OPT-1003",
-      customer: "Vikram Singh",
-      product: "Contact Lens (Monthly)",
-      amount: "$60.00",
-      status: "Pending"
-    }
-  ];
+import React from 'react';
+
+export default function RecentSales({ sales = [] }) {
 
   const getStatusClass = (status) => {
+    if (!status) return "";
     switch (status.toLowerCase()) {
       case "completed":
         return "completed";
@@ -37,40 +17,48 @@ export default function RecentSales() {
   };
 
   return (
-    <div className="panel">
+    <div className="panel recent-sales-panel glass-panel">
 
       <div className="panel-head">
         <h3>Recent Sales</h3>
         <span className="view-all">View All</span>
       </div>
 
-      <table className="sales-table">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Product</th>
-            <th>Amount</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {salesData.map((sale, index) => (
-            <tr key={index}>
-              <td>{sale.id}</td>
-              <td>{sale.customer}</td>
-              <td>{sale.product}</td>
-              <td>{sale.amount}</td>
-              <td>
-                <span className={`status ${getStatusClass(sale.status)}`}>
-                  {sale.status}
-                </span>
-              </td>
+      <div className="table-responsive">
+        <table className="sales-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Product</th>
+              <th>Amount</th>
+              <th>Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {sales.length > 0 ? sales.map((sale, index) => (
+              <tr key={index}>
+                <td className="font-semibold text-primary">{sale.id}</td>
+                <td>{sale.customer}</td>
+                <td>{sale.product}</td>
+                <td className="font-semibold">{sale.amount}</td>
+                <td>
+                  <span className={`status-badge ${getStatusClass(sale.status)}`}>
+                    {sale.status}
+                  </span>
+                </td>
+              </tr>
+            )) : (
+              <tr>
+                <td colSpan="5" style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>
+                  No recent sales found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
     </div>
   );

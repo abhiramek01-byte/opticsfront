@@ -1,100 +1,99 @@
-import { useState } from "react";
+import { useMasterNavigation } from "../../hooks/useMasterNavigation";
+import "../../styles/Master.css";
 
 export default function TaxGroup() {
-  const [formData, setFormData] = useState({
-    code: "TG001",
-    name: "",
-    tax: "",
-    cess: ""
+  const {
+    formData,
+    setFormData,
+    handleNext,
+    handlePrevious,
+    handleClear,
+    handleEdit,
+    handleSave,
+    isFirst,
+    isLast,
+    isViewing,
+    isEditMode
+  } = useMasterNavigation("tax-group", {
+    taxGroupCode: "TG001",
+    taxGroupName: "",
+    taxPercent: "",
+    cessPercent: ""
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData({
       ...formData,
       [name]: value
     });
   };
 
-  const handleClear = () => {
-    setFormData({
-      code: "TG001",
-      name: "",
-      tax: "",
-      cess: ""
-    });
-  };
-
-  const handleSave = () => {
-    console.log("Tax Group Data:", formData);
-    alert("Tax Group Saved Successfully!");
-  };
-
   return (
-    <div className="vendor-container">
-
-      {/* ================= HEADER ================= */}
-      <div className="vendor-header">
+    <div className="master-container">
+      <div className="master-header">
         <div className="header-left">
-          <button className="btn-outline">◀ Previous</button>
-          <button className="btn-outline">Next ▶</button>
-          <button className="btn-light">Edit</button>
+          <button className="btn-outline" onClick={handlePrevious} disabled={isFirst}>◀ Previous</button>
+          <button className="btn-outline" onClick={handleNext} disabled={isLast}>Next ▶</button>
+          <button className="btn-secondary" onClick={handleEdit} disabled={!isViewing}>Edit</button>
         </div>
 
         <div className="header-buttons">
-          <button className="btn-outline">Cancel</button>
-          <button className="btn-light" onClick={handleClear}>Clear</button>
-          <button className="btn-primary" onClick={handleSave}>Save</button>
+          <button className="btn-outline" onClick={handleClear}>Cancel</button>
+          <button className="btn-secondary" onClick={handleClear}>Clear</button>
+          <button className="btn-primary" onClick={handleSave} disabled={isViewing}>
+            {isEditMode ? "Update" : "Save"}
+          </button>
         </div>
       </div>
 
-      {/* ================= FORM ================= */}
-      <div className="salesman-wrapper">
-        <div className="card medium-card">
+      <div className="master-wrapper">
+        <div className="master-card">
           <h3>Tax Group Details</h3>
 
           <div className="form-grid">
-
             <div className="form-field">
               <label>Tax Group Code</label>
-              <input value={formData.code} readOnly />
+              <input value={formData.taxGroupCode || ''} className="visual-readonly" readOnly />
             </div>
 
             <div className="form-field">
               <label>Tax Group Name</label>
               <input
-                name="name"
-                value={formData.name}
+                name="taxGroupName"
+                value={formData.taxGroupName || ''}
                 onChange={handleChange}
+                placeholder="Enter tax group name"
+                readOnly={isViewing}
               />
             </div>
 
             <div className="form-field">
               <label>Tax (%)</label>
               <input
-                name="tax"
+                name="taxPercent"
                 type="number"
-                value={formData.tax}
+                value={formData.taxPercent || ''}
                 onChange={handleChange}
+                placeholder="Enter tax %"
+                readOnly={isViewing}
               />
             </div>
 
             <div className="form-field">
               <label>CESS (%)</label>
               <input
-                name="cess"
+                name="cessPercent"
                 type="number"
-                value={formData.cess}
+                value={formData.cessPercent || ''}
                 onChange={handleChange}
+                placeholder="Enter CESS %"
+                readOnly={isViewing}
               />
             </div>
-
           </div>
-
         </div>
       </div>
-
     </div>
   );
 }

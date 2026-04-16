@@ -10,8 +10,97 @@ import {
 
 const menu = [
   { name: "Dashboard", icon: <FaHome />, path: "/dashboard" },
-  { name: "Order Tracking", icon: <FaTruck />, path: "/dashboard/tracking" },
 
+  // --- Front Desk & POS Operations (Most Accessed) ---
+  {
+    name: "Sales",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Sales Order", path: "/dashboard/salesorder" },
+      { name: "Billing", path: "/dashboard/billing" },
+      { name: "Sales", path: "/dashboard/sales" },
+      { name: "Sales Return", path: "/dashboard/sales-return" },
+      {
+        name: "Sales Tax",
+        children: [
+          { name: "Summary", path: "/dashboard/sales-tax-summary" },
+          { name: "Detailed Report", path: "/dashboard/sales-tax-report" }
+        ]
+      },
+      { name: "More Reports", path: "/dashboard/report/sales" }
+    ]
+  },
+  {
+    name: "Registration",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Patient Registration", path: "/dashboard/patient-registration" },
+      { name: "Eye Testing", path: "/dashboard/eye-testing" }
+    ]
+  },
+  {
+    name: "Lens Management",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Lens Order Entry", path: "/dashboard/lens/order" },
+      { name: "Lens Orders", path: "/dashboard/lens/list" },
+      { name: "Receive Lens", path: "/dashboard/lens/receive" }
+    ]
+  },
+  {
+    name: "Product",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "View Product", path: "/dashboard/viewProduct" },
+      { name: "Add Product", path: "/dashboard/addProduct" }
+    ]
+  },
+  
+  // --- Inventory & Purchasing ---
+  {
+    name: "Stock",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Opening Stock", path: "/dashboard/openingstock" },
+      { name: "Damage", path: "/dashboard/damage" },
+      { name: "Stock Adjustment", path: "/dashboard/stockadjustment" },
+    ],
+  },
+  {
+    name: "Purchase",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Purchase", path: "/dashboard/purchase" },
+      { name: "Purchase Return", path: "/dashboard/purchase-return" },
+    ],
+  },
+
+  // --- Back Office & Management ---
+  {
+    name: "Accounts",
+    icon: <FaLayerGroup />,
+    children: [
+      { name: "Company", path: "/dashboard/accounts/company" },
+      { name: "Period", path: "/dashboard/accounts/period" },
+      { name: "Account", path: "/dashboard/accounts/account" },
+      { name: "Cash Receipt", path: "/dashboard/accounts/cashreceipt" },
+      { name: "Cash Payment", path: "/dashboard/accounts/cashpayment" },
+      { name: "Bill Wise Payment", path: "/dashboard/accounts/billwisepayment" },
+      { name: "Journal", path: "/dashboard/accounts/journal" },
+      { name: "Expense Distribution", path: "/dashboard/accounts/expensedistribution" },
+      { name: "Customer Center", path: "/dashboard/accounts/customercenter" },
+      { name: "Vendor Center", path: "/dashboard/accounts/vendorcenter" },
+      {
+        name: "Banking",
+        icon: <FaLayerGroup />,
+        children: [
+          { name: "Cheque Payment", path: "/dashboard/accounts/banking/chequepayment" },
+          { name: "Cheque Receipt", path: "/dashboard/accounts/banking/chequereceipt" },
+          { name: "Cheque Clearing", path: "/dashboard/accounts/banking/chequeclearing" }
+        ]
+      }
+    ]
+  },
   {
     name: "Master",
     icon: <FaLayerGroup />,
@@ -33,47 +122,19 @@ const menu = [
       { name: "Product", path: "/dashboard/master/product" },
       { name: "Warehouse", path: "/dashboard/master/warehouse" },
       { name: "Tax Group", path: "/dashboard/master/taxgroup" },
-
-    ],
-  },
-
-  {
-    name: "Purchase",
-    icon: <FaLayerGroup />,
-    children: [
-      { name: "Purchase", path: "/dashboard/purchase" },
-      { name: "Purchase Return", path: "/dashboard/purchase-return" },
-      { name: "Vendor Lens Order", path: "/dashboard/purchase/vendor-lens-order" },
     ],
   },
   {
-    name: "Stock",
+    name: "Branches",
     icon: <FaLayerGroup />,
     children: [
-      { name: "Opening Stock", path: "/dashboard/openingstock" },
-      { name: "Damage", path: "/dashboard/damage" },
-      { name: "Stock Adjustment", path: "/dashboard/stockadjustment" },
-
-    ],
-  },
-  {
-    name: "Registration",
-    icon: <FaLayerGroup />,
-    children: [
-      { name: "Patient Registration", path: "/dashboard/patient-registration" },
-      { name: "Eye Testing", path: "/dashboard/eye-testing" }
+      { name: "Branch Master", path: "/dashboard/branches" },
+      { name: "Branch Inventory", path: "/dashboard/branches/inventory" },
+      { name: "Branch Sales", path: "/dashboard/branches/sales" }
     ]
   },
 
-  {
-    name: "Product",
-    icon: <FaLayerGroup />,
-    children: [
-      { name: "View Product", path: "/dashboard/viewProduct" },
-      { name: "Add Product", path: "/dashboard/addProduct" }
-    ]
-  },
-
+  // --- Reports & Analytics ---
   {
     name: "Report",
     icon: <FaLayerGroup />,
@@ -87,8 +148,6 @@ const menu = [
       { name: "Customer History", path: "/dashboard/customer/history" }
     ]
   },
-
-
   {
     name: "MIS",
     icon: <FaChartLine />,
@@ -97,84 +156,17 @@ const menu = [
       { name: "Day end report", path: "/dashboard/day-end" }
     ]
   },
-
-  {
-    name: "Branches",
-    icon: <FaLayerGroup />,
-    children: [
-      { name: "Branch Master", path: "/dashboard/branches" },
-      { name: "Branch Inventory", path: "/dashboard/branches/inventory" },
-      { name: "Branch Sales", path: "/dashboard/branches/sales" }
-    ]
-  },
-
-  {
-    name: "Lens Management",
-    icon: <FaLayerGroup />,
-    children: [
-      { name: "Lens Order Entry", path: "/dashboard/lens/order" },
-      { name: "Lens Orders", path: "/dashboard/lens/list" },
-      { name: "Receive Lens", path: "/dashboard/lens/receive" }
-    ]
-  },
-
-
-  {
-    name: "Sales",
-    icon: <FaLayerGroup />,
-    children: [
-      { name: "Sales Order", path: "/dashboard/salesorder" },
-      { name: "Sales", path: "/dashboard/sales" },
-      { name: "Sales Return", path: "/dashboard/sales-return" },
-      {
-        name: "Sales Tax",
-        children: [
-          { name: "Summary", path: "/dashboard/sales-tax-summary" },
-          { name: "Detailed Report", path: "/dashboard/sales-tax-report" }
-        ]
-      },
-      { name: "More Reports", path: "/dashboard/sales-reports" }
-    ]
-  },
+  
+  // --- Miscellaneous ---
+  { name: "Order Tracking", icon: <FaTruck />, path: "/dashboard/tracking" },
   {
     name: "Tools",
     icon: <FaLayerGroup />,
     children: [
       { name: "Barcode Designer", path: "/dashboard/tools/barcode" },
-      { name: "Registration", path: "/dashboard/tools/registration" },
       { name: "Bulk Message", path: "/dashboard/tools/bulkmessage" }
-
-    ]
-  },
-
-  {
-    name: "Accounts",
-    icon: <FaLayerGroup />,
-    children: [
-      { name: "Company", path: "/dashboard/accounts/company" },
-      { name: "Period", path: "/dashboard/accounts/period" },
-      { name: "Account", path: "/dashboard/accounts/account" },
-      { name: "Cash Receipt", path: "/dashboard/accounts/cashreceipt" },
-      { name: "Cash Payment", path: "/dashboard/accounts/cashpayment" },
-      { name: "Bill Wise Payment", path: "/dashboard/accounts/billwisepayment" },
-      { name: "Journal", path: "/dashboard/accounts/journal" },
-      { name: "Expense Distribution", path: "/dashboard/accounts/expensedistribution" },
-      { name: "Customer Center", path: "/dashboard/accounts/customercenter" },
-      { name: "Vendor Center", path: "/dashboard/accounts/vendorcenter" },
-
-      // BANKING GROUP
-      {
-        name: "Banking",
-        icon: <FaLayerGroup />,
-        children: [
-          { name: "Cheque Payment", path: "/dashboard/accounts/banking/chequepayment" },
-          { name: "Cheque Receipt", path: "/dashboard/accounts/banking/chequereceipt" },
-          { name: "Cheque Clearing", path: "/dashboard/accounts/banking/chequeclearing" }
-        ]
-      }
     ]
   }
-
 ];
 
 export default function Sidebar({ onLogout }) {

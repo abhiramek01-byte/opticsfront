@@ -20,7 +20,7 @@ export default function LoginPage({ onLogin }) {
         setError("");
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
 
@@ -31,32 +31,37 @@ export default function LoginPage({ onLogin }) {
 
         setLoading(true);
 
-        setTimeout(() => {
+        try {
+
+            const response = await fetch("http://localhost:3000/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(form)
+            });
+
+            const data = await response.json();
 
             setLoading(false);
 
-            let role = "";
-
-            /* ROLE LOGIN */
-
-            if (form.username === "admin" && form.password === "admin") {
-                role = "admin";
-            }
-            else if (form.username === "spash" && form.password === "spash") {
-                role = "manager";
-            }
-            else if (form.username === "staff" && form.password === "staff") {
-                role = "staff";
-            }
-            else {
-                setError("Invalid username or password");
+            if (!response.ok || !data.role) {
+                setError(data.message || "Invalid username or password");
                 return;
             }
+
+            const role = data.role;
 
             /* SAVE LOGIN DATA */
 
             localStorage.setItem("role", role);
             localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("username", form.username);
+            if (data.branchId) {
+                localStorage.setItem("branchId", data.branchId);
+            } else {
+                localStorage.removeItem("branchId");
+            }
 
             onLogin();
 
@@ -68,7 +73,12 @@ export default function LoginPage({ onLogin }) {
                 navigate("/dashboard");
             }
 
-        }, 800);
+        } catch (err) {
+
+            setLoading(false);
+            setError("Server not responding");
+
+        }
     };
 
     return (
