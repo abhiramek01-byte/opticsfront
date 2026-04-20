@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/Master.css"; // Reuse the premium master layouts
 
@@ -28,6 +28,54 @@ export default function AdminAddProduct() {
         noOfSticker: "",
         initialStock: "" 
     }));
+
+    const [options, setOptions] = useState({
+        categories: [],
+        brands: [],
+        models: [],
+        colourCodes: [],
+        colours: [],
+        lensColours: [],
+        powers: [],
+        frameTypes: [],
+        madeBys: [],
+        taxGroups: []
+    });
+
+    import('react').then(({ useEffect }) => {
+        useEffect(() => {
+            const fetchOptions = async () => {
+                try {
+                    const endpoints = [
+                        { key: 'categories', url: 'category' },
+                        { key: 'brands', url: 'brand' },
+                        { key: 'models', url: 'model' },
+                        { key: 'colourCodes', url: 'colour-code' },
+                        { key: 'colours', url: 'colourdetails' },
+                        { key: 'lensColours', url: 'lenscolour' },
+                        { key: 'powers', url: 'power' },
+                        { key: 'frameTypes', url: 'frametype' },
+                        { key: 'madeBys', url: 'madeby' },
+                        { key: 'taxGroups', url: 'tax-group' }
+                    ];
+
+                    const results = await Promise.all(
+                        endpoints.map(ep => fetch(`http://localhost:3000/${ep.url}`).then(res => res.json()).catch(() => []))
+                    );
+
+                    const newOptions = {};
+                    endpoints.forEach((ep, index) => {
+                        newOptions[ep.key] = Array.isArray(results[index]) ? results[index] : [];
+                    });
+                    
+                    setOptions(newOptions);
+                } catch (err) {
+                    console.error("Failed to fetch options", err);
+                }
+            };
+            fetchOptions();
+        }, []);
+    });
 
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState("");
@@ -167,19 +215,14 @@ export default function AdminAddProduct() {
                                     <label>Category</label>
                                     <select name="category" value={product.category} onChange={handleChange}>
                                         <option value="">Select Category</option>
-                                        <option>Frames</option>
-                                        <option>Sunglasses</option>
-                                        <option>Contact Lens</option>
+                                        {options.categories.map(c => <option key={c.id} value={c.categoryName}>{c.categoryName}</option>)}
                                     </select>
                                 </div>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Brand</label>
                                     <select name="brand" value={product.brand} onChange={handleChange}>
                                         <option value="">Select Brand</option>
-                                        <option>RayBan</option>
-                                        <option>Oakley</option>
-                                        <option>Prada</option>
-                                        <option>Gucci</option>
+                                        {options.brands.map(b => <option key={b.id} value={b.brandName}>{b.brandName}</option>)}
                                     </select>
                                 </div>
                             </div>
@@ -192,7 +235,10 @@ export default function AdminAddProduct() {
                             <div style={{ display: 'flex', gap: '15px' }}>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Model</label>
-                                    <input name="model" value={product.model} onChange={handleChange} />
+                                    <select name="model" value={product.model} onChange={handleChange}>
+                                        <option value="">Select Model</option>
+                                        {options.models.map(m => <option key={m.id} value={m.modelName}>{m.modelName}</option>)}
+                                    </select>
                                 </div>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Model Code</label>
@@ -209,33 +255,51 @@ export default function AdminAddProduct() {
                             <div style={{ display: 'flex', gap: '15px' }}>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Colour</label>
-                                    <input name="colour" value={product.colour} onChange={handleChange} />
+                                    <select name="colour" value={product.colour} onChange={handleChange}>
+                                        <option value="">Select Colour</option>
+                                        {options.colours.map(c => <option key={c.id} value={c.colourName}>{c.colourName}</option>)}
+                                    </select>
                                 </div>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Colour Code</label>
-                                    <input name="colourCode" value={product.colourCode} onChange={handleChange} />
+                                    <select name="colourCode" value={product.colourCode} onChange={handleChange}>
+                                        <option value="">Select Colour Code</option>
+                                        {options.colourCodes.map(c => <option key={c.id} value={c.colourCode}>{c.colourCode}</option>)}
+                                    </select>
                                 </div>
                             </div>
                             
                             <div style={{ display: 'flex', gap: '15px' }}>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Lens Colour</label>
-                                    <input name="lensColour" value={product.lensColour} onChange={handleChange} />
+                                    <select name="lensColour" value={product.lensColour} onChange={handleChange}>
+                                        <option value="">Select Lens Colour</option>
+                                        {options.lensColours.map(c => <option key={c.id} value={c.lensColourName}>{c.lensColourName}</option>)}
+                                    </select>
                                 </div>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Power (Sph/Cyl)</label>
-                                    <input name="power" value={product.power} onChange={handleChange} />
+                                    <select name="power" value={product.power} onChange={handleChange}>
+                                        <option value="">Select Power</option>
+                                        {options.powers.map(p => <option key={p.id} value={p.powerName}>{p.powerName}</option>)}
+                                    </select>
                                 </div>
                             </div>
 
                             <div style={{ display: 'flex', gap: '15px' }}>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Frame Type</label>
-                                    <input name="frameType" value={product.frameType} onChange={handleChange} />
+                                    <select name="frameType" value={product.frameType} onChange={handleChange}>
+                                        <option value="">Select Frame Type</option>
+                                        {options.frameTypes.map(f => <option key={f.id} value={f.frameTypeName}>{f.frameTypeName}</option>)}
+                                    </select>
                                 </div>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Made By</label>
-                                    <input name="madeBy" value={product.madeBy} onChange={handleChange} />
+                                    <select name="madeBy" value={product.madeBy} onChange={handleChange}>
+                                        <option value="">Select Made By</option>
+                                        {options.madeBys.map(m => <option key={m.id} value={m.madeByName}>{m.madeByName}</option>)}
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -259,7 +323,10 @@ export default function AdminAddProduct() {
                             <div style={{ display: 'flex', gap: '15px' }}>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>Tax Group</label>
-                                    <input name="taxGroup" value={product.taxGroup} onChange={handleChange} placeholder="e.g. GST 18%" />
+                                    <select name="taxGroup" value={product.taxGroup} onChange={handleChange}>
+                                        <option value="">Select Tax Group</option>
+                                        {options.taxGroups.map(t => <option key={t.id} value={t.taxGroupName}>{t.taxGroupName} ({t.taxPercent}%)</option>)}
+                                    </select>
                                 </div>
                                 <div className="form-field" style={{ flex: 1 }}>
                                     <label>HSN Code</label>

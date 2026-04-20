@@ -20,6 +20,7 @@ export default function Sales() {
 
     const [discount, setDiscount] = useState(0);
     const [taxPercent, setTaxPercent] = useState(0);
+    const [taxGroups, setTaxGroups] = useState([]);
 
     /* FETCH DATA */
     useEffect(() => {
@@ -37,6 +38,12 @@ export default function Sales() {
                 console.log("Products:", data);
                 setProducts(Array.isArray(data) ? data : []);
             })
+            .catch(err => console.error(err));
+
+        // Tax Groups
+        fetch("http://localhost:3000/tax-group")
+            .then(res => res.json())
+            .then(data => setTaxGroups(Array.isArray(data) ? data : []))
             .catch(err => console.error(err));
 
     }, []);
@@ -295,8 +302,15 @@ export default function Sales() {
                     <label>Discount: ₹
                         <input type="number" style={{width: '80px', marginLeft: '5px'}} value={discount} onChange={(e) => setDiscount(Number(e.target.value))} />
                     </label>
-                    <label>Tax (%):
-                        <input type="number" style={{width: '60px', marginLeft: '5px'}} value={taxPercent} onChange={(e) => setTaxPercent(Number(e.target.value))} />
+                    <label>Tax:
+                        <select style={{marginLeft: '5px', borderRadius: '4px', border: '1px solid #ccc', padding: '4px'}} value={taxPercent} onChange={(e) => setTaxPercent(Number(e.target.value))}>
+                            <option value="0">0%</option>
+                            {taxGroups.map(t => (
+                                <option key={t.id} value={t.taxPercent}>
+                                    {t.taxGroupName} ({t.taxPercent}%)
+                                </option>
+                            ))}
+                        </select>
                     </label>
                 </div>
                 <h3>Subtotal: ₹{subTotal.toFixed(2)}</h3>

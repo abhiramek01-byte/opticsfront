@@ -8,7 +8,10 @@ export default function AdminDashboard() {
         users: 0,
         products: 0,
         vendors: 0,
-        orders: 0
+        orders: 0,
+        recentOrders: [],
+        lowStock: [],
+        topVendors: []
     });
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -33,23 +36,9 @@ export default function AdminDashboard() {
         { title: "Sales Orders", value: counts.orders }
     ];
 
-    const recentOrders = [
-        { id: "#1001", customer: "Rahul", amount: "₹2500" },
-        { id: "#1002", customer: "Anjali", amount: "₹1800" },
-        { id: "#1003", customer: "Rohit", amount: "₹3200" },
-    ];
-
-    const lowStock = [
-        { product: "Blue Cut Lens", stock: 5 },
-        { product: "RayBan Frame", stock: 3 },
-        { product: "Reading Glass", stock: 7 }
-    ];
-
-    const topVendors = [
-        { name: "Vision Optics", sales: "₹45,000" },
-        { name: "Clear Lens Co.", sales: "₹32,000" },
-        { name: "EyeCare Supplies", sales: "₹22,000" }
-    ];
+    const recentOrders = counts.recentOrders || [];
+    const lowStock = counts.lowStock || [];
+    const topVendors = counts.topVendors || [];
 
     return (
         <div className="admin-dashboard">
