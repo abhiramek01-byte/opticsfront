@@ -1,26 +1,18 @@
+import { useEffect, useState } from "react";
 import "../../styles/LensOrder.css";
 
 export default function LensOrderList() {
 
-    const orders = [
-        {
-            id: 1,
-            customer: "Rahul",
-            vendor: "Essilor",
-            type: "Progressive",
-            status: "Ordered"
-        },
-        {
-            id: 2,
-            customer: "Anil",
-            vendor: "Zeiss",
-            type: "Blue Cut",
-            status: "Pending"
-        }
-    ];
+    const [orders, setOrders] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:3000/lens-order")
+            .then(res => res.json())
+            .then(data => setOrders(data))
+            .catch(err => console.error("Error:", err));
+    }, []);
 
     return (
-
         <div className="lens-page">
 
             <h2>Lens Orders</h2>
@@ -42,10 +34,10 @@ export default function LensOrderList() {
                     {orders.map((o) => (
                         <tr key={o.id}>
                             <td>{o.id}</td>
-                            <td>{o.customer}</td>
+                            <td>{o.customerName}</td>
                             <td>{o.vendor}</td>
-                            <td>{o.type}</td>
-                            <td>{o.status}</td>
+                            <td>{o.lensType}</td>
+                            <td>{o.status || "Pending"}</td>
                         </tr>
                     ))}
 
@@ -54,6 +46,5 @@ export default function LensOrderList() {
             </table>
 
         </div>
-
     );
 }

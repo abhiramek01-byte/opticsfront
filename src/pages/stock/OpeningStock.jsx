@@ -1,109 +1,97 @@
-import { useState } from "react";
-import "../../styles/OpeningStock.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "../../styles/Transaction.css";
 
 export default function OpeningStock() {
-    const [items, setItems] = useState([
-        { code: "", product: "", qty: 0, rate: 0 }
-    ]);
 
-    const handleChange = (index, field, value) => {
-        const updated = [...items];
-        updated[index][field] = value;
-        setItems(updated);
-    };
+    const [items, setItems] = useState([]);
 
-    const addRow = () => {
-        setItems([...items, { code: "", product: "", qty: 0, rate: 0 }]);
-    };
+    useEffect(() => {
+        axios.get("http://localhost:3000/stock/getAll")
+            .then(res => {
+                setItems(res.data.result);
+                console.log("fetched:", res.data)
+            })
+            .catch(err => console.log(err));
+    }, []);
 
-    const totalQty = items.reduce((sum, item) => sum + Number(item.qty), 0);
+    const totalQty = items.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
+
     const totalValue = items.reduce(
-        (sum, item) => sum + item.qty * item.rate,
+        (sum, item) => sum + (item.quantity || 0) * (item.product?.rate || 0),
         0
     );
 
     return (
-        <div className="opening-container">
+        <div className="transaction-container">
 
-            <div className="opening-header">
-                <h2>Opening Stock</h2>
+            <div className="transaction-header">
+                <h2>Opening Stock Report</h2>
 
-                <div className="opening-buttons">
-                    <button className="btn-outline">Cancel</button>
-                    <button className="btn-light">Clear</button>
-                    <button className="btn-primary">Save</button>
+                <div className="transaction-buttons">
+                    <button className="btn-secondary" onClick={() => window.print()}>
+                        Print Report
+                    </button>
+                    <button className="btn-primary" onClick={() => alert("Exported to Excel")}>
+                        Export Data
+                    </button>
                 </div>
             </div>
 
-            <div className="opening-card">
+            <div className="transaction-card">
 
-                <table className="opening-table">
+                <table className="transaction-table">
                     <thead>
                         <tr>
-                            <th>Code</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Rate</th>
-                            <th>Total</th>
+                            <th style={{ width: '40%' }}>Product / Lens</th>
+                            <th style={{ width: '30%' }}>Vendor</th>
+                            <th style={{ width: '15%', textAlign: 'right' }}>Rate (₹)</th>
+                            <th style={{ width: '15%', textAlign: 'center' }}>Qty</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {items.map((item, index) => (
-                            <tr key={index}>
-                                <td>
-                                    <input
-                                        value={item.code}
-                                        onChange={(e) =>
-                                            handleChange(index, "code", e.target.value)
-                                        }
-                                    />
+                        {items.length === 0 ? (
+                            <tr>
+                                <td colSpan="4" style={{ textAlign: "center", padding: "30px", color: "#64748b" }}>
+                                    No opening stock found.
                                 </td>
-
-                                <td>
-                                    <input
-                                        value={item.product}
-                                        onChange={(e) =>
-                                            handleChange(index, "product", e.target.value)
-                                        }
-                                    />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="number"
-                                        value={item.qty}
-                                        onChange={(e) =>
-                                            handleChange(index, "qty", e.target.value)
-                                        }
-                                    />
-                                </td>
-
-                                <td>
-                                    <input
-                                        type="number"
-                                        value={item.rate}
-                                        onChange={(e) =>
-                                            handleChange(index, "rate", e.target.value)
-                                        }
-                                    />
-                                </td>
-
-                                <td>{item.qty * item.rate}</td>
                             </tr>
-                        ))}
+                        ) : (
+                            items.map((item) => (
+                                <tr key={item.id}>
+                                    <td style={{ fontWeight: 500 }}>{item.product?.productName || "-"}</td>
+                                    <td>{item.vendor || "-"}</td>
+                                    <td style={{ textAlign: 'right', color: '#0f172a' }}>
+                                        {item.product?.rate ? item.product.rate.toFixed(2) : "0.00"}
+                                    </td>
+                                    <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                                        <span style={{ 
+                                            background: '#f1f5f9', 
+                                            padding: '4px 12px', 
+                                            borderRadius: '20px',
+                                            border: '1px solid #e2e8f0'
+                                        }}>
+                                            {item.quantity}
+                                        </span>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
 
-                <button className="add-row-btn" onClick={addRow}>
-                    + Add Row
-                </button>
-
             </div>
 
-            <div className="opening-summary">
-                <div>Total Qty: {totalQty}</div>
-                <div>Total Value: {totalValue}</div>
+            <div className="transaction-summary">
+                <div className="summary-item">
+                    <span className="summary-label">Total Qty</span>
+                    <span className="summary-value" style={{ color: '#bae6fd' }}>{totalQty}</span>
+                </div>
+                <div className="summary-item" style={{ paddingLeft: '40px', borderLeft: '1px solid rgba(255,255,255,0.2)' }}>
+                    <span className="summary-label">Total Value</span>
+                    <span className="summary-value">₹ {totalValue.toFixed(2)}</span>
+                </div>
             </div>
 
         </div>

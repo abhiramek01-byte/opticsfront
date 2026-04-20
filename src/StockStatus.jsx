@@ -1,37 +1,37 @@
-export default function StockStatus() {
+import React from 'react';
 
-  const stockData = [
-    { name: "Frames", percent: 85 },
-    { name: "Lenses", percent: 65 },
-    { name: "Contact Lenses", percent: 42 },
-    { name: "Sunglasses", percent: 78 }
-  ];
+export default function StockStatus({ stockCategories = [] }) {
 
   const getColor = (percent) => {
-    if (percent >= 70) return "blue";
-    if (percent >= 40) return "green";
-    return "orange";
+    if (percent >= 70) return "blue-gradient";
+    if (percent >= 40) return "green-gradient";
+    return "orange-gradient";
   };
 
   return (
-    <div className="panel">
-      <h3>Stock Status</h3>
+    <div className="panel stock-status-panel glass-panel">
+      <h3>Stock Composition Composition</h3>
+      <p className="subtitle" style={{marginBottom: '20px', color: '#64748b', fontSize: '13px'}}>Inventory split by category</p>
 
-      {stockData.map((item, index) => (
+      {stockCategories.length > 0 ? stockCategories.map((item, index) => (
         <div className="stock-item" key={index}>
           <div className="stock-row">
-            <span>{item.name}</span>
-            <span>{item.percent}%</span>
+            <span className="font-medium text-dark">{item.name} <span style={{fontSize: '11px', color: '#94a3b8'}}>({item.quantity} units)</span></span>
+            <span className="font-semibold">{item.percent}%</span>
           </div>
 
-          <div className="progress">
+          <div className="progress-bg">
             <div
               className={`progress-fill ${getColor(item.percent)}`}
               style={{ width: `${item.percent}%` }}
             ></div>
           </div>
         </div>
-      ))}
+      )) : (
+        <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>
+          No stock variants calculated.
+        </div>
+      )}
 
     </div>
   );

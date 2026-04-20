@@ -1,69 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../../styles/AdminProducts.css";
 
 const CATEGORY_META = {
-    Frame: { color: "#f5b731", icon: "🕶️" },
-    Lens: { color: "#4fc3f7", icon: "🔬" },
-    Accessories: { color: "#a78bfa", icon: "✨" },
-    Solution: { color: "#34d399", icon: "💧" },
+    Frames: { color: "#f5b731", icon: "🕶️" },
+    Sunglasses: { color: "#4fc3f7", icon: "☀️" },
+    "Contact Lens": { color: "#a78bfa", icon: "👁️" },
+    Accessories: { color: "#34d399", icon: "✨" },
+    Solution: { color: "#fb7185", icon: "💧" },
 };
-
-const INITIAL = [
-    { id: 1, name: "RayBan Aviator Frame", category: "Frame", price: 4500, stock: 12 },
-    { id: 2, name: "Essilor Crizal Lens", category: "Lens", price: 3200, stock: 8 },
-    { id: 3, name: "Oakley Sport Frame", category: "Frame", price: 6800, stock: 5 },
-    { id: 4, name: "Zeiss Blue Filter Lens", category: "Lens", price: 4100, stock: 20 },
-];
-
-const CATEGORIES = ["Frame", "Lens", "Accessories", "Solution"];
 
 export default function Products() {
 
-    const [products, setProducts] = useState(INITIAL);
+    const [products, setProducts] = useState([]);
     const [search, setSearch] = useState("");
-    const [showForm, setShowForm] = useState(false);
-    const [form, setForm] = useState({ name: "", category: "Frame", price: "", stock: "" });
 
-    const addProduct = () => {
+    const navigate = useNavigate();
 
-        if (!form.name || !form.price) return;
-
-        const newProduct = {
-            id: Date.now(),
-            name: form.name,
-            category: form.category,
-            price: Number(form.price),
-            stock: Number(form.stock) || 0,
-        };
-
-        setProducts([newProduct, ...products]);
-
-        setForm({
-            name: "",
-            category: "Frame",
-            price: "",
-            stock: ""
-        });
-
-        setShowForm(false);
+    const fetchProducts = async () => {
+        try {
+            const res = await axios.get("http://localhost:3000/product");
+            setProducts(res.data);
+        } catch (error) {
+            console.error("Failed to fetch products", error);
+        }
     };
 
-    const removeProduct = (id) => {
-        setProducts(products.filter((p) => p.id !== id));
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+
+    const removeProduct = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this product?")) return;
+        
+        try {
+            await axios.delete(`http://localhost:3000/product/${id}`);
+            setProducts(products.filter((p) => p.id !== id));
+        } catch (error) {
+            console.error("Failed to delete product", error);
+            alert("Error deleting product");
+        }
     };
 
     const filtered = products.filter((p) =>
-        p.name.toLowerCase().includes(search.toLowerCase())
+        p.productName?.toLowerCase().includes(search.toLowerCase()) || 
+        p.code?.toLowerCase().includes(search.toLowerCase())
     );
 
-    const totalValue = products.reduce((s, p) => s + p.price, 0);
+    const totalValue = products.reduce((s, p) => s + Number(p.rate || 0), 0).toFixed(2);
 
     return (
-
         <div className="pm-root">
-
             <div className="pm-header">
-
                 <div>
                     <p className="pm-subtitle">Inventory & Catalog</p>
                     <h1 className="pm-title">Product Management</h1>
@@ -71,15 +60,13 @@ export default function Products() {
 
                 <button
                     className="pm-add-btn"
-                    onClick={() => setShowForm(!showForm)}
+                    onClick={() => navigate('/admin/products/add')}
                 >
-                    Add Product
+                    + Add Product
                 </button>
-
             </div>
 
             <div className="pm-stats">
-
                 <div className="pm-stat">
                     <span>{products.length}</span>
                     <p>Products</p>
@@ -87,103 +74,57 @@ export default function Products() {
 
                 <div className="pm-stat">
                     <span>₹{totalValue}</span>
-                    <p>Total Value</p>
+                    <p>Total Catalog Value</p>
                 </div>
-
             </div>
-
-            {showForm && (
-
-                <div className="pm-form">
-
-                    <input
-                        placeholder="Product Name"
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    />
-
-                    <select
-                        value={form.category}
-                        onChange={(e) => setForm({ ...form, category: e.target.value })}
-                    >
-                        {CATEGORIES.map((c) => (
-                            <option key={c}>{c}</option>
-                        ))}
-                    </select>
-
-                    <input
-                        type="number"
-                        placeholder="Price"
-                        value={form.price}
-                        onChange={(e) => setForm({ ...form, price: e.target.value })}
-                    />
-
-                    <input
-                        type="number"
-                        placeholder="Stock"
-                        value={form.stock}
-                        onChange={(e) => setForm({ ...form, stock: e.target.value })}
-                    />
-
-                    <button onClick={addProduct}>
-                        Save
-                    </button>
-
-                </div>
-
-            )}
 
             <input
                 className="pm-search"
-                placeholder="Search product..."
+                placeholder="Search by product name or code..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
 
             <div className="pm-table">
+                {filtered.length === 0 ? (
+                    <div style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>No products found.</div>
+                ) : (
+                    filtered.map((p) => {
+                        const meta = CATEGORY_META[p.category] || {
+                            color: "#8b5cf6",
+                            icon: "📦"
+                        };
 
-                {filtered.map((p) => {
+                        return (
+                            <div className="pm-row" key={p.id}>
+                                <div className="pm-name" style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <span style={{ fontWeight: 600 }}>{p.productName}</span>
+                                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{p.code} | {p.brand}</span>
+                                </div>
 
-                    const meta = CATEGORY_META[p.category];
+                                <div
+                                    className="pm-category"
+                                    style={{ color: meta.color, fontWeight: 500 }}
+                                >
+                                    {meta.icon} {p.category || "General"}
+                                </div>
 
-                    return (
+                                <div className="pm-price" style={{ fontWeight: 600 }}>
+                                    ₹{p.rate ? Number(p.rate).toFixed(2) : "0.00"}
+                                </div>
 
-                        <div className="pm-row" key={p.id}>
-
-                            <div className="pm-name">
-                                {p.name}
+                                <button
+                                    className="pm-delete"
+                                    onClick={() => removeProduct(p.id)}
+                                    style={{ width: '80px', textAlign: 'center' }}
+                                >
+                                    Delete
+                                </button>
                             </div>
-
-                            <div
-                                className="pm-category"
-                                style={{ color: meta.color }}
-                            >
-                                {meta.icon} {p.category}
-                            </div>
-
-                            <div className="pm-price">
-                                ₹{p.price}
-                            </div>
-
-                            <div className="pm-stock">
-                                {p.stock}
-                            </div>
-
-                            <button
-                                className="pm-delete"
-                                onClick={() => removeProduct(p.id)}
-                            >
-                                Delete
-                            </button>
-
-                        </div>
-
-                    );
-                })}
-
+                        );
+                    })
+                )}
             </div>
-
         </div>
-
     );
 }

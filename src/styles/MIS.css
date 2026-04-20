@@ -1,103 +1,287 @@
 .mis-container {
     padding: 30px;
-    background: #f6f7fb;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header Sections */
+.mis-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.mis-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
 }
 
 /* cards */
-
 .mis-cards {
     display: flex;
     gap: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .mis-card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+    background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
+    padding: 24px;
+    border-radius: 16px;
     flex: 1;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.mis-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.mis-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
 .mis-card h4 {
     color: #64748b;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px 0;
 }
 
 .mis-card h2 {
-    margin-top: 5px;
+    margin: 0 0 8px 0;
+    font-size: 32px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+}
+
+.mis-card p {
+    margin: 0;
+    font-size: 13px;
+    color: #10b981;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 /* table */
-
 .mis-table {
     background: white;
-    border-radius: 10px;
+    border-radius: 16px;
     overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f1f5f9;
 }
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 th {
-    background: #f1f5f9;
-    padding: 12px;
+    background: #f8fafc;
+    padding: 16px 20px;
     text-align: left;
     font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e2e8f0;
 }
 
 td {
-    padding: 12px;
-    border-top: 1px solid #eee;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+tbody tr:hover td {
+    background: #fdfefe;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .invoice {
+    color: #3b82f6;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.invoice:hover {
     color: #2563eb;
-    font-weight: 500;
+    text-decoration: underline;
 }
 
 .profit {
-    color: #16a34a;
-    font-weight: 600;
+    color: #059669;
+    font-weight: 700;
+}
+
+.loss {
+    color: #e11d48;
+    font-weight: 700;
 }
 
 .percent {
-    background: #dcfce7;
-    padding: 3px 8px;
-    border-radius: 12px;
+    background: #d1fae5;
+    color: #047857;
+    padding: 4px 10px;
+    border-radius: 20px;
     font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.percent-loss {
+    background: #ffe4e6;
+    color: #be123c;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+/* loading */
+.mis-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e2e8f0;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 15px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* report */
-
 .report-card {
     background: white;
-    padding: 30px;
-    border-radius: 12px;
-    max-width: 800px;
-    margin: auto;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 900px;
+    margin: 20px auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.report-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
 }
 
 .report-title {
-    text-align: center;
-    margin-bottom: 5px;
+    font-size: 32px;
+    font-weight: 900;
+    color: #1e293b;
+    margin: 0 0 10px 0;
+    background: linear-gradient(135deg, #1e293b, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .report-date {
-    text-align: center;
     color: #64748b;
-    margin-bottom: 25px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .report-stats {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 25px;
+    gap: 20px;
+    margin-bottom: 40px;
 }
 
-.report-table table {
-    width: 100%;
+.report-stat-box {
+    flex: 1;
+    background: #f8fafc;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.3s ease;
+}
+
+.report-stat-box:hover {
+    transform: translateY(-5px);
+}
+
+.report-stat-box h3 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 5px 0;
+}
+
+.report-stat-box p {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.date-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.date-selector input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    background: transparent;
 }

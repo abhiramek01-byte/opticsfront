@@ -52,20 +52,16 @@ export default function AdminSidebar() {
 
                         <span className="icon">{item.icon}</span>
                         <span className="text">{item.name}</span>
-
                     </Link>
-
                 ))}
 
+                {/* LOGOUT BUTTON PLACED DIRECTLY BELOW REPORTS */}
+                <button className="admin-link admin-logout-btn" onClick={handleLogout} style={{ border: 'none', background: 'transparent', textAlign: 'left', width: '100%', fontFamily: 'inherit', fontSize: 'inherit', cursor: 'pointer', marginTop: '10px' }}>
+                    <span className="icon" style={{ color: '#ef4444' }}><FaSignOutAlt /></span>
+                    <span className="text" style={{ color: '#ef4444', fontWeight: '500' }}>Logout</span>
+                </button>
+
             </div>
-
-            {/* LOGOUT */}
-            <button className="admin-logout" onClick={handleLogout}>
-
-                <FaSignOutAlt />
-                <span>Logout</span>
-
-            </button>
 
         </aside>
 

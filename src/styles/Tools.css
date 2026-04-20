@@ -1,81 +1,245 @@
 .tool-page {
     padding: 30px;
-    background: #f6f7fb;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
 }
 
 .tool-header {
-    margin-bottom: 20px;
-}
-
-.barcode-form {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.form-row {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.tool-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* Modern Card Layout */
+.modern-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
-input,
-textarea {
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label, .form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input, select, textarea {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #334155;
+    background: #f8fafc;
+    transition: all 0.2s ease;
 }
 
-.barcode-table table {
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Table Design */
+.barcode-table {
+    margin-top: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modern-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
 }
 
-th,
-td {
-    border: 1px solid #eee;
-    padding: 10px;
+.modern-table th {
+    background: #f1f5f9;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e2e8f0;
 }
 
-.tool-buttons {
-    margin-top: 10px;
+.modern-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.modern-table td input {
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.modern-table td input:focus {
+    background: white;
+    border-color: #3b82f6;
+}
+
+/* Button Stylings */
+.tool-buttons, .bulk-buttons {
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 25px;
+    justify-content: flex-end;
 }
 
-.save {
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+button:hover {
+    background: #f8fafc;
+    color: #334155;
+    transform: translateY(-1px);
+}
+
+button.add-row-btn {
+    width: 100%;
+    background: #f1f5f9;
+    border-radius: 0;
+    border: none;
+    padding: 12px;
+    color: #3b82f6;
+    border-top: 1px solid #e2e8f0;
+}
+
+button.add-row-btn:hover {
+    background: #e2e8f0;
+}
+
+button.save, button.send {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+}
+
+button.save:hover, button.send:hover {
     background: #2563eb;
     color: white;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
 }
 
-/* bulk message */
+button.delete {
+    background: #fef2f2;
+    color: #ef4444;
+    border-color: #fecaca;
+}
 
+button.delete:hover {
+    background: #fee2e2;
+}
+
+/* Bulk Layout */
 .bulk-layout {
     display: flex;
-    gap: 20px;
+    gap: 24px;
+    margin-top: 20px;
+    align-items: stretch;
 }
 
 .customer-list {
     flex: 1;
     background: white;
-    padding: 20px;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    height: 500px;
+    overflow-y: auto;
 }
 
 .message-box {
     flex: 1;
     background: white;
-    padding: 20px;
-}
-
-.bulk-buttons {
-    margin-top: 10px;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(226, 232, 240, 0.8);
     display: flex;
-    gap: 10px;
+    flex-direction: column;
 }
 
-.send {
-    background: #16a34a;
-    color: white;
+.customer-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 8px;
+}
+
+.customer-item:hover {
+    background: #f8fafc;
+}
+
+.customer-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    background: white;
+}
+
+.char-counter {
+    text-align: right;
+    font-size: 13px;
+    font-weight: 500;
+    padding-top: 10px;
+    color: #64748b;
+}
+
+/* list loader */
+.loader-text {
+    text-align: center;
+    color: #94a3b8;
+    padding: 20px;
+    font-weight: 500;
 }

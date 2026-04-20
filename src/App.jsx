@@ -63,6 +63,7 @@ import Sales from "./pages/sales/Sales";
 import SalesReturn from "./pages/sales/SalesReturn";
 import SalesTaxSummary from "./pages/sales/SalesTaxSummary";
 import SalesTaxReport from "./pages/sales/SalesTaxReport";
+import Billing from "./pages/sales/Billing";
 
 import ViewProduct from "./pages/product/ViewProduct";
 import AddProduct from "./pages/product/AddProduct";
@@ -106,6 +107,8 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import Products from "./pages/admin/AdminProducts";
 import Vendors from "./pages/admin/AdminVendors";
 import Reports from "./pages/admin/AdminReports";
+import AdminAddProduct from "./pages/admin/AdminAddProduct";
+import AdminAddVendor from "./pages/admin/AdminAddVendor";
 
 
 
@@ -176,6 +179,8 @@ import "./styles/ProductListPage.css";
 import "./styles/About.css";
 import "./styles/Admin.css";
 import "./styles/AdminDashboard.css";
+import "./styles/PurchaseReturn.css";
+import "./styles/Billing.css";
 
 function AdminRoute({ children }) {
 
@@ -219,7 +224,7 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/master/vendor" element={<Vendor />} />
           <Route path="/customer" element={<Customer />} />
           <Route path="/master/customer" element={<Customer />} />
-          <Route path="/brand" element={<Brand />} />
+          <Route path="/master/brand" element={<Brand />} />
           <Route path="/product" element={<Product />} />
           <Route path="/master/salesman" element={<SalesMan />} />
           <Route path="/master/doctor" element={<Doctor />} />
@@ -253,7 +258,7 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/accounts/account" element={<Account />} />
           <Route path="/accounts/cashreceipt" element={<CashReceipt />} />
           <Route path="/accounts/cashpayment" element={<CashPayment />} />
-          <Route path="/accounts/billwise" element={<BillWisePayment />} />
+          <Route path="/accounts/billwisepayment" element={<BillWisePayment />} />
           <Route path="/accounts/journal" element={<Journal />} />
           <Route path="/accounts/expensedistribution" element={<ExpenseDistribution />} />
           <Route path="/accounts/customercenter" element={<CustomerCenter />} />
@@ -270,6 +275,9 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
           <Route path="/sales-return" element={<SalesReturn />} />
           <Route path="/sales-tax-summary" element={<SalesTaxSummary />} />
           <Route path="/sales-tax-report" element={<SalesTaxReport />} />
+          <Route path="/billing" element={<Billing />} />
+          <Route path="/billing/:id" element={<Billing />} />
+
 
           <Route path="/viewProduct" element={<ViewProduct />} />
           <Route path="/addProduct" element={<AddProduct />} />
@@ -389,7 +397,9 @@ export default function App() {
         <Route path="branches" element={<BranchManagement />} />
         <Route path="users" element={<UserManagement />} />
         <Route path="products" element={<Products />} />
+        <Route path="products/add" element={<AdminAddProduct />} />
         <Route path="vendors" element={<Vendors />} />
+        <Route path="vendors/add" element={<AdminAddVendor />} />
         <Route path="reports" element={<Reports />} />
       </Route>
 
