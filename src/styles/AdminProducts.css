@@ -51,18 +51,16 @@
 }
 
 .pm-stat {
-    background: #f3f4f6;
+    background: #151619;
     padding: 14px;
     border-radius: 10px;
     text-align: center;
-    color: #111;
     min-width: 120px;
 }
 
 .pm-stat span {
     font-size: 20px;
     font-weight: 700;
-    color: #000;
 }
 
 /* FORM */
@@ -98,7 +96,6 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     margin-bottom: 20px;
-    color: #000;
 }
 
 /* TABLE */
@@ -111,12 +108,14 @@
 
 .pm-row {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+    grid-template-columns: 2.5fr 1.5fr 1fr 1fr 140px;
+    /* FIXED */
     align-items: center;
     padding: 14px;
     border: 1px solid #e5e7eb;
     border-radius: 8px;
     background: #ffffff;
+    gap: 10px;
 }
 
 .pm-row:hover {
@@ -127,12 +126,10 @@
 
 .pm-name {
     font-weight: 600;
-    color: #000;
 }
 
 .pm-price {
     font-weight: 700;
-    color: #000;
 }
 
 .pm-stock {
@@ -140,10 +137,33 @@
 }
 
 .pm-category {
-    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    /* FIX TEXT CUT */
 }
 
-/* DELETE BUTTON */
+/* ACTIONS */
+
+.pm-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.pm-edit {
+    background: #e5e7eb;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.pm-edit:hover {
+    background: #d1d5db;
+}
+
+/* DELETE */
 
 .pm-delete {
     background: #ef4444;

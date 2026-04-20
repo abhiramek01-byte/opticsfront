@@ -1,45 +1,62 @@
 import "../../styles/Tools.css";
 
 export default function ToolsRegistration() {
-    return (
-        <div className="tool-page">
+  return (
+    <div className="tool-page">
 
-            <h2>Customer Registration</h2>
+      {/* HEADER */}
+      <div className="page-header">
+        <h2>Customer Registration</h2>
 
-            <div className="registration-grid">
+        <div className="top-actions">
+          <button className="btn cancel-btn">Cancel</button>
+          <button className="btn clear-btn">Clear</button>
+          <button className="btn save-btn">Save</button>
+        </div>
+      </div>
 
-                <div className="form-card">
+      {/* CARD */}
+      <div className="card">
 
-                    <label>Customer Name</label>
-                    <input type="text" placeholder="Full name" />
+        <div className="form-grid">
 
-                    <label>Address</label>
-                    <textarea placeholder="Street, City"></textarea>
+          <div className="form-group">
+            <label>Customer Name</label>
+            <input placeholder="Full name" />
+          </div>
 
-                    <label>Phone</label>
-                    <input type="text" />
+          <div className="form-group">
+            <label>Phone</label>
+            <input />
+          </div>
 
-                    <label>Date of Birth</label>
-                    <input type="date" />
+          <div className="form-group full">
+            <label>Address</label>
+            <textarea placeholder="Street, City"></textarea>
+          </div>
 
-                    <label>Gender</label>
-                    <div className="radio-group">
-                        <label><input type="radio" /> Male</label>
-                        <label><input type="radio" /> Female</label>
-                    </div>
+          <div className="form-group">
+            <label>Date of Birth</label>
+            <input type="date" />
+          </div>
 
-                </div>
-
-                <div className="notes-card">
-
-                    <h4>Quick Notes</h4>
-
-                    <textarea placeholder="Add medical history..."></textarea>
-
-                </div>
-
+          <div className="form-group">
+            <label>Gender</label>
+            <div className="radio-group">
+              <label><input type="radio" name="gender" /> Male</label>
+            <label><input type="radio" name="gender" /> Female</label>
             </div>
+          </div>
+
+          <div className="form-group full">
+            <label>Quick Notes</label>
+            <textarea placeholder="Add medical history..." />
+          </div>
 
         </div>
-    );
+
+      </div>
+
+    </div>
+  );
 }

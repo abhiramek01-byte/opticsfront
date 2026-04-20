@@ -1,78 +1,107 @@
 import "../../styles/AdminReports.css";
 
-export default function AdminReports() {
+import { FaRupeeSign, FaShoppingCart, FaBox, FaUsers } from "react-icons/fa";
 
-    const stats = [
-        { title: "Total Sales", value: "₹1,25,000" },
-        { title: "Total Orders", value: "320" },
-        { title: "Products Sold", value: "540" },
-        { title: "Active Vendors", value: "12" },
-    ];
+export default function Reports() {
+  return (
+    <div className="report-root">
 
-    const topProducts = [
-        { name: "RayBan Frame", sold: 120 },
-        { name: "Blue Cut Lens", sold: 95 },
-        { name: "Reading Glass", sold: 80 },
-    ];
+      <h1 className="report-title">Business Reports</h1>
+      <p className="report-subtitle">Analyse sales and performance</p>
 
-    const vendors = [
-        { name: "Vision Optics", revenue: "₹45,000" },
-        { name: "Clear Lens Co.", revenue: "₹30,000" },
-        { name: "EyeCare Supplies", revenue: "₹22,000" },
-    ];
+      <div className="report-stats">
 
-    return (
-        <div className="report-root">
+        <div className="report-card sales">
+          <div className="report-icon"><FaRupeeSign /></div>
+          <h3>Total Sales</h3>
+          <p>₹1,25,000</p>
+        </div>
 
-            <h1 className="report-title">Business Reports</h1>
-            <p className="report-subtitle">Analyse sales and performance</p>
+        <div className="report-card orders">
+          <div className="report-icon"><FaShoppingCart /></div>
+          <h3>Total Orders</h3>
+          <p>320</p>
+        </div>
 
-            {/* STATISTICS */}
+        <div className="report-card products">
+          <div className="report-icon"><FaBox /></div>
+          <h3>Products Sold</h3>
+          <p>540</p>
+        </div>
 
-            <div className="report-stats">
+        <div className="report-card vendors">
+          <div className="report-icon"><FaUsers /></div>
+          <h3>Active Vendors</h3>
+          <p>12</p>
+        </div>
 
-                {stats.map((s, index) => (
-                    <div className="report-card" key={index}>
-                        <h3>{s.title}</h3>
-                        <p>{s.value}</p>
-                    </div>
-                ))}
+      </div>
 
-            </div>
+      <div className="report-grid">
 
-            {/* SECOND SECTION */}
+        <div className="report-box">
+          <h2>Top Selling Products</h2>
 
-            <div className="report-grid">
+          <ul>
+            <li>
+              <div className="list-row">
+                <span>RayBan Frame</span>
+                <span className="value">120</span>
+              </div>
+              <div className="progress"><div className="green" style={{width:"100%"}}></div></div>
+            </li>
 
-                <div className="report-box">
-                    <h2>Top Selling Products</h2>
+            <li>
+              <div className="list-row">
+                <span>Blue Cut Lens</span>
+                <span className="value">95</span>
+              </div>
+              <div className="progress"><div className="blue" style={{width:"80%"}}></div></div>
+            </li>
 
-                    <ul>
-                        {topProducts.map((p, i) => (
-                            <li key={i}>
-                                {p.name}
-                                <span>{p.sold} sold</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            <li>
+              <div className="list-row">
+                <span>Reading Glass</span>
+                <span className="value">80</span>
+              </div>
+              <div className="progress"><div className="purple" style={{width:"65%"}}></div></div>
+            </li>
+          </ul>
+        </div>
 
+        <div className="report-box">
+          <h2>Top Vendors</h2>
 
-                <div className="report-box">
-                    <h2>Top Vendors</h2>
+          <ul>
+            <li>
+              <div className="list-row">
+                <span>Vision Optics</span>
+                <span className="value">₹45,000</span>
+              </div>
+              <div className="progress"><div className="green" style={{width:"100%"}}></div></div>
+            </li>
 
-                    <ul>
-                        {vendors.map((v, i) => (
-                            <li key={i}>
-                                {v.name}
-                                <span>{v.revenue}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            <li>
+              <div className="list-row">
+                <span>Clear Lens Co.</span>
+                <span className="value">₹30,000</span>
+              </div>
+              <div className="progress"><div className="blue" style={{width:"70%"}}></div></div>
+            </li>
 
-            </div>
+            <li>
+              <div className="list-row">
+                <span>EyeCare Supplies</span>
+                <span className="value">₹22,000</span>
+              </div>
+              <div className="progress"><div className="orange" style={{width:"50%"}}></div></div>
+            </li>
+          </ul>
 
         </div>
-    );
+
+      </div>
+
+    </div>
+  );
 }

@@ -4,25 +4,53 @@
     min-height: 100vh;
 }
 
-/* topbar */
-
+/* ================= TOPBAR ================= */
 .sales-topbar {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    align-items: center;
 }
 
-.sales-topbar button {
-    padding: 6px 14px;
+/* LEFT BUTTONS */
+.nav-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+/* RIGHT BUTTONS */
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+/* BUTTON STYLE */
+.nav-buttons button,
+.action-buttons button {
+    padding: 6px 16px;
+    border-radius: 20px;
     border: 1px solid #ccc;
     background: white;
-    border-radius: 20px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
-.sales-topbar .save {
+/* COLORS */
+.save {
     background: black;
     color: white;
+    border: none;
+}
+
+.clear {
+    background: #e5e7eb;
+}
+
+.cancel {
+    background: white;
 }
 
 /* form */

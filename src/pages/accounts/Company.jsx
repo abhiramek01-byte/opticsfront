@@ -4,7 +4,7 @@ export default function Company() {
     return (
         <div className="company-page">
 
-            {/* Top Navigation */}
+            {/* ================= TOP BAR ================= */}
             <div className="company-topbar">
 
                 <div className="nav-buttons">
@@ -21,7 +21,7 @@ export default function Company() {
 
             </div>
 
-            {/* Form Container */}
+            {/* ================= FORM ================= */}
             <div className="company-card">
 
                 <div className="company-form">

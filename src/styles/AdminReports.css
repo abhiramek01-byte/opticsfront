@@ -30,6 +30,22 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
+
+/* HIGHLIGHT CARD (like Total Sales) */
+.report-card.highlight {
+    background: linear-gradient(135deg, #fbc2eb, #fcd6e6);
+    color: #111;
+    border-left: 5px solid #e91e63;
+}
+
+.report-card.highlight h3 {
+    color: #444;
+}
+
+.report-card.highlight p {
+    color: #000;
+}
+
 .report-card h3 {
     font-size: 14px;
     color: #666;

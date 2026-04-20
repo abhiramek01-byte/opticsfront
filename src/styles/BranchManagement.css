@@ -1,4 +1,4 @@
-/* PAGE */
+/* ================= PAGE ================= */
 
 .bm-root {
     background: #ffffff;
@@ -8,13 +8,13 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* CONTAINER */
+/* ================= CONTAINER ================= */
 
 .bm-card {
     width: 100%;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 .bm-header {
     margin-bottom: 20px;
@@ -26,7 +26,7 @@
     align-items: center;
 }
 
-/* TITLE */
+/* ================= TITLE ================= */
 
 .bm-eyebrow {
     font-size: 12px;
@@ -41,7 +41,7 @@
     color: #000;
 }
 
-/* STATS */
+/* ================= STATS ================= */
 
 .bm-stat-badge {
     background: #f3f4f6;
@@ -62,7 +62,7 @@
     color: #666;
 }
 
-/* FORM */
+/* ================= FORM ================= */
 
 .bm-form-row {
     display: grid;
@@ -78,6 +78,8 @@
     font-size: 14px;
 }
 
+/* ================= BUTTON ================= */
+
 .bm-add-btn {
     background: #f5b731;
     border: none;
@@ -91,7 +93,7 @@
     background: #e4a51c;
 }
 
-/* SEARCH */
+/* ================= SEARCH ================= */
 
 .bm-search-section {
     margin-bottom: 20px;
@@ -106,7 +108,7 @@
     color: #000;
 }
 
-/* TABLE */
+/* ================= TABLE ================= */
 
 .bm-table {
     display: flex;
@@ -114,11 +116,14 @@
     gap: 10px;
 }
 
-/* ROW */
+/* ================= ROW ================= */
 
 .bm-row {
     display: grid;
-    grid-template-columns: 100px 2fr 1fr 120px;
+
+    /* 🔥 UPDATED FOR MULTI COLUMN TABLE */
+    grid-template-columns: 150px repeat(3, 1fr);
+
     align-items: center;
     padding: 14px;
     border: 1px solid #e5e7eb;
@@ -131,27 +136,42 @@
     background: #f9fafb;
 }
 
-/* ID */
+/* ================= HEADER ROW ================= */
+
+.header-row {
+    background: #f59e0b;
+    color: white;
+    font-weight: 600;
+}
+
+/* ================= FIRST COLUMN HIGHLIGHT ================= */
+
+.highlight {
+    font-weight: 600;
+    color: #111;
+}
+
+/* ================= ID ================= */
 
 .bm-id {
     font-size: 13px;
     color: #555;
 }
 
-/* NAME */
+/* ================= NAME ================= */
 
 .bm-name {
     font-weight: 600;
     color: #000;
 }
 
-/* CITY */
+/* ================= CITY ================= */
 
 .bm-city {
     color: #444;
 }
 
-/* DELETE BUTTON */
+/* ================= DELETE BUTTON ================= */
 
 .bm-delete {
     background: #ef4444;
@@ -166,7 +186,7 @@
     background: #dc2626;
 }
 
-/* EMPTY STATE */
+/* ================= EMPTY STATE ================= */
 
 .bm-empty {
     padding: 40px;
@@ -176,7 +196,7 @@
     color: #777;
 }
 
-/* DELETE ANIMATION */
+/* ================= DELETE ANIMATION ================= */
 
 .deleting {
     opacity: 0;

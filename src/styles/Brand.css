@@ -24,25 +24,35 @@
     align-items: center;
 }
 
-/* BUTTONS */
+/* BUTTON BASE */
 .page-header button {
-    padding: 8px 16px;
-    border-radius: 6px;
+    padding: 8px 18px;
+    border-radius: 8px;
     font-size: 14px;
     cursor: pointer;
     border: 1px solid #d1d5db;
     background: white;
-    transition: 0.2s ease;
+    transition: all 0.2s ease;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* BUTTON TYPES */
+.btn-outline {
+    background: white;
 }
 
 .btn-primary {
-    background: black;
+    background: #111827;
     color: white;
     border: none;
 }
 
 .btn-light {
-    background: #e5e7eb;
+    background: #f1f5f9;
+    border: 1px solid #e5e7eb;
 }
 
 .btn-edit {
@@ -51,7 +61,24 @@
     border: none;
 }
 
-/* FORM WRAPPER */
+/* DISABLED PLACEHOLDER BUTTON */
+.disabled-btn {
+    width: 70px;
+    height: 36px;
+    background: #e5e7eb;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: not-allowed;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+}
+
+/* HOVER EFFECT */
+.page-header button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+/* FORM */
 .form-wrapper {
     display: flex;
     justify-content: center;
@@ -68,6 +95,26 @@
     width: 450px;
 }
 
+.card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 10px;
+}
+
+.card h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    height: 18px;
+    width: 3px;
+    background: #2563eb;
+    border-radius: 2px;
+}
+
+/* FORM GRID */
 .form-grid {
     display: grid;
     gap: 15px;
@@ -88,12 +135,17 @@
     color: #6b7280;
 }
 
+/* INPUT */
 input {
-    padding: 10px;
+    padding: 10px 12px;
     border-radius: 8px;
     border: 1px solid #e5e7eb;
     background: #f9fafb;
-    transition: 0.2s;
+    font-size: 14px;
+}
+
+input::placeholder {
+    color: #9ca3af;
 }
 
 input:focus {

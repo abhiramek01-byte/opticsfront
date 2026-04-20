@@ -1,10 +1,12 @@
+/* ================= PAGE ================= */
 .adjustment-container {
     padding: 25px;
     background: #f8fafc;
     min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .adjustment-header {
     display: flex;
     justify-content: space-between;
@@ -12,12 +14,14 @@
     margin-bottom: 20px;
 }
 
+/* BUTTON GROUP */
 .adjustment-buttons {
     display: flex;
     gap: 12px;
+    align-items: center;
 }
 
-/* BUTTONS */
+/* ================= BUTTONS ================= */
 .btn-primary {
     background: black;
     color: white;
@@ -43,7 +47,12 @@
     cursor: pointer;
 }
 
-/* CARD */
+/* HOVER */
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* ================= CARD ================= */
 .adjustment-card {
     background: white;
     padding: 20px;
@@ -51,7 +60,7 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* TABLE */
+/* ================= TABLE ================= */
 .adjustment-table {
     width: 100%;
     border-collapse: collapse;
@@ -68,14 +77,16 @@
     background: #f3f4f6;
 }
 
-.adjustment-table input {
+/* INPUTS */
+.adjustment-table input,
+.adjustment-table select {
     width: 100%;
     padding: 6px;
     border: 1px solid #d1d5db;
     border-radius: 4px;
 }
 
-/* ADD BUTTON */
+/* ================= ADD BUTTON ================= */
 .add-row-btn {
     margin-top: 15px;
     background: #e5e7eb;
@@ -85,7 +96,7 @@
     cursor: pointer;
 }
 
-/* SUMMARY */
+/* ================= SUMMARY ================= */
 .adjustment-summary {
     margin-top: 20px;
     text-align: right;

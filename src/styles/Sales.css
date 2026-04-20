@@ -1,62 +1,83 @@
+/* ================= PAGE ================= */
 .sales-page {
-    padding: 25px;
-    background: #f5f6fa;
+    padding: 20px;
+    background: #f4f6fb;
     min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
 }
 
-/* topbar */
-
+/* ================= TOPBAR ================= */
 .sales-topbar {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .sales-topbar button {
     padding: 6px 14px;
-    border: 1px solid #ccc;
+    border: 1px solid #d1d5db;
     background: white;
     border-radius: 20px;
     cursor: pointer;
+    font-size: 13px;
+    margin-right: 5px;
+}
+
+.right-actions {
+    display: flex;
+    gap: 8px;
 }
 
 .sales-topbar .save {
     background: black;
     color: white;
+    border: none;
 }
 
-/* form */
-
+/* ================= FORM ================= */
 .sales-form {
     background: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 6px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
+/* 🔥 FIXED GRID ALIGNMENT */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 12px 15px;
 }
 
+/* each field block */
+.form-grid div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* labels */
 .form-grid label {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 3px;
+}
+
+/* inputs */
+.form-grid input,
+.form-grid select {
+    padding: 6px 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
     font-size: 13px;
 }
 
-.form-grid input,
-.form-grid select {
-    padding: 6px;
-    border: 1px solid #ccc;
-}
-
-/* table */
-
+/* ================= TABLE ================= */
 .sales-table {
     background: white;
     border-radius: 6px;
     overflow: hidden;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .sales-table table {
@@ -65,56 +86,90 @@
 }
 
 .sales-table th {
-    background: #e5e7eb;
+    background: #eef1f6;
     padding: 8px;
-    border: 1px solid #ddd;
-    font-size: 13px;
-}
-
-.sales-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    border: 1px solid #e5e7eb;
+    font-size: 12px;
+    font-weight: 600;
     text-align: center;
 }
 
-/* footer */
+.sales-table td {
+    border: 1px solid #e5e7eb;
+    padding: 6px;
+    font-size: 12px;
+    text-align: center;
+}
 
+/* zebra effect */
+.sales-table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+/* ================= FOOTER ================= */
 .sales-footer {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
     background: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 6px;
 }
 
+/* notes */
 .notes {
-    width: 60%;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.notes label {
+    font-size: 12px;
+    margin-bottom: 5px;
 }
 
 .notes textarea {
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid #d1d5db;
     padding: 6px;
+    border-radius: 4px;
 }
 
+/* totals */
 .totals {
-    width: 30%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.totals input {
-    padding: 6px;
-    border: 1px solid #ccc;
+/* label + input inline */
+.totals div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.net-total {
-    font-size: 18px;
-    font-weight: 600;
+.totals label {
+    font-size: 12px;
+}
+
+.totals input {
+    width: 120px;
+    padding: 5px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
     text-align: right;
+}
+
+/* net total */
+.net-total {
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: flex-end;
 }
 
 .net-total span {
     color: red;
+    margin-left: 5px;
 }

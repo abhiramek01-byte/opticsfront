@@ -1,115 +1,166 @@
+/* ================= PAGE ================= */
 .eye-page {
     padding: 20px;
     background: #f6f7fb;
     min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
 }
 
-/* top bar */
-
+/* ================= TOP BAR ================= */
 .eye-topbar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
+/* LEFT BUTTONS */
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
 .nav-buttons button {
-    margin-right: 10px;
-    padding: 6px 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+}
+
+/* RIGHT BUTTONS */
+.action-buttons {
+    display: flex;
+    gap: 10px;
 }
 
 .action-buttons button {
-    margin-left: 10px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: none;
+  background: none;
 }
-
+/* BUTTON COLORS (FIXED) */
 .save {
-    background: black;
-    color: white;
+  background: #000 !important;
+  color: #1c1818 !important;
+  font-weight: 600;
+  border-radius: 20px;
 }
 
 .clear {
-    background: #ddd;
+    background: #e5e7eb;
+    color: #111;
 }
 
 .cancel {
-    background: white;
+    background: #fff;
     border: 1px solid #ccc;
+    color: #111;
 }
 
-/* main container */
-
+/* ================= MAIN ================= */
 .eye-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     gap: 30px;
     background: white;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 25px;
+    border-radius: 12px;
 }
 
-/* left form */
-
+/* LEFT */
 .eye-left {
-    width: 30%;
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 .eye-left label {
-    margin-top: 8px;
     font-size: 13px;
 }
 
 .eye-left input,
 .eye-left textarea,
 .eye-left select {
-    padding: 6px;
-    margin-top: 3px;
+    width: 100%;
+    padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 6px;
 }
 
-/* right prescription */
-
+/* RIGHT */
 .eye-right {
-    width: 70%;
+    width: 100%;
 }
 
 .eye-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .eye-table th,
 .eye-table td {
     border: 1px solid #ccc;
-    padding: 5px;
+    padding: 6px;
     text-align: center;
 }
 
-.eye-table input {
-    width: 60px;
-    border: none;
-    outline: none;
+.eye-table th {
+    background: #3b82f6;
+    color: white;
 }
 
+.eye-table input {
+    width: 100%;
+    border: none;
+    text-align: center;
+}
+
+/* REMARKS */
 .remarks {
     width: 100%;
-    height: 80px;
+    height: 100px;
+    padding: 8px;
+    border-radius: 6px;
     border: 1px solid #ccc;
 }
 
-/* bottom */
-
+/* ================= BOTTOM ================= */
 .eye-bottom {
     display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
 }
 
-.bottom-buttons button {
-    margin-left: 10px;
-    padding: 6px 14px;
+/* PRINT GROUP */
+.print-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.print-group select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    min-width: 150px;
+}
+
+/* PREVIEW */
+.preview-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.preview-group input {
+    width: 14px;
+    height: 14px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .eye-container {
+        grid-template-columns: 1fr;
+    }
 }

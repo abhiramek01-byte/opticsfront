@@ -183,3 +183,97 @@
 .um-row {
     color: #111;
 }
+
+
+.um-add-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.um-form {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.um-form input,
+.um-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.um-form button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+.um-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.um-edit {
+    background: #e5e7eb;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+/* ===== FIX HEADER ALIGNMENT ===== */
+
+.um-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ===== PRODUCT STYLE BUTTON ===== */
+
+.um-add-btn {
+    background: #f5b731;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.um-add-btn:hover {
+    background: #e4a51c;
+}
+
+/* ===== PRODUCT STYLE STATS ===== */
+
+.um-stats {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.um-stat-box {
+    background: #111;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 10px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.um-stat-box span {
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+
+.um-stat-box p {
+    font-size: 13px;
+    margin-top: 4px;
+}

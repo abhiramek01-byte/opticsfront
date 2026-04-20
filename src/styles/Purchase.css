@@ -1,17 +1,92 @@
+/* ================= PAGE ================= */
 .purchase-container {
     padding: 20px;
+    background: #f4f6fb;
+    min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
 }
 
-.purchase-card {
+/* ================= HEADER ================= */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
+/* BUTTON GROUP (FIXED) */
+.header-actions {
+    display: flex;
+    flex-direction: row;
+    /* ✅ CHANGED (horizontal) */
+    gap: 10px;
+    align-items: center;
+}
+
+/* ================= BUTTON ================= */
+
+/* SAVE (BLACK) */
+.os-btn-primary {
+    background: #000;        /* ✅ BLACK */
+    color: #270b0b;             /* ✅ WHITE TEXT */
+    padding: 8px 18px;
+    border: 1px solid #270b0b;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(139, 174, 248, 0.2);
+}
+
+/* CLEAR (LIGHT GRAY) */
+.os-btn-light {
+    background: #e5e7eb;
+    color: #111;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* CANCEL (OUTLINE) */
+.os-btn-outline {
+    background: #fff;
+    color: #111;
+    border: 1px solid #d1d5db;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+/* ================= CARD ================= */
+.purchase-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+/* ================= GRID ================= */
 .purchase-top-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
 }
 
+.purchase-top-grid label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.purchase-top-grid input,
+.purchase-top-grid select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+/* ================= TABLE ================= */
 .purchase-table {
     width: 100%;
     border-collapse: collapse;
@@ -20,19 +95,26 @@
 .purchase-table th,
 .purchase-table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
 }
 
 .purchase-table th {
     background: #f3f4f6;
+    text-align: left;
 }
 
+/* ================= ADD BUTTON ================= */
 .add-row {
     margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #e5e7eb;
+    cursor: pointer;
 }
 
+/* ================= TOTAL ================= */
 .purchase-summary {
-    margin-top: 20px;
     text-align: right;
     font-size: 18px;
     font-weight: bold;

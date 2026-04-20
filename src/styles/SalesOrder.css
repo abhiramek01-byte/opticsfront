@@ -1,32 +1,66 @@
+/* ================= PAGE ================= */
 .sales-page {
     padding: 25px;
     background: #f5f6fa;
     min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
 }
 
-/* topbar */
-
+/* ================= TOPBAR ================= */
 .sales-topbar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-.sales-topbar button {
+/* LEFT BUTTONS */
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+/* RIGHT BUTTONS */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+/* COMMON BUTTON STYLE */
+.nav-buttons button,
+.action-buttons button {
     padding: 6px 16px;
     border: 1px solid #ccc;
     background: white;
     border-radius: 20px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
 }
 
-.sales-topbar .save {
+/* BUTTON COLORS */
+.save {
     background: black;
     color: white;
+    border: none;
 }
 
-/* form */
+.clear {
+    background: #e5e7eb;
+    border: none;
+}
 
+.cancel {
+    background: white;
+}
+
+/* ================= FORM ================= */
 .sales-form {
     background: white;
     padding: 20px;
@@ -48,10 +82,10 @@
 .form-grid select {
     padding: 6px;
     border: 1px solid #ccc;
+    width: 100%;
 }
 
-/* prescription */
-
+/* ================= PRESCRIPTION ================= */
 .prescription {
     background: white;
     padding: 20px;
@@ -71,8 +105,7 @@
     border: 1px solid #ccc;
 }
 
-/* table */
-
+/* ================= TABLE ================= */
 .sales-table {
     background: white;
     border-radius: 6px;
@@ -98,8 +131,7 @@
     text-align: center;
 }
 
-/* footer */
-
+/* ================= FOOTER ================= */
 .sales-footer {
     display: flex;
     justify-content: space-between;
@@ -138,4 +170,25 @@
 
 .net-total span {
     color: red;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .eye-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .sales-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .notes,
+    .totals {
+        width: 100%;
+    }
 }

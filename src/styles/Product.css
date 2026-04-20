@@ -1,60 +1,162 @@
-.product-wrapper {
-    margin-top: 20px;
+/* PAGE */
+.page {
+  background: #f4f6fb;
+  min-height: 100vh;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
 }
 
-.product-card {
-    padding: 25px;
+/* CARD */
+.card {
+  width: 100%;
+  max-width: 1100px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 25px 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
-.product-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+/* HEADER */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
-.product-column {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* TITLE */
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.barcode-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 15px;
+.bar {
+  width: 4px;
+  height: 20px;
+  background: #6366f1;
+  border-radius: 2px;
 }
 
-.product-bottom-buttons {
-    margin-top: 25px;
-    display: flex;
-    gap: 15px;
+/* BUTTONS */
+.actions {
+  display: flex;
+  gap: 10px;
 }
 
-.product-bottom-buttons button {
-    padding: 8px 18px;
-    border-radius: 20px;
-    border: 1px solid #d1d5db;
-    background: white;
-    cursor: pointer;
-    transition: 0.2s ease;
+.btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
 }
 
-.product-bottom-buttons {
-    margin-top: 25px;
-    display: flex;
-    gap: 15px;
+/* BUTTON TYPES */
+.cancel {
+  background: #f1f5f9;
 }
 
-.product-bottom-buttons button {
-    padding: 8px 18px;
-    border-radius: 20px;
-    border: 1px solid #d1d5db;
-    background: white;
-    cursor: pointer;
-    transition: 0.2s ease;
+.clear {
+  background: #e2e8f0;
 }
 
-.product-bottom-buttons button:hover {
-    background: #f3f4f6;
+.save {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 25px;
+}
+
+/* FULL WIDTH */
+.full {
+  grid-column: span 2;
+}
+
+/* FIELD */
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* LABEL */
+.field label {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+/* INPUT */
+.field input {
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 0 12px;
+  font-size: 14px;
+  background: #f9fafb;
+  transition: 0.2s;
+}
+
+.field input:focus {
+  border-color: #6366f1;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.15);
+}
+  
+
+/* CHECKBOX ROW (LEFT ALIGN FIX) */
+.checkbox-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* CHECKBOX ROW (FINAL FIX) */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  justify-self: start;   /* 🔥 THIS FIXES LEFT ALIGN IN GRID */
+}
+
+/* PURCHASE BUTTON */
+.purchase {
+  background: #0ea5e9;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(14,165,233,0.3);
+}
+
+/* SALES BUTTON */
+.sales {
+  background: #10b981;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(16,185,129,0.3);
+}
+
+/* HOVER EFFECT */
+.purchase:hover {
+  background: #0284c7;
+}
+
+.sales:hover {
+  background: #059669;
+}
+
+/* OUTLINE BUTTON */
+.outline {
+  background: transparent;
+  border: 1px solid #cbd5e1;
 }
