@@ -148,6 +148,26 @@
     color: white;
 }
 
+
+/* SUBMENU */
+
+.admin-submenu {
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+}
+
+.admin-sublink {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 0;
+}
+
+.admin-sublink:hover {
+    color: white;
+}
+
 /* CONTENT AREA */
 .admin-content {
     flex: 1;
