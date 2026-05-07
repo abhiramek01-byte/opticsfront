@@ -50,6 +50,7 @@ export default function ProductListPage() {
         <div className="product-page">
 
             {/* HEADER */}
+            {/* HEADER */}
 
             <div className="product-header">
 
