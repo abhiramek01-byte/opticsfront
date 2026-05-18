@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../../styles/PurchaseReturn.css";
+import { FaUndo, FaSave, FaTimes, FaBuilding, FaFileInvoice, FaCalendarAlt, FaTag, FaPlus, FaBox } from "react-icons/fa";
+import "../../styles/Purchase.css"; // Reuse the modern Purchase styles
 
 export default function PurchaseReturn() {
 
@@ -8,6 +9,7 @@ export default function PurchaseReturn() {
     const [products, setProducts] = useState([]);
 
     const [form, setForm] = useState({
+        voucherType: "Purchase Return (PR)",
         vendorId: "",
         invoiceNo: "",
         date: ""
@@ -17,16 +19,15 @@ export default function PurchaseReturn() {
         { productId: "", qty: 1, rate: 0, amount: 0 }
     ]);
 
-    // 🔹 Load Vendors
+    // 🔹 Load Vendors & Products with branch-id
     useEffect(() => {
-        axios.get("http://localhost:3000/vendor/getvendors")
+        const headers = { "branch-id": localStorage.getItem("branchId") || "" };
+
+        axios.get("http://localhost:3000/vendors", { headers })
             .then(res => setVendors(res.data))
             .catch(err => console.log(err));
-    }, []);
 
-    // 🔹 Load Products
-    useEffect(() => {
-        axios.get("http://localhost:3000/product")
+        axios.get("http://localhost:3000/product", { headers })
             .then(res => setProducts(res.data))
             .catch(err => console.log(err));
     }, []);
@@ -64,7 +65,7 @@ export default function PurchaseReturn() {
 
     // 🔹 Clear
     const handleClear = () => {
-        setForm({ vendorId: "", invoiceNo: "", date: "" });
+        setForm({ voucherType: "Purchase Return (PR)", vendorId: "", invoiceNo: "", date: "" });
         setItems([{ productId: "", qty: 1, rate: 0, amount: 0 }]);
     };
 
@@ -74,13 +75,13 @@ export default function PurchaseReturn() {
     // 🔥 SAVE
     const handleSave = async () => {
         try {
-
             if (!form.vendorId) {
                 alert("Select Vendor ❌");
                 return;
             }
 
             const payload = {
+                voucherType: form.voucherType,
                 vendorId: Number(form.vendorId),
                 invoiceNo: form.invoiceNo,
                 date: form.date,
@@ -92,10 +93,11 @@ export default function PurchaseReturn() {
                 }))
             };
 
-            await axios.post("http://localhost:3000/purchase-return", payload);
+            await axios.post("http://localhost:3000/purchase-return", payload, {
+                headers: { "branch-id": localStorage.getItem("branchId") || "" }
+            });
 
             alert("Purchase Return Saved ✅");
-
             handleClear();
 
         } catch (err) {
@@ -105,16 +107,16 @@ export default function PurchaseReturn() {
     };
 
     return (
-        <div className="purchase-container modern">
+        <div className="purchase-container">
 
             {/* HEADER */}
             <div className="header-bar">
-                <h2>Purchase Return</h2>
+                <h2><FaUndo /> Purchase Return</h2>
 
                 <div className="header-buttons">
-                    <button className="btn-outline">Cancel</button>
-                    <button className="btn-light" onClick={handleClear}>Clear</button>
-                    <button className="btn-primary" onClick={handleSave}>Save</button>
+                    <button className="btn-outline"><FaTimes /> Cancel</button>
+                    <button className="btn-light" onClick={handleClear}><FaUndo /> Clear</button>
+                    <button className="btn-primary" onClick={handleSave}><FaSave /> Save Return</button>
                 </div>
             </div>
 
@@ -123,20 +125,27 @@ export default function PurchaseReturn() {
                 <div className="grid-4">
 
                     <div className="field">
-                        <label>Voucher Type</label>
-                        <select>
-                            <option>Purchase Return</option>
+                        <label><FaTag /> Voucher Type</label>
+                        <select
+                            className="modern-select"
+                            name="voucherType"
+                            value={form.voucherType}
+                            onChange={handleFormChange}
+                        >
+                            <option value="Purchase Return (PR)">Purchase Return (PR)</option>
+                            <option value="Debit Note (DN)">Debit Note (DN)</option>
                         </select>
                     </div>
 
                     <div className="field">
-                        <label>Vendor</label>
+                        <label><FaBuilding /> Vendor</label>
                         <select
+                            className="modern-select"
                             name="vendorId"
                             value={form.vendorId}
                             onChange={handleFormChange}
                         >
-                            <option value="">Select Vendor</option>
+                            <option value="">Select Vendor...</option>
                             {vendors.map(v => (
                                 <option key={v.id} value={v.id}>
                                     {v.name}
@@ -146,18 +155,20 @@ export default function PurchaseReturn() {
                     </div>
 
                     <div className="field">
-                        <label>Return Invoice</label>
+                        <label><FaFileInvoice /> Return Invoice</label>
                         <input
+                            className="modern-input"
                             name="invoiceNo"
                             value={form.invoiceNo}
                             onChange={handleFormChange}
-                            placeholder="INV-001"
+                            placeholder="Auto-generated if left blank"
                         />
                     </div>
 
                     <div className="field">
-                        <label>Date</label>
+                        <label><FaCalendarAlt /> Date</label>
                         <input
+                            className="modern-input"
                             type="date"
                             name="date"
                             value={form.date}
@@ -174,10 +185,10 @@ export default function PurchaseReturn() {
                 <table className="modern-table">
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Rate</th>
-                            <th>Amount</th>
+                            <th><FaBox style={{ verticalAlign: 'middle', marginRight: '5px' }} /> Product</th>
+                            <th style={{ width: '15%' }}>Qty</th>
+                            <th style={{ width: '20%' }}>Rate (₹)</th>
+                            <th style={{ width: '20%' }}>Amount (₹)</th>
                         </tr>
                     </thead>
 
@@ -192,7 +203,7 @@ export default function PurchaseReturn() {
                                             handleItemChange(index, "productId", e.target.value)
                                         }
                                     >
-                                        <option value="">Select</option>
+                                        <option value="">Select Product...</option>
                                         {products.map(p => (
                                             <option key={p.id} value={p.id}>
                                                 {p.productName}
@@ -204,6 +215,7 @@ export default function PurchaseReturn() {
                                 <td>
                                     <input
                                         type="number"
+                                        min="1"
                                         value={item.qty}
                                         onChange={(e) =>
                                             handleItemChange(index, "qty", e.target.value)
@@ -214,6 +226,8 @@ export default function PurchaseReturn() {
                                 <td>
                                     <input
                                         type="number"
+                                        min="0"
+                                        step="0.01"
                                         value={item.rate}
                                         onChange={(e) =>
                                             handleItemChange(index, "rate", e.target.value)
@@ -221,8 +235,8 @@ export default function PurchaseReturn() {
                                     />
                                 </td>
 
-                                <td className="amount">
-                                    ₹ {item.amount}
+                                <td className="amount-col">
+                                    ₹ {item.amount.toFixed(2)}
                                 </td>
                             </tr>
                         ))}
@@ -230,15 +244,15 @@ export default function PurchaseReturn() {
                 </table>
 
                 <button className="add-btn" onClick={addRow}>
-                    + Add Item
+                    <FaPlus /> Add Item
                 </button>
 
             </div>
 
             {/* TOTAL */}
             <div className="summary-box">
-                <h3>Total Return</h3>
-                <span>₹ {total}</span>
+                <h3>Total Return Amount</h3>
+                <span>₹ {total.toFixed(2)}</span>
             </div>
 
         </div>

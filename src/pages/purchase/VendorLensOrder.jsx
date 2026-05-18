@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "../../styles/VendorLensOrder.css";
 
 export default function VendorLensOrder() {
 
     const [orders, setOrders] = useState([]);
+    const [vendors, setVendors] = useState([]);
+
+    useEffect(() => {
+        const headers = { "branch-id": localStorage.getItem("branchId") || "" };
+        axios.get("http://localhost:3000/vendors", { headers })
+            .then(res => setVendors(res.data))
+            .catch(err => console.log(err));
+    }, []);
 
     const [form, setForm] = useState({
         vendor: "",
@@ -51,12 +60,16 @@ export default function VendorLensOrder() {
 
                         <div className="form-group">
                             <label>Vendor</label>
-                            <input
+                            <select
                                 name="vendor"
                                 value={form.vendor}
                                 onChange={handleChange}
-                                placeholder="Select Vendor"
-                            />
+                            >
+                                <option value="">Select Vendor</option>
+                                {vendors.map(v => (
+                                    <option key={v.id} value={v.name}>{v.name}</option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="form-group">

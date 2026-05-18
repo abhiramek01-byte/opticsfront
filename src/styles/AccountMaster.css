@@ -1,4 +1,4 @@
-.registration-page {
+.master-page {
     padding: 20px 30px;
     background: #f1f5f9;
     min-height: calc(100vh - 60px);
@@ -7,28 +7,25 @@
 }
 
 /* TOPBAR */
-.registration-topbar {
+.master-topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    padding: 16px 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.page-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1e293b;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.action-buttons {
+.nav-buttons, .action-buttons {
     display: flex;
     gap: 12px;
 }
 
-.action-btn {
+.master-btn {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -41,33 +38,60 @@
     transition: all 0.2s ease;
 }
 
-.action-btn.cancel {
+.master-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Specific Buttons */
+.master-btn.nav {
     background: #f8fafc;
-    color: #64748b;
+    color: #475569;
     border: 1px solid #cbd5e1;
 }
 
-.action-btn.cancel:hover {
+.master-btn.nav:hover:not(:disabled) {
     background: #f1f5f9;
+    color: #0f172a;
 }
 
-.action-btn.clear {
+.master-btn.new {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #93c5fd;
+}
+
+.master-btn.new:hover {
+    background: #dbeafe;
+}
+
+.master-btn.delete {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.master-btn.delete:hover {
+    background: #fee2e2;
+}
+
+.master-btn.clear {
     background: #fffbeb;
     color: #b45309;
     border: 1px solid #fde68a;
 }
 
-.action-btn.clear:hover {
+.master-btn.clear:hover {
     background: #fef3c7;
 }
 
-.action-btn.save {
+.master-btn.save {
     background: #0f172a;
     color: white;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.action-btn.save:hover {
+.master-btn.save:hover:not(:disabled) {
     background: #1e293b;
     transform: translateY(-1px);
 }
@@ -78,43 +102,44 @@
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
+    padding: 32px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.panel-header {
-    font-size: 16px;
-    font-weight: 600;
-    color: #334155;
-    margin-bottom: 20px;
+.form-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 24px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 12px;
+    padding-bottom: 16px;
 }
 
-/* GRID LAYOUT */
-.form-grid-2col {
+/* FORM LAYOUT */
+.master-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 20px;
 }
 
-.form-column {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.input-group {
+.form-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.input-group label {
+.form-group label {
     font-size: 13px;
     font-weight: 500;
     color: #64748b;
@@ -126,7 +151,7 @@
 .modern-input,
 .modern-select,
 .modern-textarea {
-    padding: 10px 14px;
+    padding: 12px 14px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     font-size: 14px;
@@ -150,42 +175,18 @@
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.modern-input[readonly],
-.modern-textarea[readonly] {
-    background: #f8fafc;
-    color: #94a3b8;
-    cursor: not-allowed;
-}
-
-/* FILE UPLOAD */
-.upload-box {
-    border: 2px dashed #cbd5e1;
-    border-radius: 12px;
-    padding: 40px;
-    text-align: center;
-    background: #f8fafc;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    color: #64748b;
-}
-
-.upload-box:hover {
-    border-color: #3b82f6;
-    background: #eff6ff;
-    color: #2563eb;
-}
-
-.upload-box input[type="file"] {
-    display: none;
-}
-
-@media (max-width: 900px) {
-    .form-grid-2col {
+@media (max-width: 768px) {
+    .master-topbar {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .nav-buttons, .action-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .form-row {
         grid-template-columns: 1fr;
     }
 }

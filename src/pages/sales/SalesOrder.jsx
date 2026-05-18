@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { 
+    FaUser, FaCalendar, FaPhone, FaMapMarkerAlt, 
+    FaPlus, FaSave, FaArrowLeft, FaEye, FaTrash,
+    FaFileInvoiceDollar, FaNotesMedical, FaList
+} from "react-icons/fa";
 import "../../styles/SalesOrder.css";
 
 export default function SalesOrder() {
@@ -48,58 +53,83 @@ export default function SalesOrder() {
         setOrder({ ...order, [e.target.name]: value });
     };
 
+    // 🔹 EYE PRESCRIPTION CHANGE
+    const handleEyeChange = (e) => {
+        setEye({ ...eye, [e.target.name]: e.target.value });
+    };
+
     // 🔹 ITEM CHANGE
-    const handleItemChange = async (index, e) => {
-        const newItems = [...items];
+    const handleItemChange = (index, e) => {
         const { name, value } = e.target;
 
-        newItems[index][name] = value;
+        setItems(prevItems => {
+            const newItems = [...prevItems];
+            newItems[index] = { ...newItems[index], [name]: value };
 
-        // 🔥 BARCODE FETCH
-        if (name === "barcode" && value) {
-            try {
-                const res = await fetch(`http://localhost:3000/product/barcode/${value}`);
-                const data = await res.json();
-
-                if (data) {
-                    newItems[index].productId = data.id;
-                    newItems[index].product = data.productName;
-                    newItems[index].model = data.modelCode;
-                    newItems[index].rate = data.rate || 0;
-                    newItems[index].qty = 1;
-                    newItems[index].total = data.rate || 0;
-                } else {
-                    alert("Product not found ❌");
-                }
-            } catch {
-                alert("Error fetching product");
+            if (name !== "barcode") {
+                const qty = Number(newItems[index].qty) || 0;
+                const rate = Number(newItems[index].rate) || 0;
+                const discount = Number(newItems[index].discount) || 0;
+                newItems[index].total = (qty * rate) - discount;
             }
+            
+            // We still want to recalculate global totals. It's safe to call here with newItems.
+            calculateTotals(newItems, order.discount);
+            return newItems;
+        });
+
+        // 🔥 BARCODE FETCH (Non-blocking)
+        if (name === "barcode" && value) {
+            fetch(`http://localhost:3000/product/barcode/${value}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.id) {
+                        setItems(prevItems => {
+                            const newItems = [...prevItems];
+                            newItems[index] = {
+                                ...newItems[index],
+                                productId: data.id,
+                                product: data.productName,
+                                model: data.modelCode,
+                                rate: data.rate || 0,
+                                qty: 1,
+                                total: data.rate || 0
+                            };
+                            calculateTotals(newItems, order.discount);
+                            return newItems;
+                        });
+                    }
+                })
+                .catch(err => console.error("Error fetching product by barcode:", err));
         }
-
-        // CALCULATION
-        const qty = Number(newItems[index].qty);
-        const rate = Number(newItems[index].rate);
-        const discount = Number(newItems[index].discount);
-
-        newItems[index].total = qty * rate - discount;
-
-        setItems(newItems);
-        calculateTotals(newItems);
     };
 
     const addRow = () => {
         setItems([...items, { barcode: "", productId: "", product: "", model: "", qty: 1, rate: 0, discount: 0, total: 0 }]);
     };
 
-    // 🔹 TOTAL
-    const calculateTotals = (itemsList) => {
-        const total = itemsList.reduce((sum, item) => sum + Number(item.total), 0);
+    const removeRow = (index) => {
+        const newItems = items.filter((_, i) => i !== index);
+        setItems(newItems);
+        calculateTotals(newItems, order.discount);
+    };
 
+    // 🔹 TOTAL
+    const calculateTotals = (itemsList, globalDiscount) => {
+        const total = itemsList.reduce((sum, item) => sum + Number(item.total), 0);
+        
         setOrder(prev => ({
             ...prev,
             total,
-            netTotal: total - Number(prev.discount)
+            discount: globalDiscount,
+            netTotal: total - Number(globalDiscount || 0)
         }));
+    };
+
+    const handleGlobalDiscountChange = (e) => {
+        const discount = e.target.value;
+        setOrder(prev => ({ ...prev, discount }));
+        calculateTotals(items, discount);
     };
 
     // 🔹 SAVE ORDER
@@ -121,7 +151,10 @@ export default function SalesOrder() {
 
             const res = await fetch("http://localhost:3000/sales-order", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "branch-id": localStorage.getItem("branchId") || ""
+                },
                 body: JSON.stringify(payload)
             });
 
@@ -147,106 +180,223 @@ export default function SalesOrder() {
 
             {/* TOPBAR */}
             <div className="sales-topbar">
-                <div className="left-actions">
-                    <button>◀ Previous</button>
-                    <button>Next ▶</button>
-                </div>
-
-                <div className="right-actions">
-                    <button type="button" onClick={() => navigate("/dashboard/tracking")}>View Orders</button>
-                    <button>Cancel</button>
-                    <button>Clear</button>
-                    <button className="save" onClick={handleSave}>Save Order</button>
+                <h1 className="page-title">
+                    <FaFileInvoiceDollar />
+                    New Sales Order
+                    <span>{order.orderNo}</span>
+                </h1>
+                <div className="action-buttons">
+                    <button className="action-btn view" type="button" onClick={() => navigate("/dashboard/tracking")}>
+                        <FaList /> View Orders
+                    </button>
+                    <button className="action-btn save" onClick={handleSave}>
+                        <FaSave /> Save Order
+                    </button>
                 </div>
             </div>
 
             {/* FORM */}
-            <div className="sales-form">
-                <select name="customerId" value={order.customerId} onChange={handleOrderChange}>
-                    <option value="">Select Customer</option>
-                    {customers.map(c => (
-                        <option key={c.id} value={c.id}>{c.name}</option>
-                    ))}
-                </select>
-                <input
-                    name="phone"
-                    placeholder="Phone"
-                    value={order.phone}
-                    onChange={handleOrderChange}
-                />
-                <input type="date" name="date" onChange={handleOrderChange} />
+            <div className="glass-panel">
+                <div className="panel-header">
+                    <FaUser /> Customer Details
+                </div>
+                <div className="form-grid">
+                    <div className="input-group">
+                        <label><FaUser /> Customer</label>
+                        <select className="modern-select" name="customerId" value={order.customerId} onChange={handleOrderChange}>
+                            <option value="">Select Customer</option>
+                            {customers.map(c => (
+                                <option key={c.id} value={c.id}>{c.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="input-group">
+                        <label><FaPhone /> Phone</label>
+                        <input
+                            className="modern-input"
+                            name="phone"
+                            placeholder="Phone Number"
+                            value={order.phone}
+                            onChange={handleOrderChange}
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label><FaCalendar /> Date</label>
+                        <input 
+                            className="modern-input" 
+                            type="date" 
+                            name="date" 
+                            value={order.date}
+                            onChange={handleOrderChange} 
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label><FaMapMarkerAlt /> Address</label>
+                        <input
+                            className="modern-input"
+                            name="address"
+                            placeholder="Address"
+                            value={order.address || ""}
+                            onChange={handleOrderChange}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* EYE PRESCRIPTION */}
+            <div className="glass-panel">
+                <div className="panel-header">
+                    <FaEye /> Eye Prescription
+                </div>
+                <div className="eye-grid">
+                    <div className="eye-section right-eye">
+                        <div className="eye-title">Right Eye (OD)</div>
+                        <div className="prescription-row">
+                            <div className="input-group">
+                                <label>Sphere</label>
+                                <input className="modern-input" name="rightSphere" value={eye.rightSphere} onChange={handleEyeChange} placeholder="+0.00" />
+                            </div>
+                            <div className="input-group">
+                                <label>Cylinder</label>
+                                <input className="modern-input" name="rightCylinder" value={eye.rightCylinder} onChange={handleEyeChange} placeholder="-0.00" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="eye-section left-eye">
+                        <div className="eye-title">Left Eye (OS)</div>
+                        <div className="prescription-row">
+                            <div className="input-group">
+                                <label>Sphere</label>
+                                <input className="modern-input" name="leftSphere" value={eye.leftSphere} onChange={handleEyeChange} placeholder="+0.00" />
+                            </div>
+                            <div className="input-group">
+                                <label>Cylinder</label>
+                                <input className="modern-input" name="leftCylinder" value={eye.leftCylinder} onChange={handleEyeChange} placeholder="-0.00" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {/* TABLE */}
-            <table>
-                <thead>
-                    <tr>
-                        <th>SNo</th>
-                        <th>Barcode</th>
-                        <th>Product</th>
-                        <th>Model</th>
-                        <th>Qty</th>
-                        <th>Rate</th>
-                        <th>Discount</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
+            <div className="glass-panel">
+                <div className="panel-header">
+                    <FaList /> Order Items
+                </div>
+                <div className="sales-table-container">
+                    <table className="modern-table">
+                        <thead>
+                            <tr>
+                                <th style={{width: '60px'}}>#</th>
+                                <th>Barcode</th>
+                                <th>Product Name</th>
+                                <th>Model</th>
+                                <th style={{width: '100px'}}>Qty</th>
+                                <th style={{width: '120px'}}>Rate</th>
+                                <th style={{width: '120px'}}>Discount</th>
+                                <th style={{width: '120px'}}>Total</th>
+                                <th style={{width: '60px'}}>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {items.map((item, i) => (
+                                <tr key={i}>
+                                    <td style={{textAlign: 'center', color: '#64748b', fontWeight: '500'}}>{i + 1}</td>
+                                    <td>
+                                        <input
+                                            className="cell-input"
+                                            name="barcode"
+                                            placeholder="Scan/Type"
+                                            value={item.barcode}
+                                            onChange={(e) => handleItemChange(i, e)}
+                                        />
+                                    </td>
+                                    <td><input className="cell-input" value={item.product} readOnly placeholder="Auto-filled" /></td>
+                                    <td><input className="cell-input" value={item.model} readOnly placeholder="-" /></td>
+                                    <td>
+                                        <input
+                                            className="cell-input"
+                                            name="qty"
+                                            type="number"
+                                            min="1"
+                                            value={item.qty}
+                                            onChange={(e) => handleItemChange(i, e)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            className="cell-input"
+                                            name="rate"
+                                            type="number"
+                                            min="0"
+                                            value={item.rate}
+                                            onChange={(e) => handleItemChange(i, e)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            className="cell-input"
+                                            name="discount"
+                                            type="number"
+                                            min="0"
+                                            value={item.discount}
+                                            onChange={(e) => handleItemChange(i, e)}
+                                        />
+                                    </td>
+                                    <td className="amount-text">${Number(item.total).toFixed(2)}</td>
+                                    <td>
+                                        {items.length > 1 && (
+                                            <button className="delete-btn" onClick={() => removeRow(i)} title="Remove Item">
+                                                <FaTrash />
+                                            </button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <button className="add-row-btn" onClick={addRow}>
+                    <FaPlus /> Add Item Row
+                </button>
+            </div>
 
-                <tbody>
-                    {items.map((item, i) => (
-                        <tr key={i}>
-                            <td>{i + 1}</td>
+            {/* SUMMARY */}
+            <div className="summary-grid">
+                <div className="glass-panel notes-section" style={{marginBottom: 0}}>
+                    <div className="panel-header">
+                        <FaNotesMedical /> Order Notes
+                    </div>
+                    <textarea 
+                        className="modern-input" 
+                        name="notes"
+                        placeholder="Add any special instructions, delivery notes, or customer preferences here..."
+                        value={order.notes}
+                        onChange={handleOrderChange}
+                    />
+                </div>
 
-                            <td>
-                                <input
-                                    name="barcode"
-                                    value={item.barcode}
-                                    onChange={(e) => handleItemChange(i, e)}
-                                />
-                            </td>
-
-                            <td><input value={item.product} readOnly /></td>
-                            <td><input value={item.model} readOnly /></td>
-
-                            <td>
-                                <input
-                                    name="qty"
-                                    type="number"
-                                    value={item.qty}
-                                    onChange={(e) => handleItemChange(i, e)}
-                                />
-                            </td>
-
-                            <td>
-                                <input
-                                    name="rate"
-                                    type="number"
-                                    value={item.rate}
-                                    onChange={(e) => handleItemChange(i, e)}
-                                />
-                            </td>
-
-                            <td>
-                                <input
-                                    name="discount"
-                                    type="number"
-                                    value={item.discount}
-                                    onChange={(e) => handleItemChange(i, e)}
-                                />
-                            </td>
-
-                            <td>{item.total}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            <button onClick={addRow}>+ Add Row</button>
-
-            {/* TOTAL */}
-            <div className="sales-footer">
-                <h3>Total: {order.total}</h3>
-                <h2>Net Total: {order.netTotal}</h2>
+                <div className="glass-panel totals-section" style={{marginBottom: 0}}>
+                    <div className="total-row">
+                        <span>Subtotal</span>
+                        <span><span className="currency-symbol">$</span>{Number(order.total).toFixed(2)}</span>
+                    </div>
+                    <div className="total-row">
+                        <span>Global Discount</span>
+                        <input 
+                            type="number" 
+                            className="modern-input" 
+                            style={{width: '100px', textAlign: 'right'}}
+                            value={order.discount}
+                            onChange={handleGlobalDiscountChange}
+                            min="0"
+                        />
+                    </div>
+                    <div className="total-row net">
+                        <span>Net Total</span>
+                        <span><span className="currency-symbol">$</span>{Number(order.netTotal).toFixed(2)}</span>
+                    </div>
+                </div>
             </div>
 
         </div>

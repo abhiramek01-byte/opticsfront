@@ -5,7 +5,7 @@
   padding: 24px;
   background-color: var(--bg-primary, #f4f6fc);
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .glass-panel {

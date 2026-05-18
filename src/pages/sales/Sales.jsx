@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { 
+    FaUser, FaCalendar, FaCreditCard, 
+    FaPlus, FaSave, FaTrash,
+    FaFileInvoiceDollar, FaList
+} from "react-icons/fa";
 import "../../styles/Sales.css";
 
 export default function Sales() {
@@ -24,7 +29,6 @@ export default function Sales() {
 
     /* FETCH DATA */
     useEffect(() => {
-
         // Customers
         fetch("http://localhost:3000/customers")
             .then(res => res.json())
@@ -34,10 +38,7 @@ export default function Sales() {
         // Products
         fetch("http://localhost:3000/product")
             .then(res => res.json())
-            .then(data => {
-                console.log("Products:", data);
-                setProducts(Array.isArray(data) ? data : []);
-            })
+            .then(data => setProducts(Array.isArray(data) ? data : []))
             .catch(err => console.error(err));
 
         // Tax Groups
@@ -45,16 +46,15 @@ export default function Sales() {
             .then(res => res.json())
             .then(data => setTaxGroups(Array.isArray(data) ? data : []))
             .catch(err => console.error(err));
-
     }, []);
 
     /* TOTAL */
     const subTotal = items.reduce(
-        (sum, item) => sum + item.qty * item.rate,
+        (sum, item) => sum + (Number(item.qty) || 0) * (Number(item.rate) || 0),
         0
     );
-    const taxAmount = (subTotal - discount) * (taxPercent / 100);
-    const netTotal = subTotal - discount + taxAmount;
+    const taxAmount = (subTotal - Number(discount || 0)) * (Number(taxPercent || 0) / 100);
+    const netTotal = subTotal - Number(discount || 0) + taxAmount;
 
     /* ADD ROW */
     const addItem = () => {
@@ -62,6 +62,12 @@ export default function Sales() {
             ...items,
             { barcode: "", productId: "", name: "", qty: 1, rate: 0 }
         ]);
+    };
+
+    /* REMOVE ROW */
+    const removeRow = (index) => {
+        const updated = items.filter((_, i) => i !== index);
+        setItems(updated.length ? updated : [{ barcode: "", productId: "", name: "", qty: 1, rate: 0 }]);
     };
 
     /* UPDATE ITEM */
@@ -73,7 +79,6 @@ export default function Sales() {
 
     /* BARCODE FETCH */
     const handleBarcode = async (index, value) => {
-
         const updated = [...items];
         updated[index].barcode = value;
 
@@ -82,46 +87,44 @@ export default function Sales() {
                 const res = await fetch(`http://localhost:3000/product/barcode/${value}`);
 
                 if (!res.ok) {
-                    alert("Barcode not found ❌");
-                    return;
+                    // Fail silently to allow typing, don't alert on every keystroke
+                } else {
+                    const data = await res.json();
+                    if (data && data.id) {
+                        updated[index].productId = data.id;
+                        updated[index].name = data.productName;
+                        updated[index].rate = data.rate || 0;
+                        updated[index].qty = 1;
+                    }
                 }
-
-                const data = await res.json();
-
-                console.log("Barcode result:", data);
-
-                if (data) {
-                    updated[index].productId = data.id;
-                    updated[index].name = data.productName;
-                    updated[index].rate = data.rate || 0;
-                    updated[index].qty = 1;
-                }
-
             } catch (err) {
-                console.error(err);
+                console.error("Barcode fetch error", err);
             }
         }
-
         setItems(updated);
     };
 
     /* SAVE */
     const handleSubmit = async () => {
-
         if (!customerId) {
-            alert("Select customer");
+            alert("Please select a customer ❌");
             return;
         }
 
         const formattedItems = items
-            .filter(item => item.productId && item.qty > 0)
+            .filter(item => item.productId && Number(item.qty) > 0)
             .map(item => ({
                 productId: Number(item.productId),
-                quantity: item.qty,
-                rate: item.rate,
-                amount: item.qty * item.rate,
-                tax: (item.qty * item.rate) * (taxPercent / 100)
+                quantity: Number(item.qty),
+                rate: Number(item.rate),
+                amount: Number(item.qty) * Number(item.rate),
+                tax: (Number(item.qty) * Number(item.rate)) * (Number(taxPercent) / 100)
             }));
+
+        if (formattedItems.length === 0) {
+            alert("Please add at least one valid item to the sale.");
+            return;
+        }
 
         const payload = {
             customerId: Number(customerId),
@@ -135,24 +138,26 @@ export default function Sales() {
         };
 
         try {
-
             const res = await fetch("http://localhost:3000/sales", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "branch-id": localStorage.getItem("branchId") || ""
                 },
                 body: JSON.stringify(payload)
             });
 
-            const data = await res.json();
-            console.log(data);
+            if (!res.ok) {
+                throw new Error("Failed to save sale");
+            }
 
+            const data = await res.json();
             alert("Sale Completed ✅");
             navigate(`/dashboard/billing/${data.id}`);
 
         } catch (err) {
             console.error(err);
-            alert("Error ❌");
+            alert("Error saving sale ❌");
         }
     };
 
@@ -161,160 +166,200 @@ export default function Sales() {
 
             {/* TOPBAR */}
             <div className="sales-topbar">
-                <div>
-                    <button>◀ Previous</button>
-                    <button>Next ▶</button>
-                    <button>Edit</button>
-                </div>
-
-                <div className="right-actions">
-                    <button>Cancel</button>
-                    <button>Clear</button>
-                    <button className="save" onClick={handleSubmit}>
-                        Save
+                <h1 className="page-title">
+                    <FaFileInvoiceDollar />
+                    New Sale / Billing
+                    <span>{invoiceNo}</span>
+                </h1>
+                <div className="action-buttons">
+                    <button className="action-btn cancel" onClick={() => navigate(-1)}>
+                        Cancel
+                    </button>
+                    <button className="action-btn save" onClick={handleSubmit}>
+                        <FaSave /> Complete Sale
                     </button>
                 </div>
             </div>
 
             {/* FORM */}
-            <div className="sales-form">
+            <div className="glass-panel">
+                <div className="panel-header">
+                    <FaUser /> Invoice Details
+                </div>
                 <div className="form-grid">
-
-                    <input
-                        value={invoiceNo}
-                        onChange={(e) => setInvoiceNo(e.target.value)}
-                        placeholder="Invoice No"
-                    />
-
-                    <input
-                        type="date"
-                        onChange={(e) => setDate(e.target.value)}
-                    />
-
-                    <select onChange={(e) => setCustomerId(e.target.value)}>
-                        <option>Select Customer</option>
-                        {(Array.isArray(customers) ? customers : []).map(c => (
-                            <option key={c.id} value={c.id}>
-                                {c.name}
-                            </option>
-                        ))}
-                    </select>
-
-                    <select onChange={(e) => setPaymentMode(e.target.value)}>
-                        <option>Cash</option>
-                        <option>Card</option>
-                        <option>UPI</option>
-                    </select>
-
+                    <div className="input-group">
+                        <label><FaFileInvoiceDollar /> Invoice No</label>
+                        <input
+                            className="modern-input"
+                            value={invoiceNo}
+                            onChange={(e) => setInvoiceNo(e.target.value)}
+                            placeholder="Invoice No"
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label><FaCalendar /> Date</label>
+                        <input
+                            className="modern-input"
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label><FaUser /> Customer</label>
+                        <select className="modern-select" value={customerId} onChange={(e) => setCustomerId(e.target.value)}>
+                            <option value="">Select Customer</option>
+                            {(Array.isArray(customers) ? customers : []).map(c => (
+                                <option key={c.id} value={c.id}>
+                                    {c.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="input-group">
+                        <label><FaCreditCard /> Payment Mode</label>
+                        <select className="modern-select" value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)}>
+                            <option>Cash</option>
+                            <option>Card</option>
+                            <option>UPI</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             {/* TABLE */}
-            <div className="sales-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>SNo</th>
-                            <th>Barcode</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Rate</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {items.map((item, i) => (
-                            <tr key={i}>
-                                <td>{i + 1}</td>
-
-                                {/* BARCODE */}
-                                <td>
-                                    <input
-                                        value={item.barcode}
-                                        onChange={(e) =>
-                                            handleBarcode(i, e.target.value)
-                                        }
-                                    />
-                                </td>
-
-                                {/* PRODUCT */}
-                                <td>
-                                    <select
-                                        value={item.productId}
-                                        onChange={(e) => {
-                                            const selectedId = Number(e.target.value);
-                                            const product = products.find(p => p.id === selectedId);
-
-                                            const updated = [...items];
-                                            updated[i].productId = selectedId;
-                                            updated[i].name = product?.productName || "";
-                                            updated[i].rate = product?.rate || 0;
-
-                                            setItems(updated);
-                                        }}
-                                    >
-                                        <option>Select</option>
-                                        {(Array.isArray(products) ? products : []).map(p => (
-                                            <option key={p.id} value={p.id}>
-                                                {p.productName}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </td>
-
-                                {/* QTY */}
-                                <td>
-                                    <input
-                                        type="number"
-                                        value={item.qty}
-                                        onChange={(e) =>
-                                            updateItem(i, "qty", Number(e.target.value))
-                                        }
-                                    />
-                                </td>
-
-                                {/* RATE */}
-                                <td>
-                                    <input
-                                        type="number"
-                                        value={item.rate}
-                                        onChange={(e) =>
-                                            updateItem(i, "rate", Number(e.target.value))
-                                        }
-                                    />
-                                </td>
-
-                                {/* TOTAL */}
-                                <td>{item.qty * item.rate}</td>
-
+            <div className="glass-panel">
+                <div className="panel-header">
+                    <FaList /> Sale Items
+                </div>
+                <div className="sales-table-container">
+                    <table className="modern-table">
+                        <thead>
+                            <tr>
+                                <th style={{width: '60px'}}>#</th>
+                                <th>Barcode</th>
+                                <th>Product Name</th>
+                                <th style={{width: '120px'}}>Qty</th>
+                                <th style={{width: '150px'}}>Rate</th>
+                                <th style={{width: '150px'}}>Total</th>
+                                <th style={{width: '60px'}}>Action</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {items.map((item, i) => (
+                                <tr key={i}>
+                                    <td style={{textAlign: 'center', color: '#64748b', fontWeight: '500'}}>{i + 1}</td>
+                                    <td>
+                                        <input
+                                            className="cell-input"
+                                            placeholder="Scan/Type"
+                                            value={item.barcode}
+                                            onChange={(e) => handleBarcode(i, e.target.value)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <select
+                                            className="modern-select"
+                                            style={{ border: 'none', background: 'transparent' }}
+                                            value={item.productId}
+                                            onChange={(e) => {
+                                                const selectedId = Number(e.target.value);
+                                                const product = products.find(p => p.id === selectedId);
 
-                <button onClick={addItem}>+ Add Item</button>
+                                                const updated = [...items];
+                                                updated[i].productId = selectedId;
+                                                updated[i].name = product?.productName || "";
+                                                updated[i].rate = product?.rate || 0;
+
+                                                setItems(updated);
+                                            }}
+                                        >
+                                            <option value="">Select Product</option>
+                                            {(Array.isArray(products) ? products : []).map(p => (
+                                                <option key={p.id} value={p.id}>
+                                                    {p.productName}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input
+                                            className="cell-input"
+                                            type="number"
+                                            min="1"
+                                            value={item.qty}
+                                            onChange={(e) => updateItem(i, "qty", e.target.value)}
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            className="cell-input"
+                                            type="number"
+                                            min="0"
+                                            value={item.rate}
+                                            onChange={(e) => updateItem(i, "rate", e.target.value)}
+                                        />
+                                    </td>
+                                    <td className="amount-text">${((Number(item.qty) || 0) * (Number(item.rate) || 0)).toFixed(2)}</td>
+                                    <td>
+                                        <button className="delete-btn" onClick={() => removeRow(i)} title="Remove Item">
+                                            <FaTrash />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <button className="add-row-btn" onClick={addItem}>
+                    <FaPlus /> Add Item Row
+                </button>
             </div>
 
             {/* FOOTER */}
-            <div className="sales-footer">
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '10px' }}>
-                    <label>Discount: ₹
-                        <input type="number" style={{width: '80px', marginLeft: '5px'}} value={discount} onChange={(e) => setDiscount(Number(e.target.value))} />
-                    </label>
-                    <label>Tax:
-                        <select style={{marginLeft: '5px', borderRadius: '4px', border: '1px solid #ccc', padding: '4px'}} value={taxPercent} onChange={(e) => setTaxPercent(Number(e.target.value))}>
-                            <option value="0">0%</option>
-                            {taxGroups.map(t => (
-                                <option key={t.id} value={t.taxPercent}>
-                                    {t.taxGroupName} ({t.taxPercent}%)
-                                </option>
-                            ))}
-                        </select>
-                    </label>
+            <div className="summary-grid">
+                <div className="glass-panel totals-section">
+                    <div className="total-row">
+                        <span>Subtotal</span>
+                        <span><span className="currency-symbol">$</span>{subTotal.toFixed(2)}</span>
+                    </div>
+                    <div className="total-row">
+                        <span>Discount</span>
+                        <input 
+                            type="number" 
+                            className="modern-input" 
+                            style={{width: '120px', textAlign: 'right'}}
+                            value={discount}
+                            onChange={(e) => setDiscount(e.target.value)}
+                            min="0"
+                        />
+                    </div>
+                    <div className="total-row">
+                        <span>Tax Amount</span>
+                        <div style={{display: 'flex', gap: '8px'}}>
+                            <select 
+                                className="modern-select" 
+                                style={{width: '120px'}}
+                                value={taxPercent} 
+                                onChange={(e) => setTaxPercent(e.target.value)}
+                            >
+                                <option value="0">0%</option>
+                                {taxGroups.map(t => (
+                                    <option key={t.id} value={t.taxPercent}>
+                                        {t.taxGroupName} ({t.taxPercent}%)
+                                    </option>
+                                ))}
+                            </select>
+                            <span style={{minWidth: '60px', textAlign: 'right', display: 'flex', alignItems: 'center'}}>
+                                <span className="currency-symbol">$</span>{taxAmount.toFixed(2)}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="total-row net">
+                        <span>Net Total</span>
+                        <span><span className="currency-symbol">$</span>{netTotal.toFixed(2)}</span>
+                    </div>
                 </div>
-                <h3>Subtotal: ₹{subTotal.toFixed(2)}</h3>
-                <h2>Net Total: ₹{netTotal.toFixed(2)}</h2>
             </div>
 
         </div>

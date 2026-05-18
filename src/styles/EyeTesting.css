@@ -1,166 +1,217 @@
-/* ================= PAGE ================= */
-.eye-page {
-    padding: 20px;
-    background: #f6f7fb;
-    min-height: 100vh;
-    font-family: "Segoe UI", sans-serif;
+.registration-page {
+    padding: 20px 30px;
+    background: #f1f5f9;
+    min-height: calc(100vh - 60px);
+    font-family: 'Inter', sans-serif;
+    color: #334155;
 }
 
-/* ================= TOP BAR ================= */
-.eye-topbar {
+/* TOPBAR */
+.registration-topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
-/* LEFT BUTTONS */
-.nav-buttons {
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
     display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: 12px;
 }
 
-.nav-buttons button {
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    background: #fff;
-    cursor: pointer;
-}
-
-/* RIGHT BUTTONS */
 .action-buttons {
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
-.action-buttons button {
-  background: none;
-}
-/* BUTTON COLORS (FIXED) */
-.save {
-  background: #000 !important;
-  color: #1c1818 !important;
-  font-weight: 600;
-  border-radius: 20px;
-}
-
-.clear {
-    background: #e5e7eb;
-    color: #111;
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.cancel {
-    background: #fff;
-    border: 1px solid #ccc;
-    color: #111;
+.action-btn.cancel {
+    background: #f8fafc;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
 }
 
-/* ================= MAIN ================= */
-.eye-container {
+.action-btn.cancel:hover {
+    background: #f1f5f9;
+}
+
+.action-btn.clear {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fde68a;
+}
+
+.action-btn.clear:hover {
+    background: #fef3c7;
+}
+
+.action-btn.save {
+    background: #0f172a;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn.save:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+}
+
+/* GLASS PANEL */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.panel-header {
+    font-size: 16px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+}
+
+/* GRID LAYOUT */
+.form-grid-2col {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 30px;
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
 }
 
-/* LEFT */
-.eye-left {
+.form-column {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
 }
 
-.eye-left label {
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
     font-size: 13px;
-}
-
-.eye-left input,
-.eye-left textarea,
-.eye-left select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-/* RIGHT */
-.eye-right {
-    width: 100%;
-}
-
-.eye-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.eye-table th,
-.eye-table td {
-    border: 1px solid #ccc;
-    padding: 6px;
-    text-align: center;
-}
-
-.eye-table th {
-    background: #3b82f6;
-    color: white;
-}
-
-.eye-table input {
-    width: 100%;
-    border: none;
-    text-align: center;
-}
-
-/* REMARKS */
-.remarks {
-    width: 100%;
-    height: 100px;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-/* ================= BOTTOM ================= */
-.eye-bottom {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    margin-top: 20px;
-}
-
-/* PRINT GROUP */
-.print-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.print-group select {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    min-width: 150px;
-}
-
-/* PREVIEW */
-.preview-group {
+    font-weight: 500;
+    color: #64748b;
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.preview-group input {
-    width: 14px;
-    height: 14px;
+.modern-input,
+.modern-select,
+.modern-textarea {
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #334155;
+    background: white;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* RESPONSIVE */
+.modern-textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.modern-input:focus,
+.modern-select:focus,
+.modern-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.modern-input[readonly],
+.modern-textarea[readonly] {
+    background: #f8fafc;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* EYE TABLE */
+.eye-section {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.eye-section h4 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.eye-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.eye-table td {
+    padding: 8px;
+    vertical-align: middle;
+}
+
+.eye-table td:first-child {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    width: 80px;
+}
+
+.eye-table input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.eye-table input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: white;
+}
+
 @media (max-width: 900px) {
-    .eye-container {
+    .form-grid-2col {
         grid-template-columns: 1fr;
     }
 }

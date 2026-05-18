@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { FaChartPie, FaMoneyBillWave, FaPercentage, FaReceipt, FaTable } from "react-icons/fa";
 import "../../styles/SalesTax.css";
 
 export default function SalesTaxSummary() {
@@ -10,7 +11,13 @@ export default function SalesTaxSummary() {
         const fetchSummary = async () => {
             setLoading(true);
             try {
-                const res = await fetch("http://localhost:3000/sales/report");
+                const res = await fetch("http://localhost:3000/sales/report", {
+                    headers: {
+                        "branch-id": localStorage.getItem("branchId") || ""
+                    }
+                });
+                if (!res.ok) throw new Error("Failed to fetch report");
+                
                 const data = await res.json();
                 
                 let totalTaxable = 0;
@@ -21,8 +28,8 @@ export default function SalesTaxSummary() {
                     data.sales.forEach(sale => {
                         if (sale.items && Array.isArray(sale.items)) {
                             sale.items.forEach(item => {
-                                const taxable = Number(item.amount);
-                                const tax = Number(item.tax);
+                                const taxable = Number(item.amount) || 0;
+                                const tax = Number(item.tax) || 0;
                                 const gstPercent = taxable > 0 ? Math.round((tax / taxable) * 100) : 0;
                                 
                                 totalTaxable += taxable;
@@ -61,41 +68,41 @@ export default function SalesTaxSummary() {
         <div className="tax-page">
 
             <div className="tax-header">
-                <h2>Sales Tax Summary Report</h2>
-                <p>Overview of taxable sales and tax collection by category.</p>
+                <h2><FaChartPie /> Sales Tax Summary Report</h2>
+                <p>Overview of taxable sales and tax collection by category for the current branch.</p>
             </div>
 
             {/* Cards */}
             <div className="tax-cards">
 
                 <div className="tax-card">
-                    <h4>Total Taxable Amount</h4>
-                    <p>₹{totals.taxable.toFixed(2)}</p>
+                    <h4><FaReceipt /> Total Taxable Amount</h4>
+                    <p><span className="currency-symbol">₹</span>{totals.taxable.toFixed(2)}</p>
                 </div>
 
                 <div className="tax-card">
-                    <h4>Total SGST</h4>
-                    <p>₹{(totals.tax / 2).toFixed(2)}</p>
+                    <h4><FaPercentage /> Total SGST</h4>
+                    <p><span className="currency-symbol">₹</span>{(totals.tax / 2).toFixed(2)}</p>
                 </div>
 
                 <div className="tax-card">
-                    <h4>Total CGST</h4>
-                    <p>₹{(totals.tax / 2).toFixed(2)}</p>
+                    <h4><FaPercentage /> Total CGST</h4>
+                    <p><span className="currency-symbol">₹</span>{(totals.tax / 2).toFixed(2)}</p>
                 </div>
 
                 <div className="tax-card highlight">
-                    <h4>Grand Total Tax</h4>
-                    <p>₹{totals.tax.toFixed(2)}</p>
+                    <h4><FaMoneyBillWave /> Grand Total Tax</h4>
+                    <p><span className="currency-symbol">₹</span>{totals.tax.toFixed(2)}</p>
                 </div>
 
             </div>
 
             {/* Tax Table */}
-            <div className="tax-table">
-                <h3>Tax Slab Summary</h3>
+            <div className="tax-table-container">
+                <h3><FaTable /> Tax Slab Summary</h3>
 
-                {loading ? <p>Loading summary...</p> : (
-                    <table>
+                {loading ? <div className="loading-text">Loading summary data...</div> : (
+                    <table className="modern-table">
                         <thead>
                             <tr>
                                 <th>Tax Slab</th>
@@ -109,16 +116,20 @@ export default function SalesTaxSummary() {
                         <tbody>
                             {slabs.length === 0 ? (
                                 <tr>
-                                    <td colSpan="5" style={{ textAlign: "center" }}>No tax data available.</td>
+                                    <td colSpan="5" style={{ textAlign: "center", color: "#64748b", padding: "30px" }}>
+                                        No tax data available for this branch.
+                                    </td>
                                 </tr>
                             ) : (
                                 slabs.map((slab) => (
                                     <tr key={slab.percent}>
-                                        <td>{slab.percent}%</td>
-                                        <td>₹{slab.taxable.toFixed(2)}</td>
-                                        <td>₹{(slab.tax / 2).toFixed(2)}</td>
-                                        <td>₹{(slab.tax / 2).toFixed(2)}</td>
-                                        <td>₹{slab.tax.toFixed(2)}</td>
+                                        <td style={{ fontWeight: 600 }}>{slab.percent}%</td>
+                                        <td><span className="currency-symbol">₹</span>{slab.taxable.toFixed(2)}</td>
+                                        <td><span className="currency-symbol">₹</span>{(slab.tax / 2).toFixed(2)}</td>
+                                        <td><span className="currency-symbol">₹</span>{(slab.tax / 2).toFixed(2)}</td>
+                                        <td style={{ fontWeight: 600, color: '#0f172a' }}>
+                                            <span className="currency-symbol">₹</span>{slab.tax.toFixed(2)}
+                                        </td>
                                     </tr>
                                 ))
                             )}

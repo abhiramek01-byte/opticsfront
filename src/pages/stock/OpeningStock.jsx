@@ -9,8 +9,9 @@ export default function OpeningStock() {
     useEffect(() => {
         axios.get("http://localhost:3000/stock/getAll")
             .then(res => {
-                setItems(res.data.result);
-                console.log("fetched:", res.data)
+                const openingStockData = (res.data.result || []).filter(item => item.vendor === 'Opening Stock');
+                setItems(openingStockData);
+                console.log("fetched:", openingStockData);
             })
             .catch(err => console.log(err));
     }, []);

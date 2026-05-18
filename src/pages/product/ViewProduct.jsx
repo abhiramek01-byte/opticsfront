@@ -1,7 +1,94 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/Transaction.css";
+import { FaBoxOpen, FaTags, FaEdit } from "react-icons/fa";
+
+const ImageSlider = ({ imageString, productName }) => {
+    const images = (imageString || "").split(",").map(img => img.trim()).filter(Boolean);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
+
+    if (images.length === 0) {
+        return (
+            <div className="card-image-slider" style={{ background: "#f8fafc", color: "#cbd5e1" }}>
+                <FaBoxOpen size={48} />
+            </div>
+        );
+    }
+
+    const currentImg = images[currentIndex];
+    const src = `http://localhost:3000/${currentImg.startsWith('uploads') ? currentImg : 'uploads/' + currentImg}`;
+
+    const handlePrev = (e) => {
+        if(e) e.stopPropagation();
+        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    };
+
+    const handleNext = (e) => {
+        if(e) e.stopPropagation();
+        setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    };
+
+    // Touch handlers for swipe
+    const minSwipeDistance = 30;
+
+    const onTouchStart = (e) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+        
+        if (isLeftSwipe) {
+            handleNext();
+        } else if (isRightSwipe) {
+            handlePrev();
+        }
+    };
+
+    return (
+        <div 
+            style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+            onTouchStart={onTouchStart} 
+            onTouchMove={onTouchMove} 
+            onTouchEnd={onTouchEnd}
+        >
+            <div className="card-image-slider">
+                <img
+                    src={src}
+                    alt={productName}
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                />
+            </div>
+            
+            {images.length > 1 && (
+                <>
+                    <button className="slider-btn prev" style={{zIndex: 20}} onClick={handlePrev}>◀</button>
+                    <button className="slider-btn next" style={{zIndex: 20}} onClick={handleNext}>▶</button>
+                    
+                    <div className="slider-dots" style={{zIndex: 20}}>
+                        {images.map((_, idx) => (
+                            <div 
+                                key={idx} 
+                                className={`slider-dot ${idx === currentIndex ? 'active' : ''}`}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
+        </div>
+    );
+};
 
 export default function ViewProduct() {
+    const navigate = useNavigate();
 
     const [products, setProducts] = useState([]);
     const [stock, setStock] = useState([]);
@@ -26,10 +113,10 @@ export default function ViewProduct() {
     };
 
     const getStatusInfo = (qty, nonStock) => {
-        if (nonStock) return { text: "Service", color: "#6366f1", bg: "#e0e7ff" }; // Indigo
-        if (!qty || qty <= 0) return { text: "Out of Stock", color: "#ef4444", bg: "#fee2e2" }; // Red
-        if (qty < 5) return { text: "Low Stock", color: "#f59e0b", bg: "#fef3c7" }; // Amber/Yellow
-        return { text: "In Stock", color: "#10b981", bg: "#d1fae5" }; // Emerald/Green
+        if (nonStock) return { text: "Service", color: "#4f46e5", bg: "rgba(224, 231, 255, 0.9)" }; // Indigo
+        if (!qty || qty <= 0) return { text: "Out of Stock", color: "#dc2626", bg: "rgba(254, 226, 226, 0.9)" }; // Red
+        if (qty < 5) return { text: "Low Stock", color: "#d97706", bg: "rgba(254, 243, 199, 0.9)" }; // Amber/Yellow
+        return { text: "In Stock", color: "#059669", bg: "rgba(209, 250, 229, 0.9)" }; // Emerald/Green
     };
 
     return (
@@ -44,109 +131,64 @@ export default function ViewProduct() {
                 </div>
             </div>
 
-            <div className="transaction-card" style={{ padding: '20px' }}>
-                <table className="transaction-table" style={{ whiteSpace: 'nowrap' }}>
-                    <thead>
-                        <tr>
-                            <th style={{ width: '80px', textAlign: 'center' }}>Image</th>
-                            <th>Code</th>
-                            <th>Product Name</th>
-                            <th>Category</th>
-                            <th>Brand</th>
-                            <th style={{ textAlign: 'right' }}>Price (₹)</th>
-                            <th style={{ textAlign: 'center' }}>Qty</th>
-                            <th style={{ textAlign: 'center' }}>Status</th>
-                            <th style={{ textAlign: 'center' }}>Actions</th>
-                        </tr>
-                    </thead>
+            {Array.isArray(products) && products.length > 0 ? (
+                <div className="product-grid">
+                    {products.map((p) => {
+                        const qty = getQuantity(p.id);
+                        const status = getStatusInfo(qty, p.nonStock);
 
-                    <tbody>
-                        {Array.isArray(products) && products.length > 0 ? (
-                            products.map((p) => {
-                                const qty = getQuantity(p.id);
-                                const status = getStatusInfo(qty, p.nonStock);
+                        return (
+                            <div className="product-card" key={p.id}>
+                                
+                                <div className="card-image-container">
+                                    <div className="card-badges">
+                                        <span className="status-badge" style={{ background: status.bg, color: status.color }}>
+                                            {status.text}
+                                        </span>
+                                        <span className="qty-badge">
+                                            <FaBoxOpen size={12} color="#64748b" />
+                                            {p.nonStock ? "—" : qty}
+                                        </span>
+                                    </div>
+                                    <ImageSlider imageString={p.image} productName={p.productName} />
+                                </div>
 
-                                return (
-                                    <tr key={p.id}>
-                                        <td style={{ textAlign: 'center', padding: '8px' }}>
-                                            {p.image ? (
-                                                <img
-                                                    src={`http://localhost:3000/${p.image.startsWith('uploads') ? p.image : 'uploads/' + p.image}`}
-                                                    alt={p.productName}
-                                                    style={{
-                                                        width: "48px",
-                                                        height: "48px",
-                                                        objectFit: "cover",
-                                                        borderRadius: "8px",
-                                                        border: "1px solid #e2e8f0"
-                                                    }}
-                                                    onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-                                                />
-                                            ) : null}
-                                            {(!p.image || true) && (
-                                                <div className="image-fallback" style={{
-                                                    width: "48px",
-                                                    height: "48px",
-                                                    background: "#f1f5f9",
-                                                    display: p.image ? 'none' : "flex",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    borderRadius: "8px",
-                                                    fontSize: "10px",
-                                                    color: "#94a3b8",
-                                                    border: "1px dashed #cbd5e1",
-                                                    margin: '0 auto'
-                                                }}>
-                                                    N/A
-                                                </div>
-                                            )}
-                                        </td>
-                                        
-                                        <td style={{ fontWeight: 600, color: '#334155' }}>{p.code}</td>
-                                        <td style={{ fontWeight: 500 }}>{p.productName}</td>
-                                        <td>{p.category || "-"}</td>
-                                        <td>{p.brand || "-"}</td>
-                                        
-                                        <td style={{ textAlign: 'right', fontWeight: 600, color: '#0f172a' }}>
-                                            {p.rate ? parseFloat(p.rate).toFixed(2) : "0.00"}
-                                        </td>
-                                        
-                                        <td style={{ textAlign: 'center' }}>
-                                            <span style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: '4px 10px', borderRadius: '12px', fontWeight: 'bold' }}>
-                                                {p.nonStock ? "—" : qty}
-                                            </span>
-                                        </td>
+                                <div className="card-content">
+                                    <div className="card-title-row">
+                                        <h3 className="card-title">{p.productName}</h3>
+                                        <span className="card-code">{p.code}</span>
+                                    </div>
 
-                                        <td style={{ textAlign: 'center' }}>
-                                            <span style={{ 
-                                                background: status.bg, 
-                                                color: status.color, 
-                                                padding: '6px 12px', 
-                                                borderRadius: '20px', 
-                                                fontSize: '0.8rem', 
-                                                fontWeight: 'bold',
-                                                display: 'inline-block'
-                                            }}>
-                                                {status.text}
-                                            </span>
-                                        </td>
-                                        
-                                        <td style={{ textAlign: 'center' }}>
-                                            <button style={{ background: 'transparent', border: 'none', color: '#3b82f6', cursor: 'pointer', fontWeight: 600 }}>Edit</button>
-                                        </td>
-                                    </tr>
-                                );
-                            })
-                        ) : (
-                            <tr>
-                                <td colSpan="9" style={{ textAlign: "center", padding: "40px", color: "#64748b" }}>
-                                    No products found in the catalog.
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                                    <div className="card-tags">
+                                        {p.category && <span className="card-tag"><FaTags style={{marginRight: '4px', opacity: 0.6}} />{p.category}</span>}
+                                        {p.brand && <span className="card-tag">{p.brand}</span>}
+                                    </div>
+
+                                    <div className="card-footer">
+                                        <div className="card-price">
+                                            <span>₹</span> {p.rate ? parseFloat(p.rate).toFixed(2) : "0.00"}
+                                        </div>
+                                        <button className="btn-card-edit" onClick={() => navigate('/dashboard/addProduct')}>
+                                            <FaEdit style={{marginRight: '4px'}} /> Edit
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        );
+                    })}
+                </div>
+            ) : (
+                <div className="transaction-card" style={{ textAlign: "center", padding: "60px 20px" }}>
+                    <div style={{ fontSize: '48px', color: '#cbd5e1', marginBottom: '16px' }}><FaBoxOpen /></div>
+                    <h3 style={{ color: '#475569', margin: '0 0 8px 0' }}>No products found</h3>
+                    <p style={{ color: '#94a3b8', margin: 0 }}>Your catalog is currently empty. Add a new product to get started.</p>
+                    <button className="btn-primary" style={{ marginTop: '24px' }} onClick={() => window.location.href = '/dashboard/addProduct'}>
+                        + Add New Product
+                    </button>
+                </div>
+            )}
+
         </div>
     );
 }

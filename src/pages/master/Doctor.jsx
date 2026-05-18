@@ -1,8 +1,24 @@
+import { useEffect } from "react";
 import { useMasterNavigation } from "../../hooks/useMasterNavigation";
-import "../../styles/Master.css";
+import "../../styles/Doctor.css";
+import {
+  FaUserMd,
+  FaIdCard,
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaEdit,
+  FaSave,
+  FaChevronLeft,
+  FaChevronRight,
+  FaEraser,
+  FaMobileAlt
+} from "react-icons/fa";
 
 export default function Doctor() {
   const {
+    items,
+    currentIndex,
     formData,
     setFormData,
     handleNext,
@@ -23,6 +39,29 @@ export default function Doctor() {
     email: ""
   });
 
+  useEffect(() => {
+    if (currentIndex === -1) {
+      let nextCode = "DR001";
+      if (items && items.length > 0) {
+        const maxCodeNum = items.reduce((max, item) => {
+          const codeToCheck = item.code;
+          if (codeToCheck && codeToCheck.startsWith("DR")) {
+            const num = parseInt(codeToCheck.substring(2), 10);
+            if (!isNaN(num) && num > max) return num;
+          }
+          if (item.id && item.id > max) return item.id;
+          return max;
+        }, 0);
+        const nextNum = maxCodeNum + 1;
+        nextCode = "DR" + nextNum.toString().padStart(3, "0");
+      }
+      
+      if (formData.code !== nextCode) {
+        setFormData(prev => ({ ...prev, code: nextCode }));
+      }
+    }
+  }, [items, currentIndex, formData.code, setFormData]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -31,85 +70,113 @@ export default function Doctor() {
   };
 
   return (
-    <div className="master-container">
-      <div className="master-header">
-        <div className="header-left">
-          <button className="btn-outline" onClick={handlePrevious} disabled={isFirst}>◀ Previous</button>
-          <button className="btn-outline" onClick={handleNext} disabled={isLast}>Next ▶</button>
-          <button className="btn-secondary" onClick={handleEdit} disabled={!isViewing}>Edit</button>
-        </div>
+    <div className="doctor-container">
+      <div className="doctor-header">
+        <h2>
+          <FaUserMd /> Doctor Management
+        </h2>
 
         <div className="header-buttons">
-          <button className="btn-outline" onClick={handleClear}>Cancel</button>
-          <button className="btn-secondary" onClick={handleClear}>Clear</button>
+          <button className="btn-outline" onClick={handlePrevious} disabled={isFirst}>
+            <FaChevronLeft /> Prev
+          </button>
+          <button className="btn-outline" onClick={handleNext} disabled={isLast}>
+            Next <FaChevronRight />
+          </button>
+          <button className="btn-secondary" onClick={handleEdit} disabled={!isViewing}>
+            <FaEdit /> Edit
+          </button>
+          <button className="btn-outline" onClick={handleClear}>
+            <FaEraser /> Clear
+          </button>
           <button className="btn-primary" onClick={handleSave} disabled={isViewing}>
-            {isEditMode ? "Update" : "Save"}
+            {isEditMode ? <><FaSave /> Update</> : <><FaSave /> Save</>}
           </button>
         </div>
       </div>
 
-      <div className="master-wrapper">
-        <div className="master-card">
-          <h3>Doctor Details</h3>
+      <div className="doctor-wrapper">
+        <div className="doctor-card">
+          <div className="card-header">
+            <div className="card-icon">
+              <FaUserMd />
+            </div>
+            <h3>Doctor Details</h3>
+          </div>
 
-          <div className="form-grid single-grid">
+          <div className="form-grid">
             <div className="form-field">
               <label>Doctor Code</label>
-              <input value={formData.code || ''} className="visual-readonly" readOnly />
+              <div className="input-with-icon">
+                <FaIdCard className="input-icon" />
+                <input value={formData.code || ''} className="visual-readonly" readOnly />
+              </div>
             </div>
 
             <div className="form-field">
               <label>Doctor Name</label>
-              <input
-                name="name"
-                value={formData.name || ''}
-                onChange={handleChange}
-                placeholder="Enter doctor name"
-                readOnly={isViewing}
-              />
-            </div>
-
-            <div className="form-field full">
-              <label>Address</label>
-              <textarea
-                rows="4"
-                name="address"
-                value={formData.address || ''}
-                onChange={handleChange}
-                placeholder="Enter address"
-                readOnly={isViewing}
-              />
+              <div className="input-with-icon">
+                <FaUserMd className="input-icon" />
+                <input
+                  name="name"
+                  value={formData.name || ''}
+                  onChange={handleChange}
+                  placeholder="Enter doctor name"
+                  readOnly={isViewing}
+                />
+              </div>
             </div>
 
             <div className="form-field">
               <label>Phone</label>
-              <input
-                name="phone"
-                value={formData.phone || ''}
-                onChange={handleChange}
-                placeholder="Enter phone number"
-                readOnly={isViewing}
-              />
+              <div className="input-with-icon">
+                <FaPhoneAlt className="input-icon" />
+                <input
+                  name="phone"
+                  value={formData.phone || ''}
+                  onChange={handleChange}
+                  placeholder="Enter phone number"
+                  readOnly={isViewing}
+                />
+              </div>
             </div>
 
             <div className="form-field">
               <label>Mobile No</label>
-              <input
-                name="mobile"
-                value={formData.mobile || ''}
-                onChange={handleChange}
-                placeholder="Enter mobile number"
-                readOnly={isViewing}
-              />
+              <div className="input-with-icon">
+                <FaMobileAlt className="input-icon" />
+                <input
+                  name="mobile"
+                  value={formData.mobile || ''}
+                  onChange={handleChange}
+                  placeholder="Enter mobile number"
+                  readOnly={isViewing}
+                />
+              </div>
             </div>
 
-            <div className="form-field full">
+            <div className="form-field">
               <label>Email</label>
-              <input
-                name="email"
-                value={formData.email || ''}
+              <div className="input-with-icon">
+                <FaEnvelope className="input-icon" />
+                <input
+                  name="email"
+                  value={formData.email || ''}
+                  onChange={handleChange}
+                  placeholder="Enter email address"
+                  readOnly={isViewing}
+                />
+              </div>
+            </div>
+
+            <div className="form-field full-width">
+              <label>Address</label>
+              <textarea
+                rows="3"
+                name="address"
+                value={formData.address || ''}
                 onChange={handleChange}
-                placeholder="Enter email address"
+                placeholder="Enter address"
                 readOnly={isViewing}
               />
             </div>

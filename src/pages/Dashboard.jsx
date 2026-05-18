@@ -20,6 +20,8 @@ export default function Dashboard() {
 
   const username = localStorage.getItem("username") || "User";
   const role = localStorage.getItem("role") || "Manager";
+  const branchId = localStorage.getItem("branchId");
+  const [branchName, setBranchName] = useState("Loading Branch...");
 
   const handleLogout = () => {
     localStorage.clear();
@@ -27,25 +29,41 @@ export default function Dashboard() {
     window.location.href = "/login";
   };
 
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+
   useEffect(() => {
     fetchDashboardData();
     // Refresh every 30 seconds
     const interval = setInterval(fetchDashboardData, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [selectedDate]);
 
   const fetchDashboardData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/dashboard");
+      const response = await axios.get(`http://localhost:3000/dashboard?date=${selectedDate}`);
       setData(response.data);
+
+      if (branchId) {
+        const branchRes = await axios.get(`http://localhost:3000/admin/branches`);
+        const branches = branchRes.data;
+        const currentBranch = branches.find(b => b.id === Number(branchId));
+        if (currentBranch) {
+          setBranchName(currentBranch.name);
+        } else {
+          setBranchName("Unknown Branch");
+        }
+      } else {
+        setBranchName("All Branches");
+      }
+
     } catch (error) {
-      console.error("Failed to fetch dashboard data:", error);
+      console.error("Failed to fetch dashboard data or branch info:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const todayDateStr = new Date().toLocaleDateString('en-US', { 
+  const displayDateStr = new Date(selectedDate).toLocaleDateString('en-US', { 
     month: 'long', day: 'numeric', year: 'numeric' 
   });
 
@@ -77,7 +95,7 @@ export default function Dashboard() {
             <FaUserCircle size={32} style={{ color: '#3b82f6' }} />
             <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
               <span style={{ fontWeight: 600, fontSize: '15px', color: '#0f172a', lineHeight: '1.2' }}>{username.charAt(0).toUpperCase() + username.slice(1)}</span>
-              <span style={{ fontSize: '13px', color: '#64748b', textTransform: 'capitalize', lineHeight: '1.2' }}>{role}</span>
+              <span style={{ fontSize: '12px', color: '#3b82f6', fontWeight: 500, textTransform: 'capitalize', lineHeight: '1.2', marginTop: '2px' }}>{role} • {branchName}</span>
             </div>
             <FaChevronDown size={14} style={{ color: '#94a3b8', marginLeft: '8px' }} />
           </div>
@@ -116,16 +134,25 @@ export default function Dashboard() {
         <StatCard title="Total Inventory" value={data.totals.stock} type="stock" />
       </div>
 
-      {/* TODAY OVERVIEW */}
-      <h2 className="section-title">
-        Today's Overview
-        <span className="date-badge">{todayDateStr}</span>
-      </h2>
+      {/* DAILY OVERVIEW */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h2 className="section-title" style={{ marginBottom: 0 }}>
+          Daily Overview
+          <span className="date-badge" style={{ marginLeft: '12px' }}>{displayDateStr}</span>
+        </h2>
+        <input 
+          type="date" 
+          value={selectedDate} 
+          onChange={(e) => setSelectedDate(e.target.value)} 
+          className="dashboard-date-picker"
+          style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#475569', outline: 'none', cursor: 'pointer', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(12px)', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}
+        />
+      </div>
 
       <div className="cards">
-        <StatCard title="Today's Sales" value={data.today.sales} type="calendar" badge="Today" />
-        <StatCard title="Today's Revenue" value={data.today.revenue} type="bank" format="currency" badge="Today" />
-        <StatCard title="New Customers" value={data.today.customer} type="user" badge="Today" />
+        <StatCard title="Daily Sales" value={data.today.sales} type="calendar" badge="Daily" />
+        <StatCard title="Daily Revenue" value={data.today.revenue} type="bank" format="currency" badge="Daily" />
+        <StatCard title="New Customers" value={data.today.customer} type="user" badge="Daily" />
         <StatCard 
           title="Items Low in Stock" 
           value={data.today.lowStock} 

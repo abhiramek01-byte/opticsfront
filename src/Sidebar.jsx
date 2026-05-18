@@ -1,11 +1,22 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaChartLine } from "react-icons/fa";
 import { useState } from "react";
 import {
   FaHome,
-  FaLayerGroup,
-  FaSignOutAlt,
+  FaShoppingCart,
+  FaUserPlus,
+  FaGlasses,
+  FaBoxOpen,
+  FaWarehouse,
+  FaShoppingBag,
+  FaFileInvoiceDollar,
+  FaDatabase,
+  FaCodeBranch,
+  FaFileAlt,
+  FaChartLine,
   FaTruck,
+  FaTools,
+  FaSignOutAlt,
+  FaLayerGroup
 } from "react-icons/fa";
 
 const menu = [
@@ -14,7 +25,7 @@ const menu = [
   // --- Front Desk & POS Operations (Most Accessed) ---
   {
     name: "Sales",
-    icon: <FaLayerGroup />,
+    icon: <FaShoppingCart />,
     children: [
       { name: "Sales Order", path: "/dashboard/salesorder" },
       { name: "Billing", path: "/dashboard/billing" },
@@ -32,7 +43,7 @@ const menu = [
   },
   {
     name: "Registration",
-    icon: <FaLayerGroup />,
+    icon: <FaUserPlus />,
     children: [
       { name: "Patient Registration", path: "/dashboard/patient-registration" },
       { name: "Eye Testing", path: "/dashboard/eye-testing" }
@@ -40,7 +51,7 @@ const menu = [
   },
   {
     name: "Lens Management",
-    icon: <FaLayerGroup />,
+    icon: <FaGlasses />,
     children: [
       { name: "Lens Order Entry", path: "/dashboard/lens/order" },
       { name: "Lens Orders", path: "/dashboard/lens/list" },
@@ -49,7 +60,7 @@ const menu = [
   },
   {
     name: "Product",
-    icon: <FaLayerGroup />,
+    icon: <FaBoxOpen />,
     children: [
       { name: "View Product", path: "/dashboard/viewProduct" },
       { name: "Add Product", path: "/dashboard/addProduct" }
@@ -59,7 +70,7 @@ const menu = [
   // --- Inventory & Purchasing ---
   {
     name: "Stock",
-    icon: <FaLayerGroup />,
+    icon: <FaWarehouse />,
     children: [
       { name: "Opening Stock", path: "/dashboard/openingstock" },
       { name: "Damage", path: "/dashboard/damage" },
@@ -68,7 +79,7 @@ const menu = [
   },
   {
     name: "Purchase",
-    icon: <FaLayerGroup />,
+    icon: <FaShoppingBag />,
     children: [
       { name: "Purchase", path: "/dashboard/purchase" },
       { name: "Purchase Return", path: "/dashboard/purchase-return" },
@@ -78,7 +89,7 @@ const menu = [
   // --- Back Office & Management ---
   {
     name: "Accounts",
-    icon: <FaLayerGroup />,
+    icon: <FaFileInvoiceDollar />,
     children: [
       { name: "Company", path: "/dashboard/accounts/company" },
       { name: "Period", path: "/dashboard/accounts/period" },
@@ -103,7 +114,7 @@ const menu = [
   },
   {
     name: "Master",
-    icon: <FaLayerGroup />,
+    icon: <FaDatabase />,
     children: [
       { name: "Vendor", path: "/dashboard/master/vendor" },
       { name: "Customer", path: "/dashboard/master/customer" },
@@ -126,7 +137,7 @@ const menu = [
   },
   {
     name: "Branches",
-    icon: <FaLayerGroup />,
+    icon: <FaCodeBranch />,
     children: [
       { name: "Branch Master", path: "/dashboard/branches" },
       { name: "Branch Inventory", path: "/dashboard/branches/inventory" },
@@ -137,7 +148,7 @@ const menu = [
   // --- Reports & Analytics ---
   {
     name: "Report",
-    icon: <FaLayerGroup />,
+    icon: <FaFileAlt />,
     children: [
       { name: "Purchase", path: "/dashboard/report/purchase" },
       { name: "Sales", path: "/dashboard/report/sales" },
@@ -161,7 +172,7 @@ const menu = [
   { name: "Order Tracking", icon: <FaTruck />, path: "/dashboard/tracking" },
   {
     name: "Tools",
-    icon: <FaLayerGroup />,
+    icon: <FaTools />,
     children: [
       { name: "Barcode Designer", path: "/dashboard/tools/barcode" },
       { name: "Bulk Message", path: "/dashboard/tools/bulkmessage" }

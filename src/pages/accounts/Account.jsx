@@ -190,6 +190,50 @@ export default function Account() {
                     </div>
                 </div>
             </div>
+
+            {/* Account List Dashboard Area */}
+            <div className="account-list-container glass-panel">
+                <h3 className="list-title">Chart of Accounts Dashboard</h3>
+                <div className="table-responsive">
+                    <table className="account-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Sub Group</th>
+                                <th>Under</th>
+                                <th>Opening Balance</th>
+                                <th>OB Flow</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {accounts.length > 0 ? (
+                                accounts.map((acc, index) => (
+                                    <tr 
+                                        key={acc.id || index} 
+                                        className={currentIndex === index ? "active-row" : ""}
+                                        onClick={() => {
+                                            setFormData(acc);
+                                            setCurrentIndex(index);
+                                        }}
+                                    >
+                                        <td>{acc.code}</td>
+                                        <td>{acc.name}</td>
+                                        <td>{acc.subGroup}</td>
+                                        <td>{acc.under || '-'}</td>
+                                        <td>{acc.openingBalance}</td>
+                                        <td>{acc.obType}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="6" className="text-center">No accounts found</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     );
 }

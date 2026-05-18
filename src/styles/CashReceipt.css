@@ -1,134 +1,244 @@
+/* ================= PAGE ================= */
 .cash-page {
-    padding: 25px;
-    background: #f5f6fa;
-    min-height: 100vh;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 30px;
 }
 
-/* Top Bar */
-
+/* ================= TOP BAR ================= */
 .cash-topbar {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 10px 0;
 }
 
-.nav-buttons button {
-    margin-right: 10px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid #ddd;
-    background: white;
+.cash-topbar .page-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    color: #1e293b;
+    margin: 0;
 }
 
-.edit-btn {
-    background: #e5e7eb;
+.cash-topbar .page-title svg {
+    color: #3b82f6;
 }
 
-.action-buttons button {
-    margin-left: 10px;
-    padding: 6px 18px;
-    border-radius: 20px;
+.header-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.header-buttons button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
     border: none;
 }
 
-.save {
-    background: black;
-    color: white;
+.print-btn:hover {
+    color: #0284c7;
+    background: #e0f2fe;
+    border-color: #7dd3fc !important;
 }
 
-.clear {
-    background: #e5e7eb;
+/* ================= HEADER CARD ================= */
+.cash-header-card {
+    padding: 24px 32px;
+    margin-bottom: 24px;
+    border-radius: 12px;
 }
 
-.cancel {
-    background: white;
-    border: 1px solid #ddd;
-}
-
-
-/* Header Form */
-
-.cash-form {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 10px;
+.form-grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
 }
 
 .form-row {
-    display: flex;
-    gap: 40px;
-    margin-bottom: 10px;
+    margin-top: 16px;
 }
 
-.form-group {
+.full-width {
+    width: 100%;
+}
+
+.input-group {
     display: flex;
     flex-direction: column;
+    gap: 6px;
 }
 
-.form-group label {
+.input-group label {
     font-size: 13px;
-    margin-bottom: 3px;
+    font-weight: 600;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.form-group input {
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+.input-group label svg {
+    color: #94a3b8;
 }
 
-.full {
-    width: 400px;
+.visual-readonly {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    cursor: not-allowed;
 }
 
+/* ================= TABLE CARD ================= */
+.cash-table-card {
+    padding: 24px;
+    border-radius: 12px;
+}
 
-/* Table */
-
-.cash-table-container {
-    background: white;
-    padding: 10px;
-    border-radius: 6px;
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
 }
 
 .cash-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 20px;
 }
 
 .cash-table th {
-    background: #8fb39e;
-    color: black;
-    padding: 6px;
-    border: 1px solid #ccc;
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
     font-size: 13px;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
 }
+
+.cash-table th.text-center { text-align: center; }
+.cash-table th.text-right { text-align: right; }
 
 .cash-table td {
-    border: 1px solid #ccc;
-    padding: 4px;
+    padding: 10px 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
 }
 
-.cash-table input {
-    width: 100%;
+.cash-table td.text-center { text-align: center; }
+.cash-table td.text-right { text-align: right; }
+
+/* In-table inputs */
+.no-border {
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    padding: 8px !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease;
+}
+
+.no-border:hover, .no-border:focus {
+    border: 1px solid #e2e8f0 !important;
+    background: white !important;
+}
+
+.text-primary { color: #3b82f6; }
+.font-bold { font-weight: 700; }
+
+.icon-btn {
+    background: transparent;
     border: none;
-    outline: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.delete-btn { color: #ef4444; }
+.delete-btn:hover:not(:disabled) {
+    background: #fef2f2;
+}
+.delete-btn:disabled {
+    color: #cbd5e1;
+    cursor: not-allowed;
+}
 
-/* Bottom */
-
-.cash-bottom {
+/* ================= FOOTER ================= */
+.cash-footer {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid rgba(226, 232, 240, 0.6);
 }
 
-.print-btn {
-    padding: 5px 12px;
+.add-row-btn {
+    border: 1px dashed #cbd5e1 !important;
+    background: transparent;
+}
+.add-row-btn:hover {
+    border-color: #3b82f6 !important;
+    color: #3b82f6;
+    background: #eff6ff;
 }
 
-.total-box {
-    width: 200px;
-    padding: 5px;
-    border: 1px solid #ccc;
+.total-display {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #f8fafc;
+    padding: 16px 24px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.total-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.total-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+}
+
+.total-value svg {
+    color: #10b981;
+}
+
+/* ================= PRINT STYLES ================= */
+@media print {
+    .print-hide { display: none !important; }
+    .cash-page { padding: 0; background: white; }
+    .glass-panel {
+        box-shadow: none !important;
+        border: none !important;
+        background: white !important;
+        padding: 10px 0 !important;
+    }
+    .modern-input, .modern-select {
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        color: black !important;
+    }
 }

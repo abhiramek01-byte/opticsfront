@@ -127,6 +127,7 @@ export default function LoginPage({ onLogin }) {
                                         placeholder="Enter your username"
                                         value={form.username}
                                         onChange={handleChange}
+                                        autoComplete="username"
                                     />
 
                                 </div>
@@ -149,6 +150,7 @@ export default function LoginPage({ onLogin }) {
                                         placeholder="Enter your password"
                                         value={form.password}
                                         onChange={handleChange}
+                                        autoComplete="current-password"
                                     />
 
                                     <button
