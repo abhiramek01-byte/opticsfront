@@ -91,7 +91,7 @@
     font-family: var(--font-display);
     background: var(--gradient-primary);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+     background-clip: text;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
@@ -250,7 +250,7 @@
 .hero-gradient {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background-clip: text;
     display: inline-block;
 }
 
@@ -376,8 +376,9 @@
     margin-bottom: 1rem;
     font-family: var(--font-display);
     background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
 }
 
 .feature-desc {
