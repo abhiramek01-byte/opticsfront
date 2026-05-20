@@ -102,7 +102,7 @@ import CustomerHistory from "./pages/customer/CustomerHistory";
 
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import BranchManagement from "./pages/admin/BranchManagement";
-import UserManagement from "./pages/admin/UserManagement";
+
 import AdminLayout from "./pages/admin/AdminLayout";
 import Products from "./pages/admin/AdminProducts";
 import Vendors from "./pages/admin/AdminVendors";
@@ -395,7 +395,7 @@ export default function App() {
       >
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="branches" element={<BranchManagement />} />
-        <Route path="users" element={<UserManagement />} />
+
         <Route path="products" element={<Products />} />
         <Route path="products/add" element={<AdminAddProduct />} />
         <Route path="vendors" element={<Vendors />} />

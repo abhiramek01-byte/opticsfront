@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
 
@@ -13,6 +13,21 @@ export default function HomePage() {
 
     const navigate = useNavigate();
     const sectionsRef = useRef([]);
+    const [products, setProducts] = useState([]);
+    const [loadingProducts, setLoadingProducts] = useState(true);
+
+    useEffect(() => {
+        fetch("http://localhost:3000/product")
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data.slice(0, 6)); // Fetch up to 6 products for home
+                setLoadingProducts(false);
+            })
+            .catch(err => {
+                console.error("Error fetching products:", err);
+                setLoadingProducts(false);
+            });
+    }, []);
 
     useEffect(() => {
 
@@ -288,95 +303,80 @@ export default function HomePage() {
 
                         <div className="products-grid">
 
-                            {[
-                                {
-                                    title: "Frames",
-                                    stock: "120 in stock",
-                                    size: "Medium / Large",
-                                    img: "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=400&q=80"
-                                },
-                                {
-                                    title: "Sunglasses",
-                                    stock: "80 in stock",
-                                    size: "Standard",
-                                    img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80"
-                                },
-                                {
-                                    title: "Contact Lens",
-                                    stock: "150 boxes",
-                                    size: "Daily / Monthly",
-                                    img: "https://images.unsplash.com/photo-1588776814546-ec7e61a0c1b3?auto=format&fit=crop&w=400&q=80"
-                                },
-                                {
-                                    title: "Lens Types",
-                                    stock: "200 lenses",
-                                    size: "Single Vision / Progressive",
-                                    img: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=400&q=80"
-                                },
-                                {
-                                    title: "Lens Solutions",
-                                    stock: "60 bottles",
-                                    size: "100ml / 250ml",
-                                    img: "https://images.unsplash.com/photo-1606813902755-5d1f7e7d0d7a?auto=format&fit=crop&w=400&q=80"
-                                },
-                                {
-                                    title: "Accessories",
-                                    stock: "90 items",
-                                    size: "Universal",
-                                    img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=400&q=80"
-                                }
-                            ].map((p) => (
-
-                                <div
-                                    className="product-card"
-                                    key={p.title}
-                                    onClick={() =>
-                                        alert(`${p.title} details page coming soon`)
-                                    }
-                                >
-
-                                    <img
-                                        src={p.img}
-                                        alt={p.title}
-                                        className="product-img"
-                                    />
-
-                                    <div className="product-content">
-
-                                        <h3>{p.title}</h3>
-
-                                        <p className="product-stock">
-                                            Stock Available: {p.stock}
-                                        </p>
-
-                                        <p className="product-size">
-                                            Size Options: {p.size}
-                                        </p>
-
-                                    </div>
-
+                            {loadingProducts ? (
+                                <div className="loading-shimmer" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', color: 'var(--gray-500)' }}>
+                                    Loading products...
                                 </div>
+                            ) : products.length > 0 ? (
+                                products.map((p) => {
+                                    const imageSrc = p.image
+                                        ? `http://localhost:3000/uploads/${p.image.split(',')[0]}`
+                                        : "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80"; // fallback
 
-                            ))}
+                                    return (
+                                        <div
+                                            className="product-card glass-panel"
+                                            key={p.id}
+                                            onClick={() => navigate("/products")}
+                                        >
+                                            <div className="product-img-wrapper">
+                                                <img
+                                                    src={imageSrc}
+                                                    alt={p.productName}
+                                                    className="product-img"
+                                                />
+                                                {p.brand && <span className="product-brand-badge">{p.brand}</span>}
+                                            </div>
+
+                                            <div className="product-content">
+                                                <div className="pc-top">
+                                                    <h3>{p.productName}</h3>
+                                                    <span className="product-price">₹{p.rate || "0"}</span>
+                                                </div>
+                                                <div className="product-details">
+                                                    <p className="product-category">
+                                                        <span className="icon">🏷️</span> {p.category || "General"}
+                                                    </p>
+                                                    <p className="product-stock">
+                                                        <span className="icon">📦</span> Stock: {p.stock?.length ? p.stock.reduce((sum, s) => sum + Number(s.quantity), 0) : 0}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', color: 'var(--gray-500)' }}>
+                                    No products found in the store yet.
+                                </div>
+                            )}
 
                         </div>
 
                     </div>
 
 
-                    <div className="top-selling">
+                    <div className="top-selling glass-panel">
 
                         <h3>🔥 Top Selling Products</h3>
 
-                        <ul>
-
-                            <li>RayBan Classic Frame</li>
-                            <li>Blue Cut Computer Lens</li>
-                            <li>Premium Sunglasses</li>
-                            <li>Daily Contact Lens</li>
-                            <li>Anti Glare Lens</li>
-
+                        <ul className="top-selling-list">
+                            {products.length > 0 ? products.slice(0, 5).map(p => (
+                                <li key={`ts-${p.id}`} onClick={() => navigate("/products")}>
+                                    <div className="ts-info">
+                                        <span className="ts-name">{p.productName}</span>
+                                        <span className="ts-category">{p.category || "General"}</span>
+                                    </div>
+                                    <span className="ts-price">₹{p.rate || "0"}</span>
+                                </li>
+                            )) : (
+                                !loadingProducts && <li>No top products yet.</li>
+                            )}
                         </ul>
+
+                        <button className="view-all-btn" onClick={() => navigate("/products")}>
+                            View All Products →
+                        </button>
 
                     </div>
 

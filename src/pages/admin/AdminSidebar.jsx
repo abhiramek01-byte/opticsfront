@@ -11,8 +11,8 @@ import {
 
 const menu = [
     { name: "Dashboard", icon: <FaHome />, path: "/admin/dashboard" },
-    { name: "Branches", icon: <FaBuilding />, path: "/admin/branches" },
-    { name: "Users", icon: <FaUsers />, path: "/admin/users" },
+    { name: "Branches & Managers", icon: <FaBuilding />, path: "/admin/branches" },
+
     { name: "Products", icon: <FaBox />, path: "/admin/products" },
     { name: "Vendors", icon: <FaTruck />, path: "/admin/vendors" },
     { name: "Reports", icon: <FaChartBar />, path: "/admin/reports" }

@@ -1,149 +1,127 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/ProductListPage.css";
 
 export default function ProductListPage() {
 
     const navigate = useNavigate();
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState("");
 
-    const products = [
+    useEffect(() => {
+        fetch("http://localhost:3000/product")
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data);
+                setFilteredProducts(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Failed to fetch products:", err);
+                setLoading(false);
+            });
+    }, []);
 
-        {
-            img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=100",
-            model: "Wayfarer Classic",
-            brand: "Ray-Ban",
-            category: "Sunglasses",
-            stock: 45,
-            size: "Medium"
-        },
-
-        {
-            img: "https://images.unsplash.com/photo-1577803645773-f96470509666?w=100",
-            model: "Aviator Metal",
-            brand: "Ray-Ban",
-            category: "Sunglasses",
-            stock: 32,
-            size: "Large"
-        },
-
-        {
-            img: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=100",
-            model: "Holbrook Sport",
-            brand: "Oakley",
-            category: "Sport",
-            stock: 12,
-            size: "Medium"
-        },
-
-        {
-            img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=100",
-            model: "Full Rim Tech",
-            brand: "Prada",
-            category: "Eyeglasses",
-            stock: 5,
-            size: "Standard"
+    useEffect(() => {
+        if (!search.trim()) {
+            setFilteredProducts(products);
+            return;
         }
+        const lower = search.toLowerCase();
+        const filtered = products.filter(p => 
+            p.productName?.toLowerCase().includes(lower) ||
+            p.brand?.toLowerCase().includes(lower) ||
+            p.category?.toLowerCase().includes(lower)
+        );
+        setFilteredProducts(filtered);
+    }, [search, products]);
 
-    ];
+    const totalBrands = new Set(products.map(p => p.brand).filter(Boolean)).size;
 
     return (
-
-        <div className="product-page">
-
+        <div className="product-page-root">
+            
             {/* HEADER */}
-            {/* HEADER */}
-
-            <div className="product-header">
-
-                <h2>Master Product List</h2>
-
-                <p>
-                    Efficiently manage and track your store's entire optical collection
-                </p>
-
-                <button
-                    className="back-btn"
-                    onClick={() => navigate("/")}
-                >
-                    ← Back Home
-                </button>
-
+            <div className="product-page-header glass-panel">
+                <div className="pph-left">
+                    <h2>Store Products</h2>
+                    <p>Explore our entire collection of premium eyewear</p>
+                </div>
+                <div className="pph-right">
+                    <button className="back-btn" onClick={() => navigate("/")}>
+                        ← Back Home
+                    </button>
+                </div>
             </div>
 
-
-            {/* STATS */}
-
-            <div className="product-stats">
-
-                <div className="stat-card">
-                    <h3>Total Brands</h3>
-                    <p>15</p>
+            {/* CONTROLS */}
+            <div className="product-page-controls glass-panel">
+                <div className="ppc-stats">
+                    <div className="stat">
+                        <span className="stat-val">{products.length}</span>
+                        <span className="stat-label">Total Items</span>
+                    </div>
+                    <div className="stat">
+                        <span className="stat-val">{totalBrands}</span>
+                        <span className="stat-label">Brands</span>
+                    </div>
                 </div>
 
-                <div className="stat-card">
-                    <h3>Total Items</h3>
-                    <p>450</p>
+                <div className="ppc-search">
+                    <span className="search-icon">🔍</span>
+                    <input 
+                        type="text" 
+                        placeholder="Search products, brands, or categories..." 
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
                 </div>
-
             </div>
 
-
-            {/* PRODUCT TABLE */}
-
-            <table className="product-table">
-
-                <thead>
-
-                    <tr>
-                        <th>Image</th>
-                        <th>Model Name</th>
-                        <th>Brand</th>
-                        <th>Category</th>
-                        <th>Size</th>
-                        <th>Stock</th>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {products.map((p, i) => (
-
-                        <tr key={i}>
-
-                            <td>
-                                <img src={p.img} className="product-img" />
-                            </td>
-
-                            <td>{p.model}</td>
-
-                            <td>
-                                <span className="brand-tag">
-                                    {p.brand}
-                                </span>
-                            </td>
-
-                            <td>
-                                <span className="category-tag">
-                                    {p.category}
-                                </span>
-                            </td>
-
-                            <td>{p.size}</td>
-
-                            <td className="stock">
-                                {p.stock}
-                            </td>
-
-                        </tr>
-
-                    ))}
-
-                </tbody>
-
-            </table>
+            {/* GRID */}
+            <div className="product-page-grid">
+                {loading ? (
+                    <div className="loading-state glass-panel">
+                        <div className="spinner"></div>
+                        <p>Loading products...</p>
+                    </div>
+                ) : filteredProducts.length > 0 ? (
+                    filteredProducts.map((p) => {
+                        const imageSrc = p.image 
+                            ? `http://localhost:3000/uploads/${p.image.split(',')[0]}` 
+                            : "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80";
+                        
+                        return (
+                            <div className="store-product-card glass-panel" key={p.id}>
+                                <div className="spc-img-wrap">
+                                    <img src={imageSrc} alt={p.productName} />
+                                    {p.brand && <span className="spc-brand">{p.brand}</span>}
+                                </div>
+                                <div className="spc-content">
+                                    <h3 className="spc-title">{p.productName}</h3>
+                                    <div className="spc-meta">
+                                        <span className="spc-category">{p.category || "General"}</span>
+                                        <span className="spc-price">₹{p.rate || "0"}</span>
+                                    </div>
+                                    <div className="spc-footer">
+                                        <div className="spc-stock">
+                                            📦 {p.stock?.length ? p.stock.reduce((sum, s) => sum + Number(s.quantity), 0) : 0} in stock
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })
+                ) : (
+                    <div className="empty-state glass-panel">
+                        <h2>No products found</h2>
+                        <p>Try adjusting your search criteria.</p>
+                    </div>
+                )}
+            </div>
 
         </div>
-
     );
-
 }
