@@ -46,7 +46,8 @@ const menu = [
     icon: <FaUserPlus />,
     children: [
       { name: "Patient Registration", path: "/dashboard/patient-registration" },
-      { name: "Eye Testing", path: "/dashboard/eye-testing" }
+      { name: "Eye Testing", path: "/dashboard/eye-testing" },
+      { name: "Registered Patients", path: "/dashboard/registered-patients" }
     ]
   },
   {

@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "../../styles/Company.css";
 import { useMasterNavigation } from "../../hooks/useMasterNavigation";
 import { 
@@ -7,6 +8,22 @@ import {
 } from "react-icons/fa";
 
 export default function Company() {
+    const [accounts, setAccounts] = useState([]);
+
+    useEffect(() => {
+        const fetchAccounts = async () => {
+            try {
+                const res = await axios.get(import.meta.env.VITE_API_URL + "/account");
+                if (Array.isArray(res.data)) {
+                    setAccounts(res.data);
+                }
+            } catch(e) {
+                console.error("Error loading accounts", e);
+            }
+        };
+        fetchAccounts();
+    }, []);
+
     const {
         items,
         currentIndex,
@@ -169,8 +186,9 @@ export default function Company() {
                                 disabled={isViewing}
                             >
                                 <option value="">Select Default Account</option>
-                                <option value="1">Account 1</option>
-                                <option value="2">Account 2</option>
+                                {accounts.map(acc => (
+                                    <option key={acc.id} value={acc.id}>{acc.name} ({acc.code})</option>
+                                ))}
                             </select>
                         </div>
                     </div>

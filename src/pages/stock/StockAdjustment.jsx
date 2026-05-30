@@ -11,7 +11,7 @@ export default function StockAdjustment() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/product")
+        axios.get(import.meta.env.VITE_API_URL + "/product")
             .then(res => setProducts(res.data))
             .catch(err => console.log(err));
     }, []);
@@ -51,7 +51,7 @@ export default function StockAdjustment() {
                     return;
                 }
 
-                await axios.post("http://localhost:3000/stock-adjustment", {
+                await axios.post(import.meta.env.VITE_API_URL + "/stock-adjustment", {
                     product: Number(item.product),
                     quantity: Number(item.adjustment),
                     type: item.type

@@ -17,7 +17,7 @@ export default function HomePage() {
     const [loadingProducts, setLoadingProducts] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:3000/product")
+        fetch(import.meta.env.VITE_API_URL + "/product")
             .then(res => res.json())
             .then(data => {
                 setProducts(data.slice(0, 6)); // Fetch up to 6 products for home
@@ -310,7 +310,7 @@ export default function HomePage() {
                             ) : products.length > 0 ? (
                                 products.map((p) => {
                                     const imageSrc = p.image
-                                        ? `http://localhost:3000/uploads/${p.image.split(',')[0]}`
+                                        ? `${import.meta.env.VITE_API_URL}/uploads/${p.image.split(',')[0]}`
                                         : "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80"; // fallback
 
                                     return (

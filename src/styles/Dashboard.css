@@ -1,315 +1,608 @@
-/* =========================
-   DASHBOARD WRAPPER & GLASSMORPHISM
-========================= */
+/* ==========================================================================
+   DASHBOARD DESIGN SYSTEM (THEME TOKENS)
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg-app: #f4f6fc;
+  
+  /* High-Fidelity Vibrancy Palette */
+  --primary: #4f46e5;         /* Deep Indigo */
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  --primary-glow: rgba(99, 102, 241, 0.18);
+  
+  --secondary: #0284c7;       /* Sky Blue */
+  --secondary-gradient: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  --secondary-glow: rgba(14, 165, 233, 0.18);
+  
+  --success: #059669;         /* Emerald */
+  --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --success-glow: rgba(16, 185, 129, 0.18);
+  
+  --warning: #d97706;         /* Rich Amber */
+  --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --warning-glow: rgba(245, 158, 11, 0.18);
+  
+  --danger: #dc2626;          /* Crimson Red */
+  --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  --danger-glow: rgba(239, 68, 68, 0.18);
+  
+  /* Text and Slate Overlays */
+  --dark-slate: #0f172a;      /* Bold Headings */
+  --medium-slate: #334155;    /* Standard Body */
+  --light-slate: #64748b;     /* Muted/Labels */
+  
+  /* Glassmorphism configurations */
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --border-glass: rgba(255, 255, 255, 0.6);
+  --shadow-premium: 0 12px 34px -8px rgba(30, 41, 59, 0.04), 0 4px 14px -2px rgba(30, 41, 59, 0.02);
+  --shadow-hover: 0 26px 48px -12px rgba(79, 70, 229, 0.14), 0 8px 22px -6px rgba(30, 41, 59, 0.04);
+  
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+
+/* ==========================================================================
+   BASE & ENTRANCE ANIMATIONS
+   ========================================================================== */
 .dashboard-wrapper {
-  padding: 24px;
-  background-color: var(--bg-primary, #f4f6fc);
+  padding: 32px;
+  background-color: var(--bg-app);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.03) 0px, transparent 50%);
   min-height: 100vh;
   font-family: 'Outfit', 'Inter', sans-serif;
+  color: var(--medium-slate);
+  animation: pageEnter 0.75s var(--ease) forwards;
+  box-sizing: border-box;
 }
 
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   GLASSMORPHIC PANEL UTILITY
+   ========================================================================== */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
-  border-radius: 16px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-premium);
+  border-radius: var(--radius-lg);
+  transition: all 0.4s var(--ease);
 }
 
-/* =========================
-   TOP BAR
-========================= */
+/* ==========================================================================
+   HEADER & USER PROFILE
+   ========================================================================== */
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 24px;
-  margin-bottom: 30px;
+  padding: 24px 32px;
+  margin-bottom: 36px;
+  background: rgba(255, 255, 255, 0.82) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  position: relative;
+  z-index: 10;
 }
 
 .dash-title {
   margin: 0;
-  font-size: 26px;
-  font-weight: 700;
-  color: #1e293b;
-  letter-spacing: -0.5px;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--dark-slate);
+  letter-spacing: -0.8px;
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
-  color: #64748b;
-  margin-top: 6px;
-  font-size: 14px;
-}
-
-.gradient-btn {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
+  color: var(--light-slate);
+  margin: 6px 0 0 0;
+  font-size: 14.5px;
   font-weight: 500;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-  transition: all 0.3s ease;
 }
 
-.gradient-btn:hover {
+/* User Widget Dropdown & Profile styling */
+.user-profile-btn {
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03) !important;
+}
+
+.user-profile-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+  background: #ffffff !important;
+  border-color: rgba(99, 102, 241, 0.25) !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08) !important;
 }
 
-/* =========================
-   SECTION TITLES
-========================= */
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.user-dropdown {
+  animation: slideInUp 0.3s var(--ease) forwards !important;
+  border: 1px solid rgba(15, 23, 42, 0.05) !important;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* ==========================================================================
+   METRICS SECTION HEADINGS
+   ========================================================================== */
 .section-title {
   font-size: 20px;
-  font-weight: 600;
-  color: #0f172a;
-  margin: 0 0 20px 0;
+  font-weight: 700;
+  color: var(--dark-slate);
+  margin: 0 0 22px 0;
   display: flex;
   align-items: center;
+  letter-spacing: -0.4px;
+}
+
+.section-title::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 20px;
+  background: var(--primary-gradient);
+  border-radius: 4px;
+  margin-right: 12px;
 }
 
 .date-badge {
-  background: #e2e8f0;
-  color: #475569;
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 12px;
-  margin-left: 12px;
-  font-weight: 500;
+  background: rgba(99, 102, 241, 0.07);
+  color: var(--primary);
+  font-size: 12.5px;
+  padding: 4px 14px;
+  border-radius: 24px;
+  margin-left: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  letter-spacing: -0.2px;
 }
 
-/* =========================
-   STAT CARDS
-========================= */
+.dashboard-date-picker {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  transition: all 0.3s var(--ease) !important;
+}
+
+.dashboard-date-picker:hover {
+  background: #ffffff !important;
+  border-color: rgba(99, 102, 241, 0.3) !important;
+}
+
+.dashboard-date-picker:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 4px var(--primary-glow) !important;
+  background: #ffffff !important;
+}
+
+/* ==========================================================================
+   STAT CARDS (METRICS)
+   ========================================================================== */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 
 .stat-card {
   padding: 24px;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.75);
 }
 
+.stat-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  transition: all 0.3s var(--ease);
+}
+
+/* Beautiful dynamic card hover states & card glows */
 .stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.1);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
+.stat-card.card-glow-sales:hover::after,
+.stat-card.card-glow-calendar:hover::after { 
+  background: var(--primary-gradient); 
+}
+
+.stat-card.card-glow-revenue:hover::after,
+.stat-card.card-glow-bank:hover::after { 
+  background: var(--success-gradient); 
+}
+
+.stat-card.card-glow-customer:hover::after,
+.stat-card.card-glow-user:hover::after { 
+  background: var(--secondary-gradient); 
+}
+
+.stat-card.card-glow-stock:hover::after { 
+  background: var(--warning-gradient); 
+}
+
+.stat-card.card-glow-alert:hover::after { 
+  background: var(--danger-gradient); 
+}
+
+/* Floating custom decorative gradient backgrounds */
 .card-blob {
   position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+  top: -30px;
+  right: -30px;
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.09) 0%, rgba(255, 255, 255, 0) 70%);
   border-radius: 50%;
   pointer-events: none;
+  transition: transform 0.6s var(--ease);
+  z-index: 1;
+}
+
+.stat-card.card-glow-revenue .card-blob {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.09) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.stat-card.card-glow-customer .card-blob {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.09) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.stat-card.card-glow-stock .card-blob {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.09) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.stat-card.card-glow-alert .card-blob {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.09) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.stat-card:hover .card-blob {
+  transform: scale(1.3) translate(-14px, 14px);
+}
+
+.card-content-wrap {
+  position: relative;
+  z-index: 2;
 }
 
 .card-header {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 22px;
 }
 
 .icon-wrap {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 22px;
   margin-right: 14px;
+  transition: all 0.4s var(--ease);
+}
+
+.stat-card:hover .icon-wrap {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* High contrast icon background containers */
+.icon-wrap.sales, .icon-wrap.calendar {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.05);
+}
+
+.icon-wrap.revenue, .icon-wrap.bank {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.05);
+}
+
+.icon-wrap.customer, .icon-wrap.user {
+  background: rgba(14, 165, 233, 0.1);
+  color: var(--secondary);
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.05);
+}
+
+.icon-wrap.stock {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.05);
+}
+
+.icon-wrap.alert {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.05);
 }
 
 .stat-title {
   margin: 0;
-  color: #64748b;
-  font-weight: 500;
-  font-size: 15px;
+  color: var(--light-slate);
+  font-weight: 600;
+  font-size: 14.5px;
+  text-transform: none;
+  letter-spacing: -0.1px;
 }
 
 .card-body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-top: 6px;
 }
 
 .stat-value {
   margin: 0;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--dark-slate);
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+  font-family: 'Inter', -apple-system, sans-serif;
 }
 
-.badge {
+/* Beautiful absolute positioned top-right badges */
+.badge-top {
+  position: absolute;
+  top: 18px;
+  right: 18px;
   font-size: 11px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  z-index: 10;
+  white-space: nowrap;
 }
 
-.badge-primary {
-  background: #dbeafe;
-  color: #1d4ed8;
+.badge-sales, .badge-calendar {
+  background: rgba(99, 102, 241, 0.08);
+  color: var(--primary);
+  border-color: rgba(99, 102, 241, 0.12);
 }
 
-.badge-danger {
-  background: #fee2e2;
-  color: #b91c1c;
+.badge-revenue, .badge-bank {
+  background: rgba(16, 185, 129, 0.08);
+  color: var(--success);
+  border-color: rgba(16, 185, 129, 0.12);
 }
 
-/* =========================
-   BOTTOM PANELS
-========================= */
+.badge-customer, .badge-user {
+  background: rgba(14, 165, 233, 0.08);
+  color: var(--secondary);
+  border-color: rgba(14, 165, 233, 0.12);
+}
+
+.badge-stock {
+  background: rgba(245, 158, 11, 0.08);
+  color: var(--warning);
+  border-color: rgba(245, 158, 11, 0.12);
+}
+
+.badge-alert {
+  background: rgba(239, 68, 68, 0.08);
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.12);
+}
+
+/* ==========================================================================
+   BOTTOM PANELS & TABLES
+   ========================================================================== */
 .bottom-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 24px;
-  margin-bottom: 24px;
+  grid-template-columns: 1.8fr 1.2fr;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 1024px) {
+  .bottom-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .panel {
-  padding: 24px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .panel-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-.panel-head h3 {
+.panel-head h3, .panel h3 {
   margin: 0;
-  font-size: 18px;
-  color: #0f172a;
-  font-weight: 600;
+  font-size: 19px;
+  color: var(--dark-slate);
+  font-weight: 700;
+  letter-spacing: -0.4px;
 }
 
 .view-all {
   font-size: 13px;
-  color: #3b82f6;
-  font-weight: 500;
+  color: var(--primary);
+  font-weight: 600;
   cursor: pointer;
+  padding: 6px 14px;
+  background: rgba(99, 102, 241, 0.05);
+  border-radius: 8px;
+  transition: all 0.25s var(--ease);
+  border: 1px solid rgba(99, 102, 241, 0.08);
 }
 
 .view-all:hover {
-  text-decoration: underline;
+  background: var(--primary);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
-/* =========================
-   RECENT SALES TABLE
-========================= */
-.table-responsive {
-  overflow-x: auto;
-}
-
+/* Beautiful custom datagrids */
 .sales-table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
+  border-collapse: collapse;
+  text-align: left;
 }
 
 .sales-table th {
-  text-align: left;
-  padding: 12px;
-  color: #64748b;
-  font-weight: 500;
+  padding: 14px 18px;
+  color: var(--light-slate);
+  font-weight: 700;
   font-size: 13px;
-  border-bottom: 1px solid #e2e8f0;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-bottom: 2px solid #edf2f7;
+  background: #f8fafc;
 }
 
 .sales-table td {
-  padding: 16px 12px;
-  color: #334155;
-  font-size: 14px;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 16px 18px;
+  color: var(--medium-slate);
+  font-size: 14.5px;
+  border-bottom: 1px solid #edf2f7;
+  vertical-align: middle;
+}
+
+.sales-table tbody tr {
+  transition: background-color 0.25s var(--ease);
+}
+
+.sales-table tbody tr:hover {
+  background-color: rgba(99, 102, 241, 0.03);
+}
+
+.sales-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .text-primary {
-  color: #3b82f6;
+  color: var(--primary) !important;
 }
 
 .font-semibold {
   font-weight: 600;
 }
 
+/* Glowing Neon Status Badges */
 .status-badge {
-  padding: 6px 12px;
-  border-radius: 20px;
+  padding: 6px 14px;
+  border-radius: 24px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
+  display: inline-block;
+  letter-spacing: -0.1px;
 }
 
 .status-badge.completed {
-  background: #dcfce7;
-  color: #166534;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.08);
 }
 
 .status-badge.shipped {
-  background: #e0f2fe;
-  color: #075985;
+  background: #f0f9ff;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
 }
 
 .status-badge.pending {
-  background: #fef9c3;
-  color: #854d0e;
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fef3c7;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.08);
 }
 
-/* =========================
-   STOCK STATUS
-========================= */
+/* ==========================================================================
+   STOCK STATUS Composition
+   ========================================================================== */
 .stock-item {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.stock-item:last-child {
+  margin-bottom: 0;
 }
 
 .stock-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-size: 14px;
+  font-weight: 500;
 }
 
-
-/* text style */
 .text-dark {
-  color: #0f172a;
+  color: var(--dark-slate);
 }
 
 .progress-bg {
-  height: 8px;
-  background: #e2e8f0;
-  border-radius: 10px;
+  height: 10px;
+  background: #edf2f7;
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: 10px;
-  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+  transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Category linear gradient configurations */
 .blue-gradient {
-  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  background: linear-gradient(90deg, #4f46e5 0%, #06b6d4 100%);
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.25);
 }
 
 .green-gradient {
-  background: linear-gradient(90deg, #10b981, #34d399);
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  box-shadow: 0 2px 8px rgba(52, 211, 153, 0.25);
 }
 
 .orange-gradient {
-  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.25);
 }
 
-/* Remove previous icon colors matching class names from old CSS so they don't double override */
-/* Actually, leave them as they use the same class names and add to the design */
+.font-medium {
+  font-weight: 500;
+}

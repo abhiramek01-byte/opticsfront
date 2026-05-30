@@ -10,7 +10,7 @@ export default function BillWiseProfit() {
     useEffect(() => {
         const fetchProfitData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/reports/mis/bill-wise-profit');
+                const response = await axios.get(import.meta.env.VITE_API_URL + '/reports/mis/bill-wise-profit');
                 setData(response.data);
             } catch (err) {
                 console.error("Error fetching bill-wise profit", err);

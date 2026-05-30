@@ -11,7 +11,7 @@ export default function ReceiveLens() {
     // 🔹 Load pending orders from backend
     const fetchPendingOrders = () => {
         setLoading(true);
-        axios.get("http://localhost:3000/lens-order", {
+        axios.get(import.meta.env.VITE_API_URL + "/lens-order", {
             headers: {
                 "branch-id": localStorage.getItem("branchId") || ""
             }
@@ -38,7 +38,7 @@ export default function ReceiveLens() {
     // 🔹 Handle Receive Button
     const handleReceive = async (id) => {
         try {
-            await axios.patch(`http://localhost:3000/lens-order/receive/${id}`, {}, {
+            await axios.patch(`${import.meta.env.VITE_API_URL}/lens-order/receive/${id}`, {}, {
                 headers: {
                     "branch-id": localStorage.getItem("branchId") || ""
                 }

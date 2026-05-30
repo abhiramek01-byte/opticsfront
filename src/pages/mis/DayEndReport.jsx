@@ -13,7 +13,7 @@ export default function DayEndReport() {
         const fetchDayEndData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:3000/reports/mis/day-end?date=${selectedDate}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/reports/mis/day-end?date=${selectedDate}`);
                 setData(response.data);
                 setError("");
             } catch (err) {

@@ -60,7 +60,7 @@ export default function AdminAddProduct() {
                     ];
 
                     const results = await Promise.all(
-                        endpoints.map(ep => fetch(`http://localhost:3000/${ep.url}`).then(res => res.json()).catch(() => []))
+                        endpoints.map(ep => fetch(`${import.meta.env.VITE_API_URL}/${ep.url}`).then(res => res.json()).catch(() => []))
                     );
 
                     const newOptions = {};
@@ -126,7 +126,7 @@ export default function AdminAddProduct() {
         }
 
         try {
-            const res = await fetch("http://localhost:3000/product", {
+            const res = await fetch(import.meta.env.VITE_API_URL + "/product", {
                 method: "POST",
                 body: formData
             });

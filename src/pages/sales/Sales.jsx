@@ -30,19 +30,19 @@ export default function Sales() {
     /* FETCH DATA */
     useEffect(() => {
         // Customers
-        fetch("http://localhost:3000/customers")
+        fetch(import.meta.env.VITE_API_URL + "/customers")
             .then(res => res.json())
             .then(data => setCustomers(Array.isArray(data) ? data : []))
             .catch(err => console.error(err));
 
         // Products
-        fetch("http://localhost:3000/product")
+        fetch(import.meta.env.VITE_API_URL + "/product")
             .then(res => res.json())
             .then(data => setProducts(Array.isArray(data) ? data : []))
             .catch(err => console.error(err));
 
         // Tax Groups
-        fetch("http://localhost:3000/tax-group")
+        fetch(import.meta.env.VITE_API_URL + "/tax-group")
             .then(res => res.json())
             .then(data => setTaxGroups(Array.isArray(data) ? data : []))
             .catch(err => console.error(err));
@@ -84,7 +84,7 @@ export default function Sales() {
 
         if (value) {
             try {
-                const res = await fetch(`http://localhost:3000/product/barcode/${value}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/product/barcode/${value}`);
 
                 if (!res.ok) {
                     // Fail silently to allow typing, don't alert on every keystroke
@@ -138,7 +138,7 @@ export default function Sales() {
         };
 
         try {
-            const res = await fetch("http://localhost:3000/sales", {
+            const res = await fetch(import.meta.env.VITE_API_URL + "/sales", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

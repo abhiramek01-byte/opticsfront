@@ -28,7 +28,7 @@ export default function BarcodeDesigner() {
     // Fetch existing barcodes
     const fetchBarcodes = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/barcode");
+            const res = await axios.get(import.meta.env.VITE_API_URL + "/barcode");
             setSavedBarcodes(res.data);
         } catch (err) {
             console.error(err);
@@ -49,7 +49,7 @@ export default function BarcodeDesigner() {
         }
 
         try {
-            const res = await axios.get(`http://localhost:3000/barcode/${id}`);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/barcode/${id}`);
             const data = res.data;
             setForm({
                 name: data.name || "",
@@ -101,10 +101,10 @@ export default function BarcodeDesigner() {
             const payload = { ...form, rows };
             
             if (selectedBarcodeId) {
-                await axios.put(`http://localhost:3000/barcode/${selectedBarcodeId}`, payload);
+                await axios.put(`${import.meta.env.VITE_API_URL}/barcode/${selectedBarcodeId}`, payload);
                 alert("Barcode Format Updated ✅");
             } else {
-                await axios.post("http://localhost:3000/barcode", payload);
+                await axios.post(import.meta.env.VITE_API_URL + "/barcode", payload);
                 alert("New Barcode Format Saved ✅");
             }
             fetchBarcodes();
@@ -118,7 +118,7 @@ export default function BarcodeDesigner() {
         if (!selectedBarcodeId) return;
         if (window.confirm("Delete this barcode format?")) {
             try {
-                await axios.delete(`http://localhost:3000/barcode/${selectedBarcodeId}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/barcode/${selectedBarcodeId}`);
                 alert("Barcode Format Deleted 🗑️");
                 handleClear();
                 fetchBarcodes();

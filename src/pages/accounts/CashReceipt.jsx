@@ -24,13 +24,13 @@ export default function CashReceipt() {
         const fetchData = async () => {
             try {
                 // Fetch Customers
-                const custRes = await axios.get("http://localhost:3000/customers", {
+                const custRes = await axios.get(import.meta.env.VITE_API_URL + "/customers", {
                     headers: { "branch-id": branchId }
                 });
                 setCustomers(custRes.data);
 
                 // Fetch Receipts to calculate next receipt number
-                const receiptRes = await axios.get("http://localhost:3000/cash-receipt", {
+                const receiptRes = await axios.get(import.meta.env.VITE_API_URL + "/cash-receipt", {
                     headers: { "branch-id": branchId }
                 });
                 
@@ -107,7 +107,7 @@ export default function CashReceipt() {
         };
 
         try {
-            await axios.post("http://localhost:3000/cash-receipt", payload, {
+            await axios.post(import.meta.env.VITE_API_URL + "/cash-receipt", payload, {
                 headers: { "branch-id": branchId }
             });
 

@@ -11,8 +11,8 @@ export default function CustomerHistory() {
             setLoading(true);
             try {
                 const [salesRes, ordersRes] = await Promise.all([
-                    fetch("http://localhost:3000/sales"),
-                    fetch("http://localhost:3000/sales-order")
+                    fetch(import.meta.env.VITE_API_URL + "/sales"),
+                    fetch(import.meta.env.VITE_API_URL + "/sales-order")
                 ]);
 
                 const salesData = await salesRes.json();

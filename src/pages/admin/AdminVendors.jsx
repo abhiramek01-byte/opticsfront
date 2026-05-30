@@ -11,7 +11,7 @@ export default function Vendors() {
 
     const fetchVendors = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/vendors");
+            const res = await axios.get(import.meta.env.VITE_API_URL + "/vendors");
             setVendors(res.data);
         } catch (error) {
             console.error("Failed to fetch vendors", error);
@@ -28,7 +28,7 @@ export default function Vendors() {
 
     const deleteVendor = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/vendors/${id}`);
+            await axios.delete(`${import.meta.env.VITE_API_URL}/vendors/${id}`);
             setVendors(vendors.filter(v => v.id !== id));
         } catch (error) {
             console.error("Error deleting vendor", error);

@@ -11,7 +11,7 @@ export default function SalesTaxReport() {
 
     const fetchReport = async () => {
         setLoading(true);
-        let url = "http://localhost:3000/sales/report";
+        let url = import.meta.env.VITE_API_URL + "/sales/report";
         const queryParams = [];
         if (startDate) queryParams.push(`startDate=${startDate}`);
         if (endDate) queryParams.push(`endDate=${endDate}`);

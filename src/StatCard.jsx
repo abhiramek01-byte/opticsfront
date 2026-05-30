@@ -22,18 +22,25 @@ const icons = {
 };
 
 export default function StatCard({ title, value, type, badge, format }) {
-  // Simple formatter
+  // Indian currency and standard number formatting
   const formattedValue = format === 'currency' 
-      ? `$${Number(value || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
-      : Number(value || 0).toLocaleString();
+      ? `₹${Number(value || 0).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`
+      : Number(value || 0).toLocaleString('en-IN');
 
   return (
-    <div className="stat-card glass-panel" style={{ position: 'relative', overflow: 'hidden' }}>
+    <div className={`stat-card glass-panel card-glow-${type}`} style={{ position: 'relative', overflow: 'hidden' }}>
       
       {/* Decorative Gradient Blob */}
       <div className="card-blob"></div>
 
-      <div className="card-content">
+      {/* Absolute Positioned Top-Right Badge */}
+      {badge && (
+        <span className={`badge-top badge-${type}`}>
+          {badge}
+        </span>
+      )}
+
+      <div className="card-content-wrap">
         <div className="card-header">
           {/* Icon */}
           <div className={`icon-wrap ${type}`}>
@@ -46,13 +53,6 @@ export default function StatCard({ title, value, type, badge, format }) {
 
         <div className="card-body">
           <h2 className="stat-value">{formattedValue}</h2>
-          
-          {/* Badge */}
-          {badge && (
-            <span className={`badge ${type === 'alert' ? 'badge-danger' : 'badge-primary'}`}>
-              {badge}
-            </span>
-          )}
         </div>
       </div>
 

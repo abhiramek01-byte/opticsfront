@@ -25,7 +25,7 @@ export default function SalesReturn() {
     
     const fetchReturnNo = async () => {
         try {
-            const res = await fetch("http://localhost:3000/sales-return/generate-no", {
+            const res = await fetch(import.meta.env.VITE_API_URL + "/sales-return/generate-no", {
                 headers: { "branch-id": localStorage.getItem("branchId") || "" }
             });
             if (res.ok) {
@@ -39,13 +39,13 @@ export default function SalesReturn() {
 
     useEffect(() => {
         // Fetch Customers
-        fetch("http://localhost:3000/customers")
+        fetch(import.meta.env.VITE_API_URL + "/customers")
             .then(res => res.json())
             .then(data => setCustomers(Array.isArray(data) ? data : []))
             .catch(err => console.error(err));
 
         // Fetch Products
-        fetch("http://localhost:3000/product")
+        fetch(import.meta.env.VITE_API_URL + "/product")
             .then(res => res.json())
             .then(data => setProducts(Array.isArray(data) ? data : []))
             .catch(err => console.error(err));
@@ -60,7 +60,7 @@ export default function SalesReturn() {
         
         if (field === "barcode" && value) {
             try {
-                const res = await fetch(`http://localhost:3000/product/barcode/${value}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/product/barcode/${value}`);
                 if (res.ok) {
                    const data = await res.json();
                    if (data && data.id) {
@@ -131,7 +131,7 @@ export default function SalesReturn() {
          }
          
          try {
-             const res = await fetch("http://localhost:3000/sales-return", {
+             const res = await fetch(import.meta.env.VITE_API_URL + "/sales-return", {
                  method: "POST",
                  headers: { 
                     "Content-Type": "application/json",

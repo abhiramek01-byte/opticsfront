@@ -11,7 +11,7 @@ export default function ProductListPage() {
     const [search, setSearch] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:3000/product")
+        fetch(import.meta.env.VITE_API_URL + "/product")
             .then(res => res.json())
             .then(data => {
                 setProducts(data);
@@ -90,7 +90,7 @@ export default function ProductListPage() {
                 ) : filteredProducts.length > 0 ? (
                     filteredProducts.map((p) => {
                         const imageSrc = p.image 
-                            ? `http://localhost:3000/uploads/${p.image.split(',')[0]}` 
+                            ? `${import.meta.env.VITE_API_URL}/uploads/${p.image.split(',')[0]}` 
                             : "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80";
                         
                         return (

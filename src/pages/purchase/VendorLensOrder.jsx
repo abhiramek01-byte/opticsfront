@@ -9,7 +9,7 @@ export default function VendorLensOrder() {
 
     useEffect(() => {
         const headers = { "branch-id": localStorage.getItem("branchId") || "" };
-        axios.get("http://localhost:3000/vendors", { headers })
+        axios.get(import.meta.env.VITE_API_URL + "/vendors", { headers })
             .then(res => setVendors(res.data))
             .catch(err => console.log(err));
     }, []);

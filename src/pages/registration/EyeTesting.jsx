@@ -30,11 +30,11 @@ export default function EyeTesting() {
 
     // 🔹 Load patients and doctors
     useEffect(() => {
-        axios.get("http://localhost:3000/patient")
+        axios.get(import.meta.env.VITE_API_URL + "/patient")
             .then(res => setPatients(res.data))
             .catch(err => console.log(err));
             
-        axios.get("http://localhost:3000/doctor", {
+        axios.get(import.meta.env.VITE_API_URL + "/doctor", {
             headers: { "branch-id": localStorage.getItem("branchId") || "" }
         })
         .then(res => setDoctors(res.data))
@@ -70,7 +70,7 @@ export default function EyeTesting() {
                 return;
             }
 
-            await axios.post("http://localhost:3000/eye-testing", {
+            await axios.post(import.meta.env.VITE_API_URL + "/eye-testing", {
                 patientId: Number(form.patientId),
                 doctor: form.doctor,
                 amount: Number(form.amount),

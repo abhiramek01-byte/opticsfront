@@ -14,7 +14,7 @@ export default function AdminReports() {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/admin/dashboard/reports");
+        const response = await axios.get(import.meta.env.VITE_API_URL + "/admin/dashboard/reports");
         setReportData(response.data);
       } catch (error) {
         console.error("Error fetching reports:", error);

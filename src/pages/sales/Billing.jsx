@@ -16,7 +16,7 @@ const Billing = () => {
         setLoading(true);
         if (id) {
             axios
-                .get(`http://localhost:3000/sales/${id}`)
+                .get(`${import.meta.env.VITE_API_URL}/sales/${id}`)
                 .then((res) => {
                     setSale(res.data);
                     setLoading(false);
@@ -28,7 +28,7 @@ const Billing = () => {
                 });
         } else {
             axios
-                .get(`http://localhost:3000/sales`)
+                .get(`${import.meta.env.VITE_API_URL}/sales`)
                 .then((res) => {
                     setSalesList(Array.isArray(res.data) ? res.data : []);
                     setLoading(false);
@@ -181,7 +181,7 @@ const Billing = () => {
                                 <td>
                                     {item.product?.image ? (
                                         <img
-                                            src={`http://localhost:3000/uploads/${item.product.image}`}
+                                            src={`${import.meta.env.VITE_API_URL}/uploads/${item.product.image}`}
                                             width="50"
                                             alt="Product"
                                         />

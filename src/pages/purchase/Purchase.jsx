@@ -23,11 +23,11 @@ export default function Purchase() {
     useEffect(() => {
         const headers = { "branch-id": localStorage.getItem("branchId") || "" };
 
-        axios.get("http://localhost:3000/product", { headers })
+        axios.get(import.meta.env.VITE_API_URL + "/product", { headers })
             .then(res => setProducts(res.data))
             .catch(err => console.log(err));
 
-        axios.get("http://localhost:3000/vendors", { headers })
+        axios.get(import.meta.env.VITE_API_URL + "/vendors", { headers })
             .then(res => setVendors(res.data))
             .catch(err => console.log(err));
     }, []);
@@ -88,7 +88,7 @@ export default function Purchase() {
                 }))
             };
 
-            await axios.post("http://localhost:3000/purchase", payload, {
+            await axios.post(import.meta.env.VITE_API_URL + "/purchase", payload, {
                 headers: { "branch-id": localStorage.getItem("branchId") || "" }
             });
 

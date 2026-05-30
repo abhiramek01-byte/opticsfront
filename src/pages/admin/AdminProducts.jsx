@@ -20,7 +20,7 @@ export default function Products() {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/product");
+            const res = await axios.get(import.meta.env.VITE_API_URL + "/product");
             setProducts(res.data);
         } catch (error) {
             console.error("Failed to fetch products", error);
@@ -35,7 +35,7 @@ export default function Products() {
         if (!window.confirm("Are you sure you want to delete this product?")) return;
         
         try {
-            await axios.delete(`http://localhost:3000/product/${id}`);
+            await axios.delete(`${import.meta.env.VITE_API_URL}/product/${id}`);
             setProducts(products.filter((p) => p.id !== id));
         } catch (error) {
             console.error("Failed to delete product", error);

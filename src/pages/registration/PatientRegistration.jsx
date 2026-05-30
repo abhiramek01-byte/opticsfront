@@ -20,7 +20,7 @@ export default function PatientRegistration() {
     const [doctors, setDoctors] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/doctor", {
+        axios.get(import.meta.env.VITE_API_URL + "/doctor", {
             headers: { "branch-id": localStorage.getItem("branchId") || "" }
         })
         .then(res => setDoctors(res.data))
@@ -39,7 +39,7 @@ export default function PatientRegistration() {
                 return;
             }
 
-            await axios.post("http://localhost:3000/patient", patient);
+            await axios.post(import.meta.env.VITE_API_URL + "/patient", patient);
 
             alert("Patient saved successfully ✅");
 

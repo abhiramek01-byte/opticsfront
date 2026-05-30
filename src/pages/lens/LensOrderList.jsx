@@ -10,7 +10,7 @@ export default function LensOrderList() {
 
     const fetchOrders = () => {
         setLoading(true);
-        axios.get("http://localhost:3000/lens-order", {
+        axios.get(import.meta.env.VITE_API_URL + "/lens-order", {
             headers: {
                 "branch-id": localStorage.getItem("branchId") || ""
             }

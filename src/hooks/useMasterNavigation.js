@@ -8,7 +8,7 @@ export function useMasterNavigation(endpoint, defaultData) {
 
   const fetchItems = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/${endpoint}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`);
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setItems(data);
@@ -61,8 +61,8 @@ export function useMasterNavigation(endpoint, defaultData) {
       const isUpdating = currentIndex >= 0 && isEditMode && formData.id;
       const method = isUpdating ? "PUT" : "POST";
       const url = isUpdating 
-        ? `http://localhost:3000/${endpoint}/${formData.id}` 
-        : `http://localhost:3000/${endpoint}`;
+        ? `${import.meta.env.VITE_API_URL}/${endpoint}/${formData.id}` 
+        : `${import.meta.env.VITE_API_URL}/${endpoint}`;
 
       // Clean payload for POST
       const payload = { ...formData };

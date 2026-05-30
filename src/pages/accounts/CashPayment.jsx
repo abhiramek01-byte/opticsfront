@@ -29,8 +29,8 @@ export default function CashPayment() {
     const fetchInitialData = async () => {
         try {
             const [paymentsRes, accountsRes] = await Promise.all([
-                axios.get("http://localhost:3000/cash-payment"),
-                axios.get("http://localhost:3000/account")
+                axios.get(import.meta.env.VITE_API_URL + "/cash-payment"),
+                axios.get(import.meta.env.VITE_API_URL + "/account")
             ]);
             
             setPayments(paymentsRes.data);
@@ -137,7 +137,7 @@ export default function CashPayment() {
                 // For simplicity, we just delete and recreate to update items, or implement thorough update logic in backed
                 toast.info("Update logic requires backend item syncing.");
             } else {
-                await axios.post("http://localhost:3000/cash-payment", payload);
+                await axios.post(import.meta.env.VITE_API_URL + "/cash-payment", payload);
                 toast.success("Cash Payment saved successfully!");
                 fetchInitialData();
                 handleClear();
@@ -152,7 +152,7 @@ export default function CashPayment() {
         if (!formData.id) return;
         if (window.confirm("Are you sure you want to delete this payment?")) {
             try {
-                await axios.delete(`http://localhost:3000/cash-payment/${formData.id}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/cash-payment/${formData.id}`);
                 toast.success("Payment deleted.");
                 fetchInitialData();
             } catch (error) {

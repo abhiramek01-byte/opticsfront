@@ -18,7 +18,7 @@ const ImageSlider = ({ imageString, productName }) => {
     }
 
     const currentImg = images[currentIndex];
-    const src = `http://localhost:3000/${currentImg.startsWith('uploads') ? currentImg : 'uploads/' + currentImg}`;
+    const src = `${import.meta.env.VITE_API_URL}/${currentImg.startsWith('uploads') ? currentImg : 'uploads/' + currentImg}`;
 
     const handlePrev = (e) => {
         if(e) e.stopPropagation();
@@ -94,12 +94,12 @@ export default function ViewProduct() {
     const [stock, setStock] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3000/product")
+        fetch(import.meta.env.VITE_API_URL + "/product")
             .then((res) => res.json())
             .then((data) => setProducts(data))
             .catch((err) => console.error(err));
 
-        fetch("http://localhost:3000/stock/getAll")
+        fetch(import.meta.env.VITE_API_URL + "/stock/getAll")
             .then((res) => res.json())
             .then((data) => setStock(data.result || []))
             .catch((err) => console.error(err));
@@ -119,6 +119,60 @@ export default function ViewProduct() {
         return { text: "In Stock", color: "#059669", bg: "rgba(209, 250, 229, 0.9)" }; // Emerald/Green
     };
 
+    const handleExportCSV = () => {
+        if (!products || products.length === 0) {
+            alert("No products available to export.");
+            return;
+        }
+
+        // Define CSV headers
+        const headers = ["Product ID", "Product Name", "Code", "Category", "Brand", "Rate (INR)", "Stock Type", "Quantity", "Status"];
+
+        // Map products to CSV rows
+        const csvRows = [
+            headers.join(","), // Headers row
+            ...products.map(p => {
+                const qty = getQuantity(p.id);
+                const status = getStatusInfo(qty, p.nonStock).text;
+                const stockType = p.nonStock ? "Service (Non-Stock)" : "Stock Item";
+                const rate = p.rate ? parseFloat(p.rate).toFixed(2) : "0.00";
+                
+                // Handle values that might contain commas or double quotes to avoid breaking the CSV format
+                const formatValue = (val) => {
+                    if (val === null || val === undefined) return '""';
+                    const str = String(val).replace(/"/g, '""');
+                    return `"${str}"`;
+                };
+
+                return [
+                    formatValue(p.id),
+                    formatValue(p.productName),
+                    formatValue(p.code),
+                    formatValue(p.category),
+                    formatValue(p.brand),
+                    formatValue(rate),
+                    formatValue(stockType),
+                    formatValue(p.nonStock ? "—" : qty),
+                    formatValue(status)
+                ].join(",");
+            })
+        ];
+
+        // Create the CSV Blob
+        const csvContent = "\uFEFF" + csvRows.join("\n"); // UTF-8 BOM to support special characters
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        
+        // Create temporary link and download
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `Product_Catalog_${new Date().toISOString().slice(0, 10)}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <div className="transaction-container">
 
@@ -126,7 +180,7 @@ export default function ViewProduct() {
                 <h2>Product Catalog <span style={{ fontSize: '1rem', color: '#64748b', fontWeight: 'normal', marginLeft: '10px' }}>({products.length} Items)</span></h2>
                 
                 <div className="transaction-buttons">
-                    <button className="btn-secondary">Export CSV</button>
+                    <button className="btn-secondary" onClick={handleExportCSV}>Export CSV</button>
                     <button className="btn-primary" onClick={() => window.location.href = '/dashboard/addProduct'}>+ Add New</button>
                 </div>
             </div>

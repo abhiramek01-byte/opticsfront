@@ -21,7 +21,7 @@ export default function Period() {
 
     const fetchPeriods = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/period");
+            const response = await axios.get(import.meta.env.VITE_API_URL + "/period");
             setPeriods(response.data);
             if (response.data.length > 0) {
                 setFormData(formatDataForForm(response.data[0]));
@@ -75,10 +75,10 @@ export default function Period() {
     const handleSave = async () => {
         try {
             if (formData.id) {
-                await axios.patch(`http://localhost:3000/period/${formData.id}`, formData);
+                await axios.patch(`${import.meta.env.VITE_API_URL}/period/${formData.id}`, formData);
                 toast.success("Period updated successfully!");
             } else {
-                await axios.post("http://localhost:3000/period", formData);
+                await axios.post(import.meta.env.VITE_API_URL + "/period", formData);
                 toast.success("Period saved successfully!");
             }
             fetchPeriods();
@@ -92,7 +92,7 @@ export default function Period() {
         if (!formData.id) return;
         if (window.confirm("Are you sure you want to delete this period?")) {
             try {
-                await axios.delete(`http://localhost:3000/period/${formData.id}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/period/${formData.id}`);
                 toast.success("Period deleted.");
                 fetchPeriods();
             } catch (error) {

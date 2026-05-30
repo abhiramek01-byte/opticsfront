@@ -22,7 +22,7 @@ export default function Account() {
 
     const fetchAccounts = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/account");
+            const response = await axios.get(import.meta.env.VITE_API_URL + "/account");
             setAccounts(response.data);
             if (response.data.length > 0) {
                 setFormData(response.data[0]);
@@ -69,10 +69,10 @@ export default function Account() {
     const handleSave = async () => {
         try {
             if (formData.id) {
-                await axios.patch(`http://localhost:3000/account/${formData.id}`, formData);
+                await axios.patch(`${import.meta.env.VITE_API_URL}/account/${formData.id}`, formData);
                 toast.success("Account updated successfully!");
             } else {
-                await axios.post("http://localhost:3000/account", formData);
+                await axios.post(import.meta.env.VITE_API_URL + "/account", formData);
                 toast.success("Account saved successfully!");
             }
             fetchAccounts();
@@ -86,7 +86,7 @@ export default function Account() {
         if (!formData.id) return;
         if (window.confirm("Are you sure you want to delete this account?")) {
             try {
-                await axios.delete(`http://localhost:3000/account/${formData.id}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/account/${formData.id}`);
                 toast.success("Account deleted.");
                 fetchAccounts();
             } catch (error) {

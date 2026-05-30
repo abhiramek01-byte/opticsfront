@@ -1,6 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FaUserCircle, FaSignOutAlt, FaChevronDown } from "react-icons/fa";
+import { 
+    FaUserCircle, 
+    FaSignOutAlt, 
+    FaChevronDown, 
+    FaUsers, 
+    FaBoxOpen, 
+    FaTruck, 
+    FaShoppingCart, 
+    FaExclamationTriangle, 
+    FaAward, 
+    FaStore,
+    FaCalendarCheck
+} from "react-icons/fa";
 import "../../styles/AdminDashboard.css";
 
 export default function AdminDashboard() {
@@ -24,16 +36,40 @@ export default function AdminDashboard() {
     };
 
     useEffect(() => {
-        axios.get("http://localhost:3000/admin/dashboard")
+        axios.get(import.meta.env.VITE_API_URL + "/admin/dashboard")
             .then(res => setCounts(res.data))
             .catch(err => console.error("Failed to fetch dashboard stats", err));
     }, []);
 
     const stats = [
-        { title: "Total Users", value: counts.users },
-        { title: "Total Products", value: counts.products },
-        { title: "Vendors", value: counts.vendors },
-        { title: "Sales Orders", value: counts.orders }
+        { 
+            title: "Total Users", 
+            value: counts.users, 
+            icon: <FaUsers size={24} />, 
+            desc: "Registered system accounts",
+            colorClass: "users" 
+        },
+        { 
+            title: "Total Products", 
+            value: counts.products, 
+            icon: <FaBoxOpen size={24} />, 
+            desc: "Active items in catalog",
+            colorClass: "products"
+        },
+        { 
+            title: "Vendors", 
+            value: counts.vendors, 
+            icon: <FaTruck size={24} />, 
+            desc: "Supplier partnerships",
+            colorClass: "vendors"
+        },
+        { 
+            title: "Sales Orders", 
+            value: counts.orders, 
+            icon: <FaShoppingCart size={24} />, 
+            desc: "Completed checkout orders",
+            colorClass: "orders"
+        }
     ];
 
     const recentOrders = counts.recentOrders || [];
@@ -42,40 +78,38 @@ export default function AdminDashboard() {
 
     return (
         <div className="admin-dashboard">
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
-                <h1 className="admin-title" style={{ margin: 0 }}>Admin Dashboard</h1>
+            {/* TOP HEADER */}
+            <div className="dashboard-header-container">
+                <div>
+                    <h1 className="admin-title" style={{ margin: 0, padding: 0 }}>Admin Dashboard</h1>
+                </div>
                 
                 <div className="user-profile-widget" style={{ position: 'relative' }}>
                     <div 
                         className="user-profile-btn" 
                         onClick={() => setShowDropdown(!showDropdown)}
-                        onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 6px 15px rgba(0,0,0,0.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)'}
                         style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', padding: '8px 20px', background: 'white', borderRadius: '30px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', border: '1px solid rgba(226, 232, 240, 0.8)', transition: 'all 0.3s ease' }}
                     >
-                        <FaUserCircle size={32} style={{ color: '#3b82f6' }} />
+                        <FaUserCircle size={32} style={{ color: '#2d5a3d' }} />
                         <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                            <span style={{ fontWeight: 600, fontSize: '15px', color: '#0f172a', lineHeight: '1.2' }}>{username.charAt(0).toUpperCase() + username.slice(1)}</span>
-                            <span style={{ fontSize: '13px', color: '#64748b', textTransform: 'capitalize', lineHeight: '1.2' }}>{role}</span>
+                            <span style={{ fontWeight: 600, fontSize: '15px', color: '#1c1a16', lineHeight: '1.2' }}>{username.charAt(0).toUpperCase() + username.slice(1)}</span>
+                            <span style={{ fontSize: '13px', color: '#8c8070', textTransform: 'capitalize', lineHeight: '1.2' }}>{role}</span>
                         </div>
-                        <FaChevronDown size={14} style={{ color: '#94a3b8', marginLeft: '8px' }} />
+                        <FaChevronDown size={14} style={{ color: '#b8ae9e', marginLeft: '8px' }} />
                     </div>
 
                     {showDropdown && (
                         <div 
                             className="user-dropdown" 
-                            style={{ position: 'absolute', top: '120%', right: '0', background: 'white', padding: '8px', minWidth: '200px', borderRadius: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.15)', zIndex: 1000, border: '1px solid #f1f5f9', animation: 'fadeIn 0.2s ease' }}
+                            style={{ position: 'absolute', top: '120%', right: '0', background: 'white', padding: '8px', minWidth: '200px', borderRadius: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.15)', zIndex: 1000, border: '1px solid #f1f5f9' }}
                         >
                             <div style={{ padding: '8px 12px', borderBottom: '1px solid #f1f5f9', marginBottom: '8px' }}>
-                                <span style={{ display: 'block', fontSize: '12px', color: '#64748b' }}>Logged in as</span>
-                                <span style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#0f172a', textOverflow: 'ellipsis', overflow: 'hidden' }}>{username}</span>
+                                <span style={{ display: 'block', fontSize: '12px', color: '#8c8070' }}>Logged in as</span>
+                                <span style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#1c1a16', textOverflow: 'ellipsis', overflow: 'hidden' }}>{username}</span>
                             </div>
                             <button 
                                 onClick={handleLogout}
-                                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', background: 'transparent', border: 'none', borderRadius: '8px', cursor: 'pointer', color: '#ef4444', fontWeight: 500, fontSize: '14px', transition: 'all 0.2s' }}
-                                onMouseOver={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.transform = 'translateX(5px)'; }}
-                                onMouseOut={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'translateX(0)'; }}
+                                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', background: 'transparent', border: 'none', borderRadius: '8px', cursor: 'pointer', color: '#b84040', fontWeight: 500, fontSize: '14px', transition: 'all 0.2s' }}
                             >
                                 <FaSignOutAlt />
                                 Logout
@@ -88,52 +122,101 @@ export default function AdminDashboard() {
             {/* KPI CARDS */}
             <div className="admin-stats">
                 {stats.map((s, i) => (
-                    <div className="admin-card" key={i}>
-                        <h3>{s.title}</h3>
+                    <div className={`admin-card card-${s.colorClass}`} key={i}>
+                        <div className="admin-card-header">
+                            <h3>{s.title}</h3>
+                            <div className="admin-card-icon">
+                                {s.icon}
+                            </div>
+                        </div>
                         <p>{s.value}</p>
+                        <span className="admin-card-desc">{s.desc}</span>
                     </div>
                 ))}
             </div>
 
-            {/* SECOND ROW */}
+            {/* MAIN SECTIONS GRID */}
             <div className="admin-grid">
-
-                <div className="admin-box">
+                {/* Recent Sales Orders */}
+                <div className="admin-box box-orders">
                     <h2>Recent Orders</h2>
-                    <ul>
-                        {recentOrders.map((o, i) => (
-                            <li key={i}>
-                                {o.id} - {o.customer}
-                                <span>{o.amount}</span>
-                            </li>
-                        ))}
-                    </ul>
+                    <div className="box-content-scroll">
+                        {recentOrders.length === 0 ? (
+                            <div className="admin-empty-state">No recent sales orders.</div>
+                        ) : (
+                            <ul>
+                                {recentOrders.map((o, i) => (
+                                    <li key={i} className="list-item-sales">
+                                        <div className="item-left">
+                                            <div className="item-icon-wrapper sales-color">
+                                                <FaShoppingCart size={13} />
+                                            </div>
+                                            <div className="item-details">
+                                                <span className="item-main-title">{o.id}</span>
+                                                <span className="item-subtitle">Customer: {o.customer}</span>
+                                            </div>
+                                        </div>
+                                        <span className="amount-badge">{o.amount}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 </div>
 
-                <div className="admin-box">
+                {/* Low Stock Alerts */}
+                <div className="admin-box box-stock">
                     <h2>Low Stock Alert</h2>
-                    <ul>
-                        {lowStock.map((p, i) => (
-                            <li key={i}>
-                                {p.product}
-                                <span>{p.stock} left</span>
-                            </li>
-                        ))}
-                    </ul>
+                    <div className="box-content-scroll">
+                        {lowStock.length === 0 ? (
+                            <div className="admin-empty-state">All product stocks are healthy.</div>
+                        ) : (
+                            <ul>
+                                {lowStock.map((p, i) => (
+                                    <li key={i} className="list-item-stock">
+                                        <div className="item-left">
+                                            <div className="item-icon-wrapper stock-color">
+                                                <FaExclamationTriangle size={13} />
+                                            </div>
+                                            <div className="item-details">
+                                                <span className="item-main-title" title={p.product}>{p.product}</span>
+                                                <span className="item-subtitle">Requires replenishment</span>
+                                            </div>
+                                        </div>
+                                        <span className="stock-badge">{p.stock} left</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 </div>
 
-                <div className="admin-box">
+                {/* Top Vendor Partners */}
+                <div className="admin-box box-vendors">
                     <h2>Top Vendors</h2>
-                    <ul>
-                        {topVendors.map((v, i) => (
-                            <li key={i}>
-                                {v.name}
-                                <span>{v.sales}</span>
-                            </li>
-                        ))}
-                    </ul>
+                    <div className="box-content-scroll">
+                        {topVendors.length === 0 ? (
+                            <div className="admin-empty-state">No vendors configured.</div>
+                        ) : (
+                            <ul>
+                                {topVendors.map((v, i) => (
+                                    <li key={i} className="list-item-vendor">
+                                        <div className="item-left">
+                                            <div className="item-icon-wrapper vendor-color">
+                                                <FaAward size={13} />
+                                            </div>
+                                            <div className="item-details">
+                                                <span className="item-main-title">{v.name}</span>
+                                                <span className="item-subtitle">Optics Distributor</span>
+                                            </div>
+                                        </div>
+                                        <span className="vendor-badge">{v.sales}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 </div>
-
             </div>
         </div>
     );

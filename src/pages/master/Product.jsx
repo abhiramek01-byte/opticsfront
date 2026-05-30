@@ -124,8 +124,8 @@ export default function Product() {
 
       const method = isEditMode ? "PUT" : "POST";
       const url = isEditMode 
-        ? `http://localhost:3000/product/${formData.id}` 
-        : `http://localhost:3000/product`;
+        ? `${import.meta.env.VITE_API_URL}/product/${formData.id}` 
+        : `${import.meta.env.VITE_API_URL}/product`;
 
       const res = await fetch(url, {
         method,
@@ -195,7 +195,7 @@ export default function Product() {
             {formData.image && (
               <div style={{ flexShrink: 0, paddingLeft: '20px', borderLeft: '1px solid rgba(255, 255, 255, 0.5)' }}>
                 <img
-                  src={typeof formData.image === 'string' ? `http://localhost:3000/${formData.image}` : URL.createObjectURL(formData.image)}
+                  src={typeof formData.image === 'string' ? `${import.meta.env.VITE_API_URL}/${formData.image}` : URL.createObjectURL(formData.image)}
                   alt="preview"
                   width="100"
                   style={{ borderRadius: "8px", objectFit: 'cover', height: '100px', border: '2px solid rgba(255, 255, 255, 0.8)' }}

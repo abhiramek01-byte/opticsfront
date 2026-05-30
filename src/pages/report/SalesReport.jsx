@@ -9,7 +9,7 @@ export default function SalesReport() {
         const fetchSales = async () => {
             setLoading(true);
             try {
-                const res = await fetch("http://localhost:3000/sales/report");
+                const res = await fetch(import.meta.env.VITE_API_URL + "/sales/report");
                 const data = await res.json();
                 
                 if (data.sales && Array.isArray(data.sales)) {

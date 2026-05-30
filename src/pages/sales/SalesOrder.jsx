@@ -40,7 +40,7 @@ export default function SalesOrder() {
 
     // 🔹 FETCH CUSTOMERS
     useEffect(() => {
-        fetch("http://localhost:3000/customers")
+        fetch(import.meta.env.VITE_API_URL + "/customers")
             .then(res => res.json())
             .then(data => setCustomers(Array.isArray(data) ? data : []))
             .catch(err => console.error(err));
@@ -80,7 +80,7 @@ export default function SalesOrder() {
 
         // 🔥 BARCODE FETCH (Non-blocking)
         if (name === "barcode" && value) {
-            fetch(`http://localhost:3000/product/barcode/${value}`)
+            fetch(`${import.meta.env.VITE_API_URL}/product/barcode/${value}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data && data.id) {
@@ -149,7 +149,7 @@ export default function SalesOrder() {
 
             const payload = { order, eye, items: formattedItems };
 
-            const res = await fetch("http://localhost:3000/sales-order", {
+            const res = await fetch(import.meta.env.VITE_API_URL + "/sales-order", {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
@@ -163,7 +163,7 @@ export default function SalesOrder() {
             // 🔥 SAVE REAL ORDER ID
             setOrder(prev => ({
                 ...prev,
-                id: data.id
+                id: data.order?.id || data.id
             }));
 
             alert("Order Saved ✅");

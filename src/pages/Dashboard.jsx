@@ -40,11 +40,11 @@ export default function Dashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/dashboard?date=${selectedDate}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/dashboard?date=${selectedDate}`);
       setData(response.data);
 
       if (branchId) {
-        const branchRes = await axios.get(`http://localhost:3000/admin/branches`);
+        const branchRes = await axios.get(`${import.meta.env.VITE_API_URL}/admin/branches`);
         const branches = branchRes.data;
         const currentBranch = branches.find(b => b.id === Number(branchId));
         if (currentBranch) {

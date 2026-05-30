@@ -19,7 +19,11 @@ export default function OrderTracking() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch("http://localhost:3000/sales-order");
+      const res = await fetch(import.meta.env.VITE_API_URL + "/sales-order", {
+        headers: {
+          "branch-id": localStorage.getItem("branchId") || ""
+        }
+      });
       const data = await res.json();
       setOrders(Array.isArray(data) ? data : []);
       setLoading(false);
@@ -56,9 +60,12 @@ export default function OrderTracking() {
     if (!selectedOrderId) return;
     
     try {
-      const res = await fetch(`http://localhost:3000/sales/convert/${selectedOrderId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/sales/convert/${selectedOrderId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "branch-id": localStorage.getItem("branchId") || ""
+        },
         body: JSON.stringify({ paymentMode })
       });
 

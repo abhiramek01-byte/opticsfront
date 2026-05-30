@@ -49,7 +49,7 @@ export default function AdminAddVendor() {
         }
 
         try {
-            await axios.post("http://localhost:3000/vendors", formData);
+            await axios.post(import.meta.env.VITE_API_URL + "/vendors", formData);
             alert("Vendor Added Successfully! ✅");
             navigate("/admin/vendors");
         } catch (error) {

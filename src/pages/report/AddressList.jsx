@@ -10,8 +10,8 @@ export default function AddressList() {
             setLoading(true);
             try {
                 const [customersRes, vendorsRes] = await Promise.all([
-                    fetch("http://localhost:3000/customers"),
-                    fetch("http://localhost:3000/vendors")
+                    fetch(import.meta.env.VITE_API_URL + "/customers"),
+                    fetch(import.meta.env.VITE_API_URL + "/vendors")
                 ]);
                 
                 const customers = await customersRes.json();
@@ -36,7 +36,7 @@ export default function AddressList() {
                     vendors.forEach(v => {
                         combined.push({
                             id: `vend-${v.id}`,
-                            name: v.vendorName,
+                            name: v.name,
                             type: "Vendor",
                             phone: v.phone || "N/A",
                             email: v.email || "N/A",

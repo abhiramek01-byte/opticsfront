@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../../../styles/BranchManagement.css";
 
-const API = "http://localhost:3000/branch";
+const API = import.meta.env.VITE_API_URL + "/branch";
 
 export default function BranchManagement() {
 

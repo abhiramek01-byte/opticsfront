@@ -9,7 +9,7 @@ export default function PurchaseReport() {
         const fetchPurchases = async () => {
             setLoading(true);
             try {
-                const res = await fetch("http://localhost:3000/purchase");
+                const res = await fetch(import.meta.env.VITE_API_URL + "/purchase");
                 const data = await res.json();
                 
                 if (Array.isArray(data)) {
@@ -57,15 +57,16 @@ export default function PurchaseReport() {
                             purchases.map(purchase => {
                                 const totalQty = purchase.items?.reduce((sum, item) => sum + Number(item.quantity), 0) || 0;
                                 const itemNames = purchase.items?.map(i => i.product?.productName).join(', ') || "No Items";
+                                const netTotal = purchase.items?.reduce((sum, item) => sum + (Number(item.amount) || 0), 0) || 0;
 
                                 return (
                                     <tr key={purchase.id}>
-                                        <td>{new Date(purchase.purchaseDate).toLocaleDateString()}</td>
+                                        <td>{purchase.date ? new Date(purchase.date).toLocaleDateString() : "N/A"}</td>
                                         <td>{purchase.invoiceNo}</td>
-                                        <td>{purchase.vendor?.vendorName || "Unknown Vendor"}</td>
+                                        <td>{purchase.vendor?.name || "Unknown Vendor"}</td>
                                         <td>{itemNames}</td>
                                         <td>{totalQty}</td>
-                                        <td style={{ fontWeight: "bold" }}>₹{Number(purchase.netTotal).toFixed(2)}</td>
+                                        <td style={{ fontWeight: "bold" }}>₹{netTotal.toFixed(2)}</td>
                                     </tr>
                                 )
                             })

@@ -40,6 +40,7 @@ import StockAdjustment from "./pages/stock/StockAdjustment";
 
 import PatientRegistration from "./pages/registration/PatientRegistration";
 import EyeTesting from "./pages/registration/EyeTesting";
+import PatientList from "./pages/registration/PatientList";
 
 import Company from "./pages/accounts/Company";
 import Period from "./pages/accounts/Period";
@@ -102,6 +103,7 @@ import CustomerHistory from "./pages/customer/CustomerHistory";
 
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import BranchManagement from "./pages/admin/BranchManagement";
+import BranchRegister from "./pages/admin/BranchRegister";
 
 import AdminLayout from "./pages/admin/AdminLayout";
 import Products from "./pages/admin/AdminProducts";
@@ -251,6 +253,7 @@ function ProtectedLayout({ isLoggedIn, onLogout }) {
 
           <Route path="/patient-registration" element={<PatientRegistration />} />
           <Route path="/eye-testing" element={<EyeTesting />} />
+          <Route path="/registered-patients" element={<PatientList />} />
 
 
           <Route path="/accounts/company" element={<Company />} />
@@ -395,6 +398,7 @@ export default function App() {
       >
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="branches" element={<BranchManagement />} />
+        <Route path="branches/register" element={<BranchRegister />} />
 
         <Route path="products" element={<Products />} />
         <Route path="products/add" element={<AdminAddProduct />} />

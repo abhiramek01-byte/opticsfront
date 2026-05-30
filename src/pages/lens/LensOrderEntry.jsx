@@ -9,7 +9,7 @@ export default function LensOrderEntry() {
 
     useEffect(() => {
         const headers = { "branch-id": localStorage.getItem("branchId") || "" };
-        axios.get("http://localhost:3000/vendors", { headers })
+        axios.get(import.meta.env.VITE_API_URL + "/vendors", { headers })
             .then(res => setVendors(res.data))
             .catch(err => console.log(err));
     }, []);
@@ -67,7 +67,7 @@ export default function LensOrderEntry() {
         };
 
         try {
-            await axios.post("http://localhost:3000/lens-order", payload, {
+            await axios.post(import.meta.env.VITE_API_URL + "/lens-order", payload, {
                 headers: {
                     "branch-id": localStorage.getItem("branchId") || ""
                 }

@@ -7,7 +7,7 @@ export default function OpeningStock() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/stock/getAll")
+        axios.get(import.meta.env.VITE_API_URL + "/stock/getAll")
             .then(res => {
                 const openingStockData = (res.data.result || []).filter(item => item.vendor === 'Opening Stock');
                 setItems(openingStockData);
